@@ -1,0 +1,74 @@
+[
+    {
+        "codigo": 1,
+        "nombre": "Blas",
+        "contacto": {
+            "telefono": "111.111.111",
+            "fax": "111.111.112"
+        },
+        "domicilio": {
+            "direccion1": "Calle Falsa 123",
+            "ciudad": "Zaragoza"
+        }
+    },
+    {
+        "codigo": 2,
+        "nombre": "Federico",
+        "contacto": {
+            "nombre": {
+                "value": "el fede"
+            },
+            "telefono": "123.11.234.5.222",
+            "fax": "111.2"
+        },
+        "domicilio": {
+            "direccion1": "Avda. Solomillo 13",
+            "direccion2": {
+                "value": "Escalera 1, Piso 1, Puerta 1"
+            },
+            "ciudad": "Zaragoza"
+        }
+    },
+    {
+        "codigo": 3,
+        "nombre": "Saturnín",
+        "contacto": {
+            "telefono": "112",
+            "fax": "933 532 129"
+        },
+        "domicilio": {
+            "direccion1": "Callejón Cajón .1f",
+            "ciudad": "Zaragoza"
+        }
+    },
+    {
+        "codigo": 4,
+        "nombre": "Janomina",
+        "contacto": {
+            "nombre": {
+                "value": "Jánova Berlenemina 3ª"
+            },
+            "apellido": {
+                "value": "del Valle Boniato"
+            },
+            "telefono": "9934-jt",
+            "fax": "9934-jf"
+        },
+        "domicilio": {
+            "direccion1": "Gran Plaza 49",
+            "ciudad": "Zaragoza"
+        }
+    },
+    {
+        "codigo": 5,
+        "nombre": "Rémora",
+        "contacto": {
+            "fax": "111-222-1",
+            "telefono": "111-222-0"
+        },
+        "domicilio": {
+            "direccion1": "C/ Y Reme Mortadelo 13",
+            "ciudad": "Zaragoza"
+        }
+    }
+]
