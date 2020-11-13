@@ -18,17 +18,19 @@ public class OptionalAdapterTest {
         double dob = 69.68;
         @Override
         public String toString() {
-            return "" + i + opt + otro + vacio + dob;
+            return "" +  i +'\n' + opt +'\n' + otro +'\n' + vacio +'\n' + dob;
         }
     }
 
-    private static final String json = "[69,1,3,9]";
     @Test
     public void rest() {
         
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(new OptionalAdapterFactory()).create();
 
+        String json = gson.toJson(new TestClass());
+        System.out.println(json);
 
-        
+        TestClass t = gson.fromJson(json, TestClass.class);
+        System.out.println(t);
     }
 }

@@ -1,17 +1,19 @@
 package dev.el_nico.jardineria.util.adapter;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Optional;
 import java.util.function.Function;
 
 import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 public class OptionalAdapter<T> extends TypeAdapter<Optional<T>> {
 
-    private Class<T> tipo_del_optional;
+    private TypeToken<T> tipo_del_optional;
     private Function<JsonReader, Optional<T>> leedorT = (in) -> null;
     private IOException excepcionGuardada;
     private boolean deberiaLanzar;
@@ -91,14 +93,18 @@ public class OptionalAdapter<T> extends TypeAdapter<Optional<T>> {
         deberiaLanzar = true;
     }
 
-    private OptionalAdapter(Class<T> T) {
+    private OptionalAdapter(TypeToken<T> T) {
         super();
         tipo_del_optional = T;
     }
 
     @Override
     public void write(JsonWriter out, Optional<T> value) throws IOException {
-        
+        if (value.isPresent()) {
+            out.value(value.get().toString());
+        } else {
+            out.nullValue();
+        }
     }
 
     @Override
@@ -112,9 +118,11 @@ public class OptionalAdapter<T> extends TypeAdapter<Optional<T>> {
         }
     }
 
-    public static <T> OptionalAdapter<T> crear(Class<T> T_del_optional) {
-        var adapter = new OptionalAdapter<>(T_del_optional);
+    public static <T> OptionalAdapter<T> crear(TypeToken<T> typeToken) {
+
+        var adapter = new OptionalAdapter<>(typeToken);
         
+        Type T_del_optional = typeToken.getType();
         if (T_del_optional == Integer.class) {
             adapter.leedorT = adapter.leedorInt;
         } else if (T_del_optional == Long.class) {
