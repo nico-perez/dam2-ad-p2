@@ -1,4 +1,4 @@
-package dev.el_nico.jardineria.Dao;
+package dev.el_nico.jardineria.dao;
 
 import java.util.List;
 import java.util.Optional;

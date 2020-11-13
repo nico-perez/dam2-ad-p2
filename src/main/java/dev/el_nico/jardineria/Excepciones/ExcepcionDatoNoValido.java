@@ -1,4 +1,4 @@
-package dev.el_nico.jardineria.Excepciones;
+package dev.el_nico.jardineria.excepciones;
 
 public class ExcepcionDatoNoValido extends Exception {
     private static final long serialVersionUID = 1L;

@@ -1,13 +1,13 @@
 package dev.el_nico.jardineria;
 
-import dev.el_nico.jardineria.Modelo.Cliente;
-import dev.el_nico.jardineria.Modelo.Pedido;
-import dev.el_nico.jardineria.Dao.ClientesGsonDao;
-import dev.el_nico.jardineria.Dao.IDataAccessObject;
-import dev.el_nico.jardineria.Dao.PedidosGsonDao;
-import dev.el_nico.jardineria.Excepciones.ExcepcionClienteDuplicado;
-import dev.el_nico.jardineria.Excepciones.ExcepcionCodigoYaExistente;
-import dev.el_nico.jardineria.Excepciones.ExcepcionDatoNoValido;
+import dev.el_nico.jardineria.dao.ClientesGsonDao;
+import dev.el_nico.jardineria.dao.IDataAccessObject;
+import dev.el_nico.jardineria.dao.PedidosGsonDao;
+import dev.el_nico.jardineria.excepciones.ExcepcionClienteDuplicado;
+import dev.el_nico.jardineria.excepciones.ExcepcionCodigoYaExistente;
+import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
+import dev.el_nico.jardineria.modelo.Cliente;
+import dev.el_nico.jardineria.modelo.Pedido;
 
 /**
  * Hello world!

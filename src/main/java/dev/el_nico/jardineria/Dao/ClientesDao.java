@@ -1,4 +1,4 @@
-package dev.el_nico.jardineria.Dao;
+package dev.el_nico.jardineria.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.Optional;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import dev.el_nico.jardineria.Modelo.Cliente;
-import dev.el_nico.jardineria.Excepciones.ExcepcionClienteDuplicado;
-import dev.el_nico.jardineria.Excepciones.ExcepcionCodigoYaExistente;
+import dev.el_nico.jardineria.excepciones.ExcepcionClienteDuplicado;
+import dev.el_nico.jardineria.excepciones.ExcepcionCodigoYaExistente;
+import dev.el_nico.jardineria.modelo.Cliente;
 
 public class ClientesDao implements IDataAccessObject<Cliente> {
 

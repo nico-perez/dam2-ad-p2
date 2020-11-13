@@ -1,4 +1,4 @@
-package dev.el_nico.jardineria.Dao;
+package dev.el_nico.jardineria.dao;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,10 +13,10 @@ import java.util.TreeMap;
 
 import com.google.gson.Gson;
 
-import dev.el_nico.jardineria.Excepciones.ExcepcionClienteDuplicado;
-import dev.el_nico.jardineria.Excepciones.ExcepcionCodigoYaExistente;
-import dev.el_nico.jardineria.Excepciones.ExcepcionDatoNoValido;
-import dev.el_nico.jardineria.Modelo.Cliente;
+import dev.el_nico.jardineria.excepciones.ExcepcionClienteDuplicado;
+import dev.el_nico.jardineria.excepciones.ExcepcionCodigoYaExistente;
+import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
+import dev.el_nico.jardineria.modelo.Cliente;
 
 public class ClientesGsonDao implements IDataAccessObject<Cliente> {
 

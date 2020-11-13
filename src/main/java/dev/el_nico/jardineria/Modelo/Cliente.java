@@ -1,9 +1,9 @@
-package dev.el_nico.jardineria.Modelo;
+package dev.el_nico.jardineria.modelo;
 
 import java.util.Optional;
 
-import dev.el_nico.jardineria.Excepciones.ExcepcionDatoNoValido;
-import dev.el_nico.jardineria.Utilidades.AbstractBuilder;
+import dev.el_nico.jardineria.util.AbstractBuilder;
+import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
 
 /**
  * Objeto que representa a uno de los clientes

@@ -1,4 +1,4 @@
-package dev.el_nico.jardineria.Dao;
+package dev.el_nico.jardineria.dao;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -7,10 +7,10 @@ import java.util.Optional;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import dev.el_nico.jardineria.Excepciones.ExcepcionCodigoYaExistente;
-import dev.el_nico.jardineria.Excepciones.ExcepcionDatoNoValido;
-import dev.el_nico.jardineria.Modelo.Cliente;
-import dev.el_nico.jardineria.Modelo.Pedido;
+import dev.el_nico.jardineria.excepciones.ExcepcionCodigoYaExistente;
+import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
+import dev.el_nico.jardineria.modelo.Cliente;
+import dev.el_nico.jardineria.modelo.Pedido;
 
 public class PedidosDao implements IDataAccessObject<Pedido> {
 

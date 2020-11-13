@@ -1,6 +1,6 @@
-package dev.el_nico.jardineria.Utilidades;
+package dev.el_nico.jardineria.util;
 
-import dev.el_nico.jardineria.Excepciones.ExcepcionDatoNoValido;
+import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
 
 public abstract class AbstractBuilder<T> {
     /**
