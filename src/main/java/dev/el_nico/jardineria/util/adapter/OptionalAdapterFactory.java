@@ -20,23 +20,24 @@ import com.google.gson.stream.JsonWriter;
  */
 public class OptionalAdapterFactory implements TypeAdapterFactory {
 
+    @SuppressWarnings("unchecked") // ssíííí que puedo convertir OptionalAdapter a TypeAdapter
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
         
         Type tipo_posible_optional = type.getType();
+
+        // Comprueba que el tipo es un Optional parametrizado
         if (type.getRawType() == Optional.class && tipo_posible_optional instanceof ParameterizedType) {
-            // El tipo es un Optional parametrizado
-            Type tipo_T_del_optional = ((ParameterizedType) tipo_posible_optional).getActualTypeArguments()[0];
+            
+            Class<?> T = ((ParameterizedType) tipo_posible_optional).getActualTypeArguments()[0].getClass();
 
-            Class<?> clase = tipo_T_del_optional.getClass();
-                
-        
-
-            OptionalAdapter.crear(clase);
-
-
-
+            if (T == Integer.class || T == Long.class || T == Boolean.class || T == String.class || T == Double.class) {
+                return (TypeAdapter<T>) OptionalAdapter.crear(T);
+            } else {
+                return (TypeAdapter<T>) gson.getAdapter(T);
+            }
         } else {
+            // Si no lo es, no nos interesa
             return null;
         }
     }

@@ -26,10 +26,8 @@ public class OptionalAdapterTest {
     @Test
     public void rest() {
         
-        OptionalAdapterFactory fac = new OptionalAdapterFactory();
-        fac.create(new Gson(), new TypeToken<Optional<?>>(){});
-        fac.create(new Gson(), new TypeToken<Optional>(){});
-        fac.create(new Gson(), new TypeToken<String>(){});
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(new OptionalAdapterFactory()).create();
+
 
         
     }
