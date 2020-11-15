@@ -1,7 +1,5 @@
 package dev.el_nico.jardineria.util;
 
-import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
-
 public abstract class AbstractBuilder<T> {
     /**
      * Esta función debe asegurarse de que todos los
@@ -12,5 +10,5 @@ public abstract class AbstractBuilder<T> {
      * @return Una instancia válida de T si los datos son
      * correctos. Si no, null.
      */
-    public abstract T build() throws ExcepcionDatoNoValido;
+    public abstract T build() throws Exception;
 }

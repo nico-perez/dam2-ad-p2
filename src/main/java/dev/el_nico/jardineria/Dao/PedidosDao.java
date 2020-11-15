@@ -7,8 +7,8 @@ import java.util.Optional;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import dev.el_nico.jardineria.excepciones.ExcepcionClienteNoEncontrado;
 import dev.el_nico.jardineria.excepciones.ExcepcionCodigoYaExistente;
-import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
 import dev.el_nico.jardineria.modelo.Cliente;
 import dev.el_nico.jardineria.modelo.Pedido;
 
@@ -43,15 +43,15 @@ public class PedidosDao implements IDataAccessObject<Pedido> {
     }
 
     @Override
-    public void guardar(Pedido t) throws ExcepcionDatoNoValido, 
-                                         ExcepcionCodigoYaExistente {
+    public void guardar(Pedido t) throws ExcepcionClienteNoEncontrado, 
+                                         ExcepcionCodigoYaExistente{
         boolean valido = true;
 
         // Se asegura de que el código de cliente referencia un
         // cliente existente.
-        if (clientes.uno(t.get_codigo_cliente()).isEmpty()) {
+        if (!clientes.uno(t.get_codigo_cliente()).isPresent()) {
             valido = false;
-            throw new ExcepcionDatoNoValido("El código de cliente no existe.");
+            throw new ExcepcionClienteNoEncontrado("El código de cliente no existe.");
         }
 
         // Se asegura de que el código de pedido no pertenece ya

@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import dev.el_nico.jardineria.excepciones.ExcepcionClienteDuplicado;
 import dev.el_nico.jardineria.excepciones.ExcepcionCodigoYaExistente;
 import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
+import dev.el_nico.jardineria.excepciones.ExcepcionFormatoIncorrecto;
 import dev.el_nico.jardineria.modelo.Cliente;
 
 public class ClientesGsonDao implements IDataAccessObject<Cliente> {
@@ -56,6 +57,8 @@ public class ClientesGsonDao implements IDataAccessObject<Cliente> {
                 } catch (ExcepcionDatoNoValido e) {
                     // Si el cliente leído no es válido, lo descarta directamente.
                     System.err.println("Un cliente deserializado no tenía datos correctos");
+                } catch (ExcepcionFormatoIncorrecto e) {
+                    System.err.println("formato incorrecto! en email, dni o nie");
                 }
             }
         }

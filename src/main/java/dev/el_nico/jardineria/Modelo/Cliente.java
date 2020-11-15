@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import dev.el_nico.jardineria.util.AbstractBuilder;
 import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
+import dev.el_nico.jardineria.excepciones.ExcepcionFormatoIncorrecto;
 
 /**
  * Objeto que representa a uno de los clientes
@@ -34,9 +35,14 @@ public class Cliente {
     private Contacto contacto;
     private Domicilio domicilio;
 
-    private int cod_empl_rep_ventas;
-    private double limite_credito;
+    private Optional<Integer> cod_empl_rep_ventas;
+    private Optional<Double> limite_credito;
     
+    private Optional<TipoDocumento> tipo_doc;
+    private Optional<String> dni;
+    private Optional<String> email;
+    private Optional<String> contrasena;
+
     private Cliente(int codigo, String nombre, Contacto contacto,  Domicilio domicilio) {
         this.codigo = codigo;
         this.nombre = nombre;
@@ -51,17 +57,16 @@ public class Cliente {
 
     /** 
      * Devuelve el código del empleado representante de 
-     * ventas, que será 0 si no existe.
+     * ventas.
      */
-    public int get_cod_empl_rep_ventas() {
+    public Optional<Integer> get_cod_empl_rep_ventas() {
         return cod_empl_rep_ventas;
     }
 
     /**
-     * Devuelve el límite de crédito, que será 0.0 si no
-     * hay ninguno establecido.
+     * Devuelve el límite de crédito.
      */
-    public double get_limite_credito() {
+    public Optional<Double> get_limite_credito() {
         return limite_credito;
     }
 
@@ -78,6 +83,29 @@ public class Cliente {
     /** Devuelve los datos de domicilio. Nunca es null. */
     public Domicilio get_domicilio() {
         return domicilio;
+    }
+
+    /** 
+     * Retorna el tipo de documento, que puede ser
+     * DNI o NIE.
+     */
+    public Optional<TipoDocumento> get_tipo_documento() {
+        return tipo_doc;
+    }
+
+    /** Devuelve el DNI o NIE */
+    public Optional<String> get_dni() {
+        return dni;
+    }
+
+    /** Devuelve el email */
+    public Optional<String> get_email() {
+        return email;
+    }
+
+    /** Devuelve la contraseña */
+    public Optional<String> get_contrasena() {
+        return contrasena;
     }
 
     /**
@@ -249,13 +277,13 @@ public class Cliente {
 
         /** Para aportar un límite de crédito al builder. */
         public Builder con_limite_credito(double limite_credito) {
-            cliente.limite_credito = limite_credito;
+            cliente.limite_credito = Optional.of(limite_credito);
             return this;
         }
 
         /** Para aportar un código de empleado rep. ventas al builder. */
         public Builder con_cod_empl_rep_ventas(int cod_empl_rep_ventas) {
-            cliente.cod_empl_rep_ventas = cod_empl_rep_ventas;
+            cliente.cod_empl_rep_ventas = Optional.of(cod_empl_rep_ventas);
             return this;
         }
 
@@ -286,29 +314,85 @@ public class Cliente {
             return this;
         }
 
+        /** Para aportar DNI o NIE al builder */
+        public Builder con_documento(TipoDocumento tipo, String documento) {
+            cliente.tipo_doc = Optional.of(tipo);
+            cliente.dni = Optional.of(documento);
+            return this;
+        }
+
+        /** Para aportar email y contraseña al builder */
+        public Builder con_email(String email, String contrasena) {
+            cliente.email = Optional.of(email);
+            cliente.contrasena = Optional.of(contrasena);
+            return this;
+        }
+
         /**
-         * Se asegura de que ninguno de los campos «NOT NULL» del
-         * script SQL tienen su valor por defecto (null, 0 o 0.0).
-         * Si alguno lo tiene, lanza una excepción y devuelve null.
-         * Si no, devuelve un cliente válido con todos los datos 
+         * Se asegura de que ninguno de los campos «NOT NULL» del script SQL tienen su
+         * valor por defecto (null, 0 o 0.0). Si alguno lo tiene, lanza una excepción y
+         * devuelve null. Si no, devuelve un cliente válido con todos los datos
          * aportados al builder.
-         * @return Un cliente válido o null si alguno de los datos
-         * es incorrecto.
+         * 
+         * @return Un cliente válido o null si alguno de los datos es incorrecto.
+         * @throws ExcepcionFormatoIncorrecto
          */
-        public Cliente build() throws ExcepcionDatoNoValido {
-            boolean valido = true;
-            valido &= (cliente.codigo != 0) &&
+        public Cliente build() throws ExcepcionDatoNoValido, ExcepcionFormatoIncorrecto {
+            boolean datos_necesarios_asignados = true;
+            datos_necesarios_asignados &= (cliente.codigo != 0) &&
                       (cliente.nombre != null) &&
                       (cliente.contacto.telefono != null) &&
                       (cliente.contacto.fax != null) &&
                       (cliente.domicilio.direccion1 != null) &&
                       (cliente.domicilio.ciudad != null);
-            if (!valido) {
+
+            if (!datos_necesarios_asignados) {
                 throw new ExcepcionDatoNoValido("Ninguno de los siguientes campos puede tener " +
                                                 "su valor por defecto: codigo, nombre, telefono, " +
                                                 "fax, direccion1, ciudad.");
             }
-            return valido ? cliente : null;
+
+            boolean email_bien = true;
+            if (cliente.email != null && cliente.email.isPresent()) {
+                if (cliente.contrasena == null || !cliente.contrasena.isPresent()) {
+                    email_bien = false;
+                    throw new ExcepcionDatoNoValido("Deberia haber contraseña!!!");
+                }
+                // Comprobar que el email es en forma tal @ tal . tal
+                if (!cliente.email.get().matches("\\w+@\\w+[.][a-zA-Z]+")) {
+                    email_bien = false;
+                    throw new ExcepcionFormatoIncorrecto("El email debería cumplir \"[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.][a-zA-Z]+\", " +
+                                                         "pero es " + cliente.email.get());
+                }
+            }
+
+            boolean documento_bien = true;
+            if (cliente.tipo_doc != null && cliente.tipo_doc.isPresent()) {
+                if (cliente.dni == null || !cliente.dni.isPresent()) {
+                    documento_bien = false;
+                    throw new ExcepcionDatoNoValido("Debería haber documento!!!");
+                } else {
+                    switch (cliente.tipo_doc.get()) {
+                    case DNI: // Comprobar que el documento es 8 dígitos + letra
+                        if (!cliente.dni.get().matches("\\d{8}[a-zA-Z]")) {
+                            documento_bien = false;
+                            throw new ExcepcionFormatoIncorrecto("El formato DNI debería cumplir \"[0-9]{8}[a-zA-Z]\", " +
+                                                                 "pero es " + cliente.dni.get());
+                        }
+                        break;
+                    case NIE: // Comprobar que el documento es letra + 7 dígitos + letra
+                        if (!cliente.dni.get().matches("[a-zA-Z]\\d{7}[a-zA-Z]")) {
+                            documento_bien = false;
+                            throw new ExcepcionFormatoIncorrecto("El formato NIE debería cumplir \"[a-zA-Z][0-9]{7}[a-zA-Z]\", " +
+                                                                 "pero es " + cliente.dni.get());
+                        }
+                        break;
+                    }
+                }
+            }
+            
+            return datos_necesarios_asignados && 
+                   email_bien && documento_bien ? cliente : null;
         }
     }
 }

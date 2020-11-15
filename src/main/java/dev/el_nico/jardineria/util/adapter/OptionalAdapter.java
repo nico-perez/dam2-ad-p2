@@ -88,6 +88,20 @@ public class OptionalAdapter<T> extends TypeAdapter<Optional<T>> {
         return null;
     };
 
+    private final Function<JsonReader, Optional<T>> leedorFloat = (in) -> {
+        try {
+            if (in.peek() == JsonToken.NULL) {
+                in.nextNull();
+                return Optional.empty();
+            } else {
+                return (Optional<T>) Optional.of((float) in.nextDouble());
+            }
+        } catch (IOException e) {
+            guardar(e);
+        }
+        return null;
+    };
+
     private void guardar(IOException e) {
         excepcionGuardada = e;
         deberiaLanzar = true;
@@ -100,8 +114,27 @@ public class OptionalAdapter<T> extends TypeAdapter<Optional<T>> {
 
     @Override
     public void write(JsonWriter out, Optional<T> value) throws IOException {
-        if (value.isPresent()) {
-            out.value(value.get().toString());
+        if (value != null && value.isPresent()) {
+            
+            T v = value.get();
+
+            // TODO castear a Number
+            Type T_del_optional = tipo_del_optional.getType();
+            if (T_del_optional == Integer.class) {
+                out.value((Integer) v);
+            } else if (T_del_optional == Long.class) {
+                out.value((Long) v);
+            } else if (T_del_optional == Boolean.class) {
+                out.value((Boolean) v);
+            } else if (T_del_optional == String.class) {
+                out.value((String) v);
+            } else if (T_del_optional == Double.class) {
+                out.value((Double) v);
+            } else if (T_del_optional == Float.class) {
+                out.value((Float) v);
+            }
+
+            
         } else {
             out.nullValue();
         }
@@ -120,7 +153,7 @@ public class OptionalAdapter<T> extends TypeAdapter<Optional<T>> {
 
     public static <T> OptionalAdapter<T> crear(TypeToken<T> typeToken) {
 
-        var adapter = new OptionalAdapter<>(typeToken);
+        OptionalAdapter<T> adapter = new OptionalAdapter<>(typeToken);
         
         Type T_del_optional = typeToken.getType();
         if (T_del_optional == Integer.class) {
@@ -133,7 +166,9 @@ public class OptionalAdapter<T> extends TypeAdapter<Optional<T>> {
             adapter.leedorT = adapter.leedorString;
         } else if (T_del_optional == Double.class) {
             adapter.leedorT = adapter.leedorDouble;
-        } 
+        } else if (T_del_optional == Float.class) {
+            adapter.leedorT = adapter.leedorFloat;
+        }
         
         return adapter;
     }
