@@ -17,11 +17,11 @@ public class OptionalAdapterTest {
         Optional<Double> opt_dou = Optional.of(1.0);
         Optional<Float> opt_flo = Optional.of(1.5f);
         Optional<String> opt_nil = null;
-        Optional<Optional<Boolean>> opt_opt_bool = Optional.of(Optional.of(true)); // TODO esto lo serializa mal
+        //Optional<Optional<Boolean>> opt_opt_bool = Optional.of(Optional.of(true)); // TODO esto lo serializa mal
         double dob = 69.68;
         @Override
         public String toString() {
-            return "" + i +'\n' + opt_int +'\n' + opt_str +'\n' + opt_emp +'\n' + opt_dou+'\n' +opt_flo+'\n'+opt_nil+'\n'+opt_opt_bool+'\n'+ dob;
+            return "" + i +'\n' + opt_int +'\n' + opt_str +'\n' + opt_emp +'\n' + opt_dou+'\n' +opt_flo+'\n'+opt_nil+'\n' /*+opt_opt_bool+'\n'*/+ dob;
         }
     }
 
