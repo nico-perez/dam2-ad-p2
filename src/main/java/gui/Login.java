@@ -32,21 +32,41 @@ public class Login extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSpinner1 = new javax.swing.JSpinner();
+        jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         he_olvidado_la_contrasena = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         panel_contrasena = new javax.swing.JPanel();
+        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 32767));
+        jLabel2 = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 32767));
+        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(4, 0), new java.awt.Dimension(4, 0), new java.awt.Dimension(4, 32767));
         input_contrasena = new javax.swing.JPasswordField();
         boton_para_ver_pass = new javax.swing.JButton();
         boton_para_ocultar_pass = new javax.swing.JButton();
         panel_usuario = new javax.swing.JPanel();
+        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 32767));
+        jLabel1 = new javax.swing.JLabel();
+        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(3, 0), new java.awt.Dimension(3, 0), new java.awt.Dimension(2, 32767));
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 32767));
         input_usuario = new javax.swing.JTextField();
         filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 32767));
+        jPanel2 = new javax.swing.JPanel();
+        boton_cancelar = new javax.swing.JButton();
+        boton_aceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 63, Short.MAX_VALUE)
+        );
 
         he_olvidado_la_contrasena.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         he_olvidado_la_contrasena.setForeground(new java.awt.Color(0, 0, 200));
@@ -54,15 +74,20 @@ public class Login extends javax.swing.JDialog {
         he_olvidado_la_contrasena.setBorder(null);
         he_olvidado_la_contrasena.setContentAreaFilled(false);
 
-        jButton2.setText("jButton2");
-
         panel_contrasena.setBackground(new java.awt.Color(255, 255, 255));
         panel_contrasena.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panel_contrasena.setForeground(new java.awt.Color(255, 255, 255));
         panel_contrasena.setLayout(new javax.swing.BoxLayout(panel_contrasena, javax.swing.BoxLayout.LINE_AXIS));
-        panel_contrasena.add(filler1);
+        panel_contrasena.add(filler4);
 
-        input_contrasena.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(63, 140, 101));
+        jLabel2.setText("pwd:");
+        panel_contrasena.add(jLabel2);
+        panel_contrasena.add(filler1);
+        panel_contrasena.add(filler6);
+
+        input_contrasena.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         input_contrasena.setText("contraseña");
         input_contrasena.setToolTipText("");
         input_contrasena.setBorder(null);
@@ -97,8 +122,16 @@ public class Login extends javax.swing.JDialog {
         panel_usuario.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panel_usuario.setForeground(new java.awt.Color(255, 255, 255));
         panel_usuario.setLayout(new javax.swing.BoxLayout(panel_usuario, javax.swing.BoxLayout.LINE_AXIS));
+        panel_usuario.add(filler5);
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(63, 140, 101));
+        jLabel1.setText("user:");
+        panel_usuario.add(jLabel1);
+        panel_usuario.add(filler7);
         panel_usuario.add(filler2);
 
+        input_usuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         input_usuario.setText("usuario");
         input_usuario.setBorder(null);
         input_usuario.addActionListener(new java.awt.event.ActionListener() {
@@ -109,37 +142,63 @@ public class Login extends javax.swing.JDialog {
         panel_usuario.add(input_usuario);
         panel_usuario.add(filler3);
 
+        boton_cancelar.setText("Cancelar");
+        jPanel2.add(boton_cancelar);
+
+        boton_aceptar.setText("Aceptar");
+        jPanel2.add(boton_aceptar);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(218, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panel_contrasena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panel_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(he_olvidado_la_contrasena, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap(218, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(he_olvidado_la_contrasena))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panel_contrasena, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+                            .addComponent(panel_usuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(102, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panel_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panel_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(he_olvidado_la_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addContainerGap(161, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -148,23 +207,23 @@ public class Login extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_input_usuarioActionPerformed
 
+    private void boton_para_ocultar_passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_para_ocultar_passActionPerformed
+        boton_para_ocultar_pass.setVisible(false);
+        boton_para_ver_pass.setVisible(true);
+
+        input_contrasena.setEchoChar(echo_char_por_defecto);
+    }//GEN-LAST:event_boton_para_ocultar_passActionPerformed
+
     private void boton_para_ver_passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_para_ver_passActionPerformed
         boton_para_ver_pass.setVisible(false);
         boton_para_ocultar_pass.setVisible(true);
-        
+
         input_contrasena.setEchoChar((char)0);
     }//GEN-LAST:event_boton_para_ver_passActionPerformed
 
     private void input_contrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_contrasenaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_input_contrasenaActionPerformed
-
-    private void boton_para_ocultar_passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_para_ocultar_passActionPerformed
-        boton_para_ocultar_pass.setVisible(false);
-        boton_para_ver_pass.setVisible(true);
-        
-        input_contrasena.setEchoChar(echo_char_por_defecto);
-    }//GEN-LAST:event_boton_para_ocultar_passActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,17 +275,25 @@ public class Login extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton boton_aceptar;
+    private javax.swing.JButton boton_cancelar;
     private javax.swing.JButton boton_para_ocultar_pass;
     private javax.swing.JButton boton_para_ver_pass;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
+    private javax.swing.Box.Filler filler4;
+    private javax.swing.Box.Filler filler5;
+    private javax.swing.Box.Filler filler6;
+    private javax.swing.Box.Filler filler7;
     private javax.swing.JButton he_olvidado_la_contrasena;
     private javax.swing.JPasswordField input_contrasena;
     private javax.swing.JTextField input_usuario;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel panel_contrasena;
     private javax.swing.JPanel panel_usuario;
     // End of variables declaration//GEN-END:variables
