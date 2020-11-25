@@ -11,12 +11,16 @@ package gui;
  */
 public class Login extends javax.swing.JDialog {
 
+    private char echo_char_por_defecto;
+    
     /**
      * Creates new form Login
      */
     public Login(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        echo_char_por_defecto = input_contrasena.getEchoChar();
+        boton_para_ocultar_pass.setVisible(false);
     }
 
     /**
@@ -28,131 +32,111 @@ public class Login extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jSpinner1 = new javax.swing.JSpinner();
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        he_olvidado_la_contrasena = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jPasswordField2 = new javax.swing.JPasswordField();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jPanel3 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        panel_contrasena = new javax.swing.JPanel();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 32767));
+        input_contrasena = new javax.swing.JPasswordField();
+        boton_para_ver_pass = new javax.swing.JButton();
+        boton_para_ocultar_pass = new javax.swing.JButton();
+        panel_usuario = new javax.swing.JPanel();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 32767));
+        input_usuario = new javax.swing.JTextField();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 32767));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel3.setText("Usuario:");
-
-        jLabel4.setText("Contraseña:");
-
-        jButton1.setForeground(new java.awt.Color(0, 0, 200));
-        jButton1.setText("He olvidado la contraseña");
-        jButton1.setBorder(null);
+        he_olvidado_la_contrasena.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        he_olvidado_la_contrasena.setForeground(new java.awt.Color(0, 0, 200));
+        he_olvidado_la_contrasena.setText("He olvidado la contraseña");
+        he_olvidado_la_contrasena.setBorder(null);
+        he_olvidado_la_contrasena.setContentAreaFilled(false);
 
         jButton2.setText("jButton2");
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel2.setForeground(new java.awt.Color(255, 255, 255));
+        panel_contrasena.setBackground(new java.awt.Color(255, 255, 255));
+        panel_contrasena.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panel_contrasena.setForeground(new java.awt.Color(255, 255, 255));
+        panel_contrasena.setLayout(new javax.swing.BoxLayout(panel_contrasena, javax.swing.BoxLayout.LINE_AXIS));
+        panel_contrasena.add(filler1);
 
-        jPasswordField2.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
-        jPasswordField2.setText("dfojkgf");
-        jPasswordField2.setToolTipText("");
-        jPasswordField2.setBorder(null);
-
-        jToggleButton1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jToggleButton1.setText("👁");
-        jToggleButton1.setBorder(null);
-        jToggleButton1.setPreferredSize(new java.awt.Dimension(25, 32));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
-                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPasswordField2, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(5, 5, 5))
-        );
-
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        jTextField1.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
-        jTextField1.setText("Hola");
-        jTextField1.setBorder(null);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        input_contrasena.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        input_contrasena.setText("contraseña");
+        input_contrasena.setToolTipText("");
+        input_contrasena.setBorder(null);
+        input_contrasena.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                input_contrasenaActionPerformed(evt);
             }
         });
+        panel_contrasena.add(input_contrasena);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-        );
+        boton_para_ver_pass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eye-regular.png"))); // NOI18N
+        boton_para_ver_pass.setBorder(null);
+        boton_para_ver_pass.setContentAreaFilled(false);
+        boton_para_ver_pass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boton_para_ver_passActionPerformed(evt);
+            }
+        });
+        panel_contrasena.add(boton_para_ver_pass);
+
+        boton_para_ocultar_pass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eye-slash-regular.png"))); // NOI18N
+        boton_para_ocultar_pass.setBorder(null);
+        boton_para_ocultar_pass.setContentAreaFilled(false);
+        boton_para_ocultar_pass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boton_para_ocultar_passActionPerformed(evt);
+            }
+        });
+        panel_contrasena.add(boton_para_ocultar_pass);
+
+        panel_usuario.setBackground(new java.awt.Color(255, 255, 255));
+        panel_usuario.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panel_usuario.setForeground(new java.awt.Color(255, 255, 255));
+        panel_usuario.setLayout(new javax.swing.BoxLayout(panel_usuario, javax.swing.BoxLayout.LINE_AXIS));
+        panel_usuario.add(filler2);
+
+        input_usuario.setText("usuario");
+        input_usuario.setBorder(null);
+        input_usuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                input_usuarioActionPerformed(evt);
+            }
+        });
+        panel_usuario.add(input_usuario);
+        panel_usuario.add(filler3);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(218, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panel_contrasena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(he_olvidado_la_contrasena, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(218, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(173, 173, 173))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(103, 103, 103)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(85, 85, 85)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel4))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(102, Short.MAX_VALUE)
+                .addComponent(panel_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panel_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(he_olvidado_la_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton2)
-                .addGap(22, 22, 22))
+                .addContainerGap(161, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -160,9 +144,27 @@ public class Login extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void input_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_usuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_input_usuarioActionPerformed
+
+    private void boton_para_ver_passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_para_ver_passActionPerformed
+        boton_para_ver_pass.setVisible(false);
+        boton_para_ocultar_pass.setVisible(true);
+        
+        input_contrasena.setEchoChar((char)0);
+    }//GEN-LAST:event_boton_para_ver_passActionPerformed
+
+    private void input_contrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_contrasenaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_input_contrasenaActionPerformed
+
+    private void boton_para_ocultar_passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_para_ocultar_passActionPerformed
+        boton_para_ocultar_pass.setVisible(false);
+        boton_para_ver_pass.setVisible(true);
+        
+        input_contrasena.setEchoChar(echo_char_por_defecto);
+    }//GEN-LAST:event_boton_para_ocultar_passActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,15 +216,18 @@ public class Login extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton boton_para_ocultar_pass;
+    private javax.swing.JButton boton_para_ver_pass;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler3;
+    private javax.swing.JButton he_olvidado_la_contrasena;
+    private javax.swing.JPasswordField input_contrasena;
+    private javax.swing.JTextField input_usuario;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JPanel panel_contrasena;
+    private javax.swing.JPanel panel_usuario;
     // End of variables declaration//GEN-END:variables
 }

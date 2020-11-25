@@ -1,0 +1,4 @@
+fontawesome.com/icons/eye?style=regular
+fontawesome.com/icons/eye-slash?style=regular
+convertidos a png y encogidos
+fontawesome.com/license
