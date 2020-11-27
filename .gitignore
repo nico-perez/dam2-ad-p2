@@ -28,4 +28,4 @@ buildNumber.properties
 .vscode/
 
 #tal
-.jar
+*.jar
