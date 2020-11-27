@@ -5,6 +5,16 @@
  */
 package gui;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author NICO2DAM
@@ -21,6 +31,11 @@ public class Login extends javax.swing.JDialog {
         initComponents();
         echo_char_por_defecto = input_contrasena.getEchoChar();
         boton_para_ocultar_pass.setVisible(false);
+        try {
+            this.setIconImage(ImageIO.read(new File("src/main/resources/img/leaf-solid.png")));
+        } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -32,40 +47,72 @@ public class Login extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        contrasena_olvidada = new javax.swing.JDialog();
+        jLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        jTextArea1 = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
         he_olvidado_la_contrasena = new javax.swing.JButton();
         panel_contrasena = new javax.swing.JPanel();
-        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 32767));
+        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(3, 0), new java.awt.Dimension(3, 0), new java.awt.Dimension(3, 32767));
         jLabel2 = new javax.swing.JLabel();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 32767));
         filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(4, 0), new java.awt.Dimension(4, 0), new java.awt.Dimension(4, 32767));
         input_contrasena = new javax.swing.JPasswordField();
         boton_para_ver_pass = new javax.swing.JButton();
         boton_para_ocultar_pass = new javax.swing.JButton();
         panel_usuario = new javax.swing.JPanel();
-        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 32767));
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
         jLabel1 = new javax.swing.JLabel();
-        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(3, 0), new java.awt.Dimension(3, 0), new java.awt.Dimension(2, 32767));
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 32767));
+        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(5, 32767));
         input_usuario = new javax.swing.JTextField();
         filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 0), new java.awt.Dimension(2, 32767));
         jPanel2 = new javax.swing.JPanel();
         boton_cancelar = new javax.swing.JButton();
         boton_aceptar = new javax.swing.JButton();
 
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("vaya por dios");
+
+        javax.swing.GroupLayout contrasena_olvidadaLayout = new javax.swing.GroupLayout(contrasena_olvidada.getContentPane());
+        contrasena_olvidada.getContentPane().setLayout(contrasena_olvidadaLayout);
+        contrasena_olvidadaLayout.setHorizontalGroup(
+            contrasena_olvidadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+        );
+        contrasena_olvidadaLayout.setVerticalGroup(
+            contrasena_olvidadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Jardinería - Login");
+        setForeground(java.awt.Color.red);
+        setIconImage(null);
+        setIconImages(null);
         setResizable(false);
+
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jTextArea1.setLineWrap(true);
+        jTextArea1.setRows(5);
+        jTextArea1.setText("¡Bienvenid@!\nIntroduzca sus datos a continuación para iniciar sesión en la aplicación.");
+        jTextArea1.setToolTipText("");
+        jTextArea1.setWrapStyleWord(true);
+        jTextArea1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 3));
+        jTextArea1.setOpaque(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jTextArea1)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 63, Short.MAX_VALUE)
+            .addComponent(jTextArea1, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
         );
 
         he_olvidado_la_contrasena.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
@@ -73,23 +120,28 @@ public class Login extends javax.swing.JDialog {
         he_olvidado_la_contrasena.setText("He olvidado la contraseña");
         he_olvidado_la_contrasena.setBorder(null);
         he_olvidado_la_contrasena.setContentAreaFilled(false);
+        he_olvidado_la_contrasena.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                he_olvidado_la_contrasenaActionPerformed(evt);
+            }
+        });
 
         panel_contrasena.setBackground(new java.awt.Color(255, 255, 255));
         panel_contrasena.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panel_contrasena.setForeground(new java.awt.Color(255, 255, 255));
+        panel_contrasena.setToolTipText("Contraseña");
         panel_contrasena.setLayout(new javax.swing.BoxLayout(panel_contrasena, javax.swing.BoxLayout.LINE_AXIS));
         panel_contrasena.add(filler4);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(63, 140, 101));
-        jLabel2.setText("pwd:");
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/key-solid.png"))); // NOI18N
         panel_contrasena.add(jLabel2);
-        panel_contrasena.add(filler1);
         panel_contrasena.add(filler6);
 
-        input_contrasena.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        input_contrasena.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
         input_contrasena.setText("contraseña");
-        input_contrasena.setToolTipText("");
+        input_contrasena.setToolTipText("Contraseña");
         input_contrasena.setBorder(null);
         input_contrasena.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,7 +150,8 @@ public class Login extends javax.swing.JDialog {
         });
         panel_contrasena.add(input_contrasena);
 
-        boton_para_ver_pass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eye-regular.png"))); // NOI18N
+        boton_para_ver_pass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eye-regular-azul.png"))); // NOI18N
+        boton_para_ver_pass.setToolTipText("Ver contraseña");
         boton_para_ver_pass.setBorder(null);
         boton_para_ver_pass.setContentAreaFilled(false);
         boton_para_ver_pass.addActionListener(new java.awt.event.ActionListener() {
@@ -108,7 +161,8 @@ public class Login extends javax.swing.JDialog {
         });
         panel_contrasena.add(boton_para_ver_pass);
 
-        boton_para_ocultar_pass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eye-slash-regular.png"))); // NOI18N
+        boton_para_ocultar_pass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eye-slash-regular-azul-y-naranja.png"))); // NOI18N
+        boton_para_ocultar_pass.setToolTipText("Ocultar contraseña");
         boton_para_ocultar_pass.setBorder(null);
         boton_para_ocultar_pass.setContentAreaFilled(false);
         boton_para_ocultar_pass.addActionListener(new java.awt.event.ActionListener() {
@@ -121,18 +175,19 @@ public class Login extends javax.swing.JDialog {
         panel_usuario.setBackground(new java.awt.Color(255, 255, 255));
         panel_usuario.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panel_usuario.setForeground(new java.awt.Color(255, 255, 255));
+        panel_usuario.setToolTipText("Usuario");
         panel_usuario.setLayout(new javax.swing.BoxLayout(panel_usuario, javax.swing.BoxLayout.LINE_AXIS));
-        panel_usuario.add(filler5);
+        panel_usuario.add(filler1);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(63, 140, 101));
-        jLabel1.setText("user:");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/user-solid.png"))); // NOI18N
         panel_usuario.add(jLabel1);
-        panel_usuario.add(filler7);
-        panel_usuario.add(filler2);
+        panel_usuario.add(filler8);
 
-        input_usuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        input_usuario.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
         input_usuario.setText("usuario");
+        input_usuario.setToolTipText("Usuario");
         input_usuario.setBorder(null);
         input_usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,9 +197,17 @@ public class Login extends javax.swing.JDialog {
         panel_usuario.add(input_usuario);
         panel_usuario.add(filler3);
 
+        boton_cancelar.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         boton_cancelar.setText("Cancelar");
+        boton_cancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        boton_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boton_cancelarActionPerformed(evt);
+            }
+        });
         jPanel2.add(boton_cancelar);
 
+        boton_aceptar.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         boton_aceptar.setText("Aceptar");
         jPanel2.add(boton_aceptar);
 
@@ -152,18 +215,18 @@ public class Login extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(he_olvidado_la_contrasena))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(he_olvidado_la_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(panel_contrasena, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
                             .addComponent(panel_usuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,7 +259,7 @@ public class Login extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -224,6 +287,14 @@ public class Login extends javax.swing.JDialog {
     private void input_contrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_contrasenaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_input_contrasenaActionPerformed
+
+    private void he_olvidado_la_contrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_he_olvidado_la_contrasenaActionPerformed
+        JOptionPane.showMessageDialog(this, "vaya", "oh no", JOptionPane.ERROR_MESSAGE, new ImageIcon("src/main/resources/img/toilet-paper-solid.png"));
+    }//GEN-LAST:event_he_olvidado_la_contrasenaActionPerformed
+
+    private void boton_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_cancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_boton_cancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -279,21 +350,22 @@ public class Login extends javax.swing.JDialog {
     private javax.swing.JButton boton_cancelar;
     private javax.swing.JButton boton_para_ocultar_pass;
     private javax.swing.JButton boton_para_ver_pass;
+    private javax.swing.JDialog contrasena_olvidada;
     private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
     private javax.swing.Box.Filler filler4;
-    private javax.swing.Box.Filler filler5;
     private javax.swing.Box.Filler filler6;
-    private javax.swing.Box.Filler filler7;
+    private javax.swing.Box.Filler filler8;
     private javax.swing.JButton he_olvidado_la_contrasena;
     private javax.swing.JPasswordField input_contrasena;
     private javax.swing.JTextField input_usuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel panel_contrasena;
     private javax.swing.JPanel panel_usuario;
     // End of variables declaration//GEN-END:variables
