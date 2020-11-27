@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package dev.el_nico.jardineria.gui;
 
 import java.awt.Image;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -120,6 +121,7 @@ public class Login extends javax.swing.JDialog {
         he_olvidado_la_contrasena.setText("He olvidado la contraseña");
         he_olvidado_la_contrasena.setBorder(null);
         he_olvidado_la_contrasena.setContentAreaFilled(false);
+        he_olvidado_la_contrasena.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         he_olvidado_la_contrasena.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 he_olvidado_la_contrasenaActionPerformed(evt);
@@ -189,6 +191,7 @@ public class Login extends javax.swing.JDialog {
         input_usuario.setText("usuario");
         input_usuario.setToolTipText("Usuario");
         input_usuario.setBorder(null);
+        input_usuario.setCaretPosition(0);
         input_usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 input_usuarioActionPerformed(evt);
@@ -289,11 +292,11 @@ public class Login extends javax.swing.JDialog {
     }//GEN-LAST:event_input_contrasenaActionPerformed
 
     private void he_olvidado_la_contrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_he_olvidado_la_contrasenaActionPerformed
-        JOptionPane.showMessageDialog(this, "vaya", "oh no", JOptionPane.ERROR_MESSAGE, new ImageIcon("src/main/resources/img/toilet-paper-solid.png"));
+        JOptionPane.showMessageDialog(this, "papel de toilete", "oh no", JOptionPane.ERROR_MESSAGE, new ImageIcon("src/main/resources/img/toilet-paper-solid.png"));
     }//GEN-LAST:event_he_olvidado_la_contrasenaActionPerformed
 
     private void boton_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_cancelarActionPerformed
-        this.dispose();
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }//GEN-LAST:event_boton_cancelarActionPerformed
 
     /**
