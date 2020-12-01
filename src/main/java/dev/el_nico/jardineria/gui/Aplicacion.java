@@ -6,6 +6,8 @@
 package dev.el_nico.jardineria.gui;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Point;
 import javax.swing.JRootPane;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
@@ -44,96 +46,136 @@ public class Aplicacion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        barraDeTitulo = new javax.swing.JPanel();
+        IconoYNombreVentana = new javax.swing.JLabel();
+        fondoBotonCerrar = new javax.swing.JPanel();
+        botonCerrar = new javax.swing.JButton();
+        fondoBotonMinim = new javax.swing.JPanel();
+        botonMinim = new javax.swing.JButton();
+        panelVentana = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 51, 153));
         setMinimumSize(new java.awt.Dimension(800, 632));
         setPreferredSize(new java.awt.Dimension(800, 632));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        barraDeTitulo.setBackground(new java.awt.Color(255, 255, 255));
+        barraDeTitulo.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                barraDeTituloMouseDragged(evt);
+            }
+        });
+        barraDeTitulo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                barraDeTituloMousePressed(evt);
+            }
+        });
 
-        jLabel1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/leaf-solid.png"))); // NOI18N
-        jLabel1.setText("Jardinería");
+        IconoYNombreVentana.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        IconoYNombreVentana.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        IconoYNombreVentana.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/leaf-solid.png"))); // NOI18N
+        IconoYNombreVentana.setText("Jardinería");
+        IconoYNombreVentana.setToolTipText("");
+        IconoYNombreVentana.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                IconoYNombreVentanaMouseDragged(evt);
+            }
+        });
+        IconoYNombreVentana.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                IconoYNombreVentanaMousePressed(evt);
+            }
+        });
 
-        jPanel3.setBackground(new java.awt.Color(255, 204, 204));
+        fondoBotonCerrar.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/power-off-solid.png"))); // NOI18N
-        jButton1.setToolTipText("");
-        jButton1.setBorderPainted(false);
-        jButton1.setContentAreaFilled(false);
+        botonCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/power-off-solid.png"))); // NOI18N
+        botonCerrar.setToolTipText("");
+        botonCerrar.setBorderPainted(false);
+        botonCerrar.setContentAreaFilled(false);
+        botonCerrar.setFocusPainted(false);
+        botonCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botonCerrarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botonCerrarMouseExited(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, Short.MAX_VALUE)
+        javax.swing.GroupLayout fondoBotonCerrarLayout = new javax.swing.GroupLayout(fondoBotonCerrar);
+        fondoBotonCerrar.setLayout(fondoBotonCerrarLayout);
+        fondoBotonCerrarLayout.setHorizontalGroup(
+            fondoBotonCerrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(botonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+        fondoBotonCerrarLayout.setVerticalGroup(
+            fondoBotonCerrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(botonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        jPanel5.setBackground(new java.awt.Color(211, 221, 229));
+        fondoBotonMinim.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/window-minimize-solid.png"))); // NOI18N
-        jButton3.setBorderPainted(false);
-        jButton3.setContentAreaFilled(false);
+        botonMinim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/window-minimize-solid.png"))); // NOI18N
+        botonMinim.setBorder(null);
+        botonMinim.setBorderPainted(false);
+        botonMinim.setContentAreaFilled(false);
+        botonMinim.setFocusPainted(false);
+        botonMinim.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botonMinimMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botonMinimMouseExited(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout fondoBotonMinimLayout = new javax.swing.GroupLayout(fondoBotonMinim);
+        fondoBotonMinim.setLayout(fondoBotonMinimLayout);
+        fondoBotonMinimLayout.setHorizontalGroup(
+            fondoBotonMinimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(fondoBotonMinimLayout.createSequentialGroup()
+                .addComponent(botonMinim, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        fondoBotonMinimLayout.setVerticalGroup(
+            fondoBotonMinimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(botonMinim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout barraDeTituloLayout = new javax.swing.GroupLayout(barraDeTitulo);
+        barraDeTitulo.setLayout(barraDeTituloLayout);
+        barraDeTituloLayout.setHorizontalGroup(
+            barraDeTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(barraDeTituloLayout.createSequentialGroup()
+                .addComponent(IconoYNombreVentana, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fondoBotonMinim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(fondoBotonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        barraDeTituloLayout.setVerticalGroup(
+            barraDeTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, barraDeTituloLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(barraDeTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(IconoYNombreVentana, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fondoBotonCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fondoBotonMinim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(16, 16, 16))
         );
 
-        jPanel2.setBackground(new java.awt.Color(241, 247, 237));
-        jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(204, 204, 204)));
+        panelVentana.setBackground(new java.awt.Color(241, 247, 237));
+        panelVentana.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(204, 204, 204)));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelVentanaLayout = new javax.swing.GroupLayout(panelVentana);
+        panelVentana.setLayout(panelVentanaLayout);
+        panelVentanaLayout.setHorizontalGroup(
+            panelVentanaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 843, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelVentanaLayout.setVerticalGroup(
+            panelVentanaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 628, Short.MAX_VALUE)
         );
 
@@ -141,20 +183,60 @@ public class Aplicacion extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(barraDeTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelVentana, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(barraDeTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelVentana, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonCerrarMouseEntered
+        fondoBotonCerrar.setBackground(new Color(253, 185, 186));
+    }//GEN-LAST:event_botonCerrarMouseEntered
+
+    private void botonCerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonCerrarMouseExited
+        fondoBotonCerrar.setBackground(Color.white);
+    }//GEN-LAST:event_botonCerrarMouseExited
+
+    private void botonMinimMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonMinimMouseEntered
+        fondoBotonMinim.setBackground(new Color(189, 203, 216));
+    }//GEN-LAST:event_botonMinimMouseEntered
+
+    private void botonMinimMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonMinimMouseExited
+        fondoBotonMinim.setBackground(Color.white);
+    }//GEN-LAST:event_botonMinimMouseExited
+
+    Point location;
+    int px = 0, 
+        py = 0;
+    
+    private void barraDeTituloMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraDeTituloMouseDragged
+        location = this.getLocation(location);
+        int x = location.x - px + evt.getX();
+        int y = location.y - py + evt.getY();
+        this.setLocation(x, y);
+    }//GEN-LAST:event_barraDeTituloMouseDragged
+
+    private void barraDeTituloMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraDeTituloMousePressed
+        px = evt.getX();
+        py = evt.getY();
+    }//GEN-LAST:event_barraDeTituloMousePressed
+
+    private void IconoYNombreVentanaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IconoYNombreVentanaMouseDragged
+        barraDeTituloMouseDragged(evt); 
+    }//GEN-LAST:event_IconoYNombreVentanaMouseDragged
+
+    private void IconoYNombreVentanaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IconoYNombreVentanaMousePressed
+        barraDeTituloMousePressed(evt);
+    }//GEN-LAST:event_IconoYNombreVentanaMousePressed
 
     /**
      * @param args the command line arguments
@@ -174,12 +256,12 @@ public class Aplicacion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel5;
+    private javax.swing.JLabel IconoYNombreVentana;
+    private javax.swing.JPanel barraDeTitulo;
+    private javax.swing.JButton botonCerrar;
+    private javax.swing.JButton botonMinim;
+    private javax.swing.JPanel fondoBotonCerrar;
+    private javax.swing.JPanel fondoBotonMinim;
+    private javax.swing.JPanel panelVentana;
     // End of variables declaration//GEN-END:variables
 }
