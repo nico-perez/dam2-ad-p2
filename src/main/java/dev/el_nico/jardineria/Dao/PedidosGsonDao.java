@@ -78,7 +78,7 @@ public class PedidosGsonDao implements IDataAccessObject<Pedido> {
 
         // Se asegura de que el código de cliente referencia un
         // cliente existente.
-        if (clientes.uno(t.get_codigo_cliente()).isEmpty()) {
+        if (!clientes.uno(t.get_codigo_cliente()).isPresent()) {
             valido = false;
             throw new ExcepcionDatoNoValido("El código de cliente no existe.");
         }
