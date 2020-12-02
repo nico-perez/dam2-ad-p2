@@ -1,5 +1,8 @@
 package dev.el_nico.jardineria;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import dev.el_nico.jardineria.dao.ClientesGsonDao;
 import dev.el_nico.jardineria.dao.IDataAccessObject;
 import dev.el_nico.jardineria.dao.PedidosGsonDao;
@@ -19,7 +22,6 @@ public class App
     private static IDataAccessObject<Pedido> pedidosDao;
 
     public static void main(String[] args) {
-
         clientesDao = new ClientesGsonDao("clientes.json");
         pedidosDao = new PedidosGsonDao("pedidos.json", clientesDao);
 

@@ -7,10 +7,20 @@ package dev.el_nico.jardineria.gui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Frame;
 import java.awt.Point;
+import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 import javax.swing.JRootPane;
+import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
  *
@@ -32,8 +42,13 @@ public class Aplicacion extends javax.swing.JFrame {
         
         
         initComponents();
+        try {
+            this.setIconImage(ImageIO.read(new File("src/main/resources/img/icono-jardineria.png")));
+        } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        ((BasicInternalFrameUI)jInternalFrame1.getUI()).setNorthPane(null);
         
-        //
 
     }
 
@@ -52,7 +67,22 @@ public class Aplicacion extends javax.swing.JFrame {
         botonCerrar = new javax.swing.JButton();
         fondoBotonMinim = new javax.swing.JPanel();
         botonMinim = new javax.swing.JButton();
-        panelVentana = new javax.swing.JPanel();
+        jInternalFrame1 = new javax.swing.JInternalFrame();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaClientes = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaPedidos = new javax.swing.JTable();
+        jToolBar1 = new javax.swing.JToolBar();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 51, 153));
@@ -71,8 +101,7 @@ public class Aplicacion extends javax.swing.JFrame {
             }
         });
 
-        IconoYNombreVentana.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        IconoYNombreVentana.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        IconoYNombreVentana.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         IconoYNombreVentana.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/leaf-solid.png"))); // NOI18N
         IconoYNombreVentana.setText("Jardinería");
         IconoYNombreVentana.setToolTipText("");
@@ -102,6 +131,11 @@ public class Aplicacion extends javax.swing.JFrame {
                 botonCerrarMouseExited(evt);
             }
         });
+        botonCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCerrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout fondoBotonCerrarLayout = new javax.swing.GroupLayout(fondoBotonCerrar);
         fondoBotonCerrar.setLayout(fondoBotonCerrarLayout);
@@ -129,6 +163,11 @@ public class Aplicacion extends javax.swing.JFrame {
                 botonMinimMouseExited(evt);
             }
         });
+        botonMinim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonMinimActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout fondoBotonMinimLayout = new javax.swing.GroupLayout(fondoBotonMinim);
         fondoBotonMinim.setLayout(fondoBotonMinimLayout);
@@ -148,6 +187,7 @@ public class Aplicacion extends javax.swing.JFrame {
         barraDeTituloLayout.setHorizontalGroup(
             barraDeTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(barraDeTituloLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(IconoYNombreVentana, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(fondoBotonMinim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -165,26 +205,169 @@ public class Aplicacion extends javax.swing.JFrame {
                 .addGap(16, 16, 16))
         );
 
-        panelVentana.setBackground(new java.awt.Color(241, 247, 237));
-        panelVentana.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(204, 204, 204)));
+        jInternalFrame1.setBackground(new java.awt.Color(241, 247, 237));
+        jInternalFrame1.setBorder(null);
+        jInternalFrame1.setVisible(true);
 
-        javax.swing.GroupLayout panelVentanaLayout = new javax.swing.GroupLayout(panelVentana);
-        panelVentana.setLayout(panelVentanaLayout);
-        panelVentanaLayout.setHorizontalGroup(
-            panelVentanaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 843, Short.MAX_VALUE)
+        jTabbedPane1.setToolTipText("");
+
+        jScrollPane1.setBackground(new java.awt.Color(204, 204, 204));
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 0, new java.awt.Color(0, 0, 0)));
+
+        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Nombre", "Nombre de Contacto", "Apellido de Contacto", "Teléfono", "Fax", "1ª Línea de Dirección", "2ª Línea de Dirección", "Ciudad", "Región", "País", "Código Postal", "Código del Empleado Representante de Ventas", "Límite de Crédito", "Tipo de Documento", "Documento Identificativo", "Correo Electrónico", "Contraseña"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaClientes.setToolTipText("");
+        tablaClientes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jScrollPane1.setViewportView(tablaClientes);
+
+        jTabbedPane1.addTab("Clientes", new javax.swing.ImageIcon(getClass().getResource("/img/user-solid-peq.png")), jScrollPane1); // NOI18N
+
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 0, new java.awt.Color(0, 0, 0)));
+
+        tablaPedidos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Fecha del Pedido", "Fecha Esperada", "Fecha de Entrega", "Estado del Pedido", "Comentarios", "Código del Cliente"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tablaPedidos.setEnabled(false);
+        jScrollPane2.setViewportView(tablaPedidos);
+
+        jTabbedPane1.addTab("Pedidos", new javax.swing.ImageIcon(getClass().getResource("/img/file-invoice-solid.png")), jScrollPane2); // NOI18N
+
+        jToolBar1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(204, 204, 204)));
+        jToolBar1.setFloatable(false);
+        jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/plus-square-solid.png"))); // NOI18N
+        jButton1.setFocusPainted(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton1);
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/minus-square-solid.png"))); // NOI18N
+        jButton2.setFocusPainted(false);
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton2);
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pen-square-solid.png"))); // NOI18N
+        jButton3.setFocusPainted(false);
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton3);
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(204, 204, 204)));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 765, Short.MAX_VALUE)
         );
-        panelVentanaLayout.setVerticalGroup(
-            panelVentanaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 628, Short.MAX_VALUE)
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 27, Short.MAX_VALUE)
         );
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 27, Short.MAX_VALUE)
+        );
+
+        jMenu1.setText("Archivo");
+        jMenu1.setMargin(new java.awt.Insets(0, 2, 0, 2));
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Cliente");
+        jMenu2.setMargin(new java.awt.Insets(0, 2, 0, 2));
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Pedido");
+        jMenu3.setMargin(new java.awt.Insets(0, 2, 0, 2));
+        jMenuBar1.add(jMenu3);
+
+        jInternalFrame1.setJMenuBar(jMenuBar1);
+
+        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
+        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
+        jInternalFrame1Layout.setHorizontalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame1Layout.createSequentialGroup()
+                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 721, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        jInternalFrame1Layout.setVerticalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jTabbedPane1.getAccessibleContext().setAccessibleName("Clientes");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(barraDeTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panelVentana, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jInternalFrame1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,7 +375,7 @@ public class Aplicacion extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(barraDeTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(panelVentana, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jInternalFrame1))
         );
 
         pack();
@@ -238,6 +421,25 @@ public class Aplicacion extends javax.swing.JFrame {
         barraDeTituloMousePressed(evt);
     }//GEN-LAST:event_IconoYNombreVentanaMousePressed
 
+    private void botonMinimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonMinimActionPerformed
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_ICONIFIED));
+        this.setState(Frame.ICONIFIED);
+    }//GEN-LAST:event_botonMinimActionPerformed
+
+    private void botonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarActionPerformed
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }//GEN-LAST:event_botonCerrarActionPerformed
+
+    private JFrame ventanaEditarCliente;
+    public boolean editarClienteExiste = false;
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        if (ventanaEditarCliente == null || !editarClienteExiste) {
+            ventanaEditarCliente = new EditarCliente(this);
+            ventanaEditarCliente.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -254,7 +456,15 @@ public class Aplicacion extends javax.swing.JFrame {
             }
         });
     }
+    
+    public JTable getTablaClientes() {
+        return tablaClientes;
+    }
 
+    public JTable getTablaPedidos() {
+        return tablaPedidos;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IconoYNombreVentana;
     private javax.swing.JPanel barraDeTitulo;
@@ -262,6 +472,21 @@ public class Aplicacion extends javax.swing.JFrame {
     private javax.swing.JButton botonMinim;
     private javax.swing.JPanel fondoBotonCerrar;
     private javax.swing.JPanel fondoBotonMinim;
-    private javax.swing.JPanel panelVentana;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JInternalFrame jInternalFrame1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTable tablaClientes;
+    private javax.swing.JTable tablaPedidos;
     // End of variables declaration//GEN-END:variables
 }

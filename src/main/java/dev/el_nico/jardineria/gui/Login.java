@@ -5,7 +5,9 @@
  */
 package dev.el_nico.jardineria.gui;
 
+import java.awt.Color;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -15,6 +17,8 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
+import javax.swing.border.LineBorder;
 
 /**
  *
@@ -29,14 +33,20 @@ public class Login extends javax.swing.JDialog {
      */
     public Login(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        
+        this.setUndecorated(true);
+        this.getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
+       
+        this.getRootPane().setBorder(new LineBorder(new Color(204,204,204)));
+        
         initComponents();
         echo_char_por_defecto = input_contrasena.getEchoChar();
         boton_para_ocultar_pass.setVisible(false);
         try {
-            this.setIconImage(ImageIO.read(new File("src/main/resources/img/leaf-solid.png")));
+            this.setIconImage(ImageIO.read(new File("src/main/resources/img/icono-jardineria.png")));
         } catch (IOException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }
 
     /**
@@ -70,6 +80,10 @@ public class Login extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         boton_cancelar = new javax.swing.JButton();
         boton_aceptar = new javax.swing.JButton();
+        barraTitulo = new javax.swing.JPanel();
+        iconoYNombreVentana = new javax.swing.JLabel();
+        fondoBotonCerrar = new javax.swing.JPanel();
+        botonCerrar = new javax.swing.JButton();
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("vaya por dios");
@@ -87,12 +101,16 @@ public class Login extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Jardinería - Login");
+        setBackground(new java.awt.Color(241, 247, 237));
         setForeground(java.awt.Color.red);
         setIconImage(null);
         setIconImages(null);
         setResizable(false);
 
+        jPanel3.setBackground(new java.awt.Color(241, 247, 237));
+
         jTextArea1.setEditable(false);
+        jTextArea1.setBackground(new java.awt.Color(241, 247, 237));
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jTextArea1.setLineWrap(true);
@@ -101,20 +119,26 @@ public class Login extends javax.swing.JDialog {
         jTextArea1.setToolTipText("");
         jTextArea1.setWrapStyleWord(true);
         jTextArea1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 3, 0, 3));
-        jTextArea1.setOpaque(false);
+        jTextArea1.setMargin(new java.awt.Insets(10, 10, 10, 10));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jTextArea1)
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(jTextArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextArea1, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel1.setBackground(new java.awt.Color(241, 247, 237));
 
         he_olvidado_la_contrasena.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         he_olvidado_la_contrasena.setForeground(new java.awt.Color(0, 0, 200));
@@ -122,6 +146,7 @@ public class Login extends javax.swing.JDialog {
         he_olvidado_la_contrasena.setBorder(null);
         he_olvidado_la_contrasena.setContentAreaFilled(false);
         he_olvidado_la_contrasena.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        he_olvidado_la_contrasena.setFocusPainted(false);
         he_olvidado_la_contrasena.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 he_olvidado_la_contrasenaActionPerformed(evt);
@@ -200,6 +225,8 @@ public class Login extends javax.swing.JDialog {
         panel_usuario.add(input_usuario);
         panel_usuario.add(filler3);
 
+        jPanel2.setBackground(new java.awt.Color(241, 247, 237));
+
         boton_cancelar.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         boton_cancelar.setText("Cancelar");
         boton_cancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -245,24 +272,99 @@ public class Login extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        barraTitulo.setBackground(new java.awt.Color(255, 255, 255));
+        barraTitulo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+        barraTitulo.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                barraTituloMouseDragged(evt);
+            }
+        });
+        barraTitulo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                barraTituloMousePressed(evt);
+            }
+        });
+
+        iconoYNombreVentana.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        iconoYNombreVentana.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/leaf-solid.png"))); // NOI18N
+        iconoYNombreVentana.setText("Jardinería - Login");
+        iconoYNombreVentana.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                iconoYNombreVentanaMouseDragged(evt);
+            }
+        });
+        iconoYNombreVentana.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                iconoYNombreVentanaMousePressed(evt);
+            }
+        });
+
+        fondoBotonCerrar.setBackground(new java.awt.Color(255, 255, 255));
+
+        botonCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/times-solid.png"))); // NOI18N
+        botonCerrar.setToolTipText("");
+        botonCerrar.setBorderPainted(false);
+        botonCerrar.setContentAreaFilled(false);
+        botonCerrar.setFocusPainted(false);
+        botonCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botonCerrarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botonCerrarMouseExited(evt);
+            }
+        });
+        botonCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCerrarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout fondoBotonCerrarLayout = new javax.swing.GroupLayout(fondoBotonCerrar);
+        fondoBotonCerrar.setLayout(fondoBotonCerrarLayout);
+        fondoBotonCerrarLayout.setHorizontalGroup(
+            fondoBotonCerrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(botonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, Short.MAX_VALUE)
+        );
+        fondoBotonCerrarLayout.setVerticalGroup(
+            fondoBotonCerrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(botonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        javax.swing.GroupLayout barraTituloLayout = new javax.swing.GroupLayout(barraTitulo);
+        barraTitulo.setLayout(barraTituloLayout);
+        barraTituloLayout.setHorizontalGroup(
+            barraTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(barraTituloLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(iconoYNombreVentana)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addComponent(fondoBotonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        barraTituloLayout.setVerticalGroup(
+            barraTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(iconoYNombreVentana, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(barraTituloLayout.createSequentialGroup()
+                .addComponent(fondoBotonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(barraTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(barraTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -298,6 +400,42 @@ public class Login extends javax.swing.JDialog {
     private void boton_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_cancelarActionPerformed
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }//GEN-LAST:event_boton_cancelarActionPerformed
+
+    private void iconoYNombreVentanaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconoYNombreVentanaMouseDragged
+        barraTituloMouseDragged(evt);
+    }//GEN-LAST:event_iconoYNombreVentanaMouseDragged
+
+    private void iconoYNombreVentanaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconoYNombreVentanaMousePressed
+        barraTituloMousePressed(evt);
+    }//GEN-LAST:event_iconoYNombreVentanaMousePressed
+
+    private void botonCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonCerrarMouseEntered
+        fondoBotonCerrar.setBackground(new Color(253, 185, 186));
+    }//GEN-LAST:event_botonCerrarMouseEntered
+
+    private void botonCerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonCerrarMouseExited
+        fondoBotonCerrar.setBackground(Color.white);
+    }//GEN-LAST:event_botonCerrarMouseExited
+
+    Point location;
+    int px = 0, 
+        py = 0;
+    
+    private void barraTituloMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraTituloMouseDragged
+        location = this.getLocation(location);
+        int x = location.x - px + evt.getX();
+        int y = location.y - py + evt.getY();
+        this.setLocation(x, y);
+    }//GEN-LAST:event_barraTituloMouseDragged
+
+    private void barraTituloMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraTituloMousePressed
+        px = evt.getX();
+        py = evt.getY();
+    }//GEN-LAST:event_barraTituloMousePressed
+
+    private void botonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarActionPerformed
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }//GEN-LAST:event_botonCerrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -349,6 +487,8 @@ public class Login extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel barraTitulo;
+    private javax.swing.JButton botonCerrar;
     private javax.swing.JButton boton_aceptar;
     private javax.swing.JButton boton_cancelar;
     private javax.swing.JButton boton_para_ocultar_pass;
@@ -359,7 +499,9 @@ public class Login extends javax.swing.JDialog {
     private javax.swing.Box.Filler filler4;
     private javax.swing.Box.Filler filler6;
     private javax.swing.Box.Filler filler8;
+    private javax.swing.JPanel fondoBotonCerrar;
     private javax.swing.JButton he_olvidado_la_contrasena;
+    private javax.swing.JLabel iconoYNombreVentana;
     private javax.swing.JPasswordField input_contrasena;
     private javax.swing.JTextField input_usuario;
     private javax.swing.JLabel jLabel1;

@@ -5,27 +5,46 @@
  */
 package dev.el_nico.jardineria.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.Point;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
+import javax.swing.JRootPane;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author NICO2DAM
  */
-public class NuevoCliente extends javax.swing.JFrame {
+public class EditarCliente extends javax.swing.JFrame {
 
+    private Aplicacion ref;
+    private ArrayList<JTextField> inputs = new ArrayList<>(17);
+    
     /**
      * Creates new form NuevoCliente
      */
-    public NuevoCliente() {
+    public EditarCliente(Aplicacion ref) {
+        this.ref = ref;
+        if (ref != null) ref.editarClienteExiste = true;
+        
+        this.setUndecorated(true);
+        this.getRootPane().setBorder(new LineBorder(new Color(204,204,204)));
         initComponents();
         try {
-            this.setIconImage(ImageIO.read(new File("src/main/resources/img/leaf-solid.png")));
+            this.setIconImage(ImageIO.read(new File("src/main/resources/img/icono-jardineria.png")));
         } catch (IOException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } 
@@ -35,11 +54,33 @@ public class NuevoCliente extends javax.swing.JFrame {
         this.setMinimumSize(new Dimension(450, 0));
         this.pack();
         ButtonGroup bg = new ButtonGroup();
-        bg.add(radiobutonna);
-        bg.add(radiobutondni);
-        bg.add(radiobutonnie);
+        bg.add(inputNA);
+        bg.add(inputDNI);
+        bg.add(inputNIE);
+        
+        inputs.addAll(
+            Arrays.asList(
+                inputCodigo,
+                inputNombre,
+                inputContactoNombre,
+                inputContactoApellido,
+                inputContactoTelefono,
+                inputContactoFax,
+                inputDomicilioDireccion1,
+                inputDomicilioDireccion2,
+                inputDomicilioCP,
+                inputDomicilioCiudad,
+                inputDomicilioRegion,
+                inputDomicilioPais,
+                inputCodRepVentas,
+                inputLimiteCredito,
+                inputDocumentoContenido,
+                inputEmail,
+                inputContrasena
+            )
+        );
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -108,31 +149,39 @@ public class NuevoCliente extends javax.swing.JFrame {
         jPanel11 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         jLabel28 = new javax.swing.JLabel();
-        radiobutonna = new javax.swing.JRadioButton();
-        radiobutonnie = new javax.swing.JRadioButton();
-        radiobutondni = new javax.swing.JRadioButton();
+        inputNA = new javax.swing.JRadioButton();
+        inputNIE = new javax.swing.JRadioButton();
+        inputDNI = new javax.swing.JRadioButton();
         jPanel15 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         inputDocumentoContenido = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jPanel27 = new javax.swing.JPanel();
-        jTextField13 = new javax.swing.JTextField();
+        inputEmail = new javax.swing.JTextField();
         jPanel10 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jPanel28 = new javax.swing.JPanel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        inputContrasena = new javax.swing.JPasswordField();
         jPanel29 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         botonAceptar = new javax.swing.JButton();
         botonCancelar = new javax.swing.JButton();
+        barraTitulo = new javax.swing.JPanel();
+        iconoYNombreVentana = new javax.swing.JLabel();
+        fondoBotonCerrar = new javax.swing.JPanel();
+        botonCerrar = new javax.swing.JButton();
+        fondoBotonMinim = new javax.swing.JPanel();
+        botonMinim = new javax.swing.JButton();
+        botonAceptar1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Jardinería - Añadir nuevo cliente");
-        setBackground(new java.awt.Color(254, 242, 227));
+        setBackground(new java.awt.Color(241, 247, 237));
         setForeground(new java.awt.Color(254, 242, 227));
+        setUndecorated(true);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -371,6 +420,7 @@ public class NuevoCliente extends javax.swing.JFrame {
         jToggleButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 6, 1, 6));
         jToggleButton1.setBorderPainted(false);
         jToggleButton1.setContentAreaFilled(false);
+        jToggleButton1.setFocusPainted(false);
         jToggleButton1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/caret-down-solid.png"))); // NOI18N
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -412,6 +462,7 @@ public class NuevoCliente extends javax.swing.JFrame {
         jToggleButton2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 6, 1, 6));
         jToggleButton2.setBorderPainted(false);
         jToggleButton2.setContentAreaFilled(false);
+        jToggleButton2.setFocusPainted(false);
         jToggleButton2.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/caret-down-solid.png"))); // NOI18N
         jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -727,20 +778,20 @@ public class NuevoCliente extends javax.swing.JFrame {
         jLabel28.setText("Tipo");
         jLabel28.setOpaque(true);
 
-        radiobutonna.setSelected(true);
-        radiobutonna.setText("N/A");
-        radiobutonna.setNextFocusableComponent(radiobutondni);
+        inputNA.setSelected(true);
+        inputNA.setText("N/A");
+        inputNA.setNextFocusableComponent(inputDNI);
 
-        radiobutonnie.setText("NIE");
-        radiobutonnie.setNextFocusableComponent(inputDocumentoContenido);
-        radiobutonnie.addActionListener(new java.awt.event.ActionListener() {
+        inputNIE.setText("NIE");
+        inputNIE.setNextFocusableComponent(inputDocumentoContenido);
+        inputNIE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radiobutonnieActionPerformed(evt);
+                inputNIEActionPerformed(evt);
             }
         });
 
-        radiobutondni.setText("DNI");
-        radiobutondni.setNextFocusableComponent(radiobutonnie);
+        inputDNI.setText("DNI");
+        inputDNI.setNextFocusableComponent(inputNIE);
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -749,20 +800,20 @@ public class NuevoCliente extends javax.swing.JFrame {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(radiobutonna)
+                .addComponent(inputNA)
                 .addGap(18, 18, 18)
-                .addComponent(radiobutondni)
+                .addComponent(inputDNI)
                 .addGap(18, 18, 18)
-                .addComponent(radiobutonnie)
+                .addComponent(inputNIE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                .addComponent(radiobutonna)
-                .addComponent(radiobutonnie)
-                .addComponent(radiobutondni))
+                .addComponent(inputNA)
+                .addComponent(inputNIE)
+                .addComponent(inputDNI))
         );
 
         jPanel15.setBackground(new java.awt.Color(224, 224, 224));
@@ -834,9 +885,9 @@ public class NuevoCliente extends javax.swing.JFrame {
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/at-solid.png"))); // NOI18N
         jLabel8.setText("Email");
 
-        jTextField13.setFont(new java.awt.Font("Calibri Light", 0, 12)); // NOI18N
-        jTextField13.setBorder(null);
-        jTextField13.setOpaque(false);
+        inputEmail.setFont(new java.awt.Font("Calibri Light", 0, 12)); // NOI18N
+        inputEmail.setBorder(null);
+        inputEmail.setOpaque(false);
 
         javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
         jPanel27.setLayout(jPanel27Layout);
@@ -844,12 +895,12 @@ public class NuevoCliente extends javax.swing.JFrame {
             jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel27Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField13, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                .addComponent(inputEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel27Layout.setVerticalGroup(
             jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField13, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(inputEmail, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -875,9 +926,9 @@ public class NuevoCliente extends javax.swing.JFrame {
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/asterisk-solid.png"))); // NOI18N
         jLabel10.setText("Contraseña");
 
-        jPasswordField1.setBorder(null);
-        jPasswordField1.setNextFocusableComponent(botonAceptar);
-        jPasswordField1.setOpaque(false);
+        inputContrasena.setBorder(null);
+        inputContrasena.setNextFocusableComponent(botonAceptar);
+        inputContrasena.setOpaque(false);
 
         javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
         jPanel28.setLayout(jPanel28Layout);
@@ -885,12 +936,12 @@ public class NuevoCliente extends javax.swing.JFrame {
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPasswordField1)
+                .addComponent(inputContrasena)
                 .addContainerGap())
         );
         jPanel28Layout.setVerticalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPasswordField1)
+            .addComponent(inputContrasena)
         );
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -944,51 +995,182 @@ public class NuevoCliente extends javax.swing.JFrame {
         botonAceptar.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
         botonAceptar.setText("Aceptar");
         botonAceptar.setNextFocusableComponent(botonCancelar);
+        botonAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAceptarActionPerformed(evt);
+            }
+        });
 
         botonCancelar.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
         botonCancelar.setText("Cancelar");
         botonCancelar.setNextFocusableComponent(inputCodigo);
+
+        barraTitulo.setBackground(new java.awt.Color(255, 255, 255));
+        barraTitulo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
+        barraTitulo.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                barraTituloMouseDragged(evt);
+            }
+        });
+        barraTitulo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                barraTituloMousePressed(evt);
+            }
+        });
+
+        iconoYNombreVentana.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        iconoYNombreVentana.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/leaf-solid.png"))); // NOI18N
+        iconoYNombreVentana.setText("Jardinería - Editar cliente");
+        iconoYNombreVentana.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                iconoYNombreVentanaMouseDragged(evt);
+            }
+        });
+        iconoYNombreVentana.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                iconoYNombreVentanaMousePressed(evt);
+            }
+        });
+
+        fondoBotonCerrar.setBackground(new java.awt.Color(255, 255, 255));
+
+        botonCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/times-solid.png"))); // NOI18N
+        botonCerrar.setToolTipText("");
+        botonCerrar.setBorderPainted(false);
+        botonCerrar.setContentAreaFilled(false);
+        botonCerrar.setFocusPainted(false);
+        botonCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botonCerrarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botonCerrarMouseExited(evt);
+            }
+        });
+        botonCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCerrarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout fondoBotonCerrarLayout = new javax.swing.GroupLayout(fondoBotonCerrar);
+        fondoBotonCerrar.setLayout(fondoBotonCerrarLayout);
+        fondoBotonCerrarLayout.setHorizontalGroup(
+            fondoBotonCerrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(botonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, Short.MAX_VALUE)
+        );
+        fondoBotonCerrarLayout.setVerticalGroup(
+            fondoBotonCerrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(botonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        fondoBotonMinim.setBackground(new java.awt.Color(255, 255, 255));
+
+        botonMinim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/window-minimize-solid.png"))); // NOI18N
+        botonMinim.setBorder(null);
+        botonMinim.setBorderPainted(false);
+        botonMinim.setContentAreaFilled(false);
+        botonMinim.setFocusPainted(false);
+        botonMinim.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botonMinimMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botonMinimMouseExited(evt);
+            }
+        });
+        botonMinim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonMinimActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout fondoBotonMinimLayout = new javax.swing.GroupLayout(fondoBotonMinim);
+        fondoBotonMinim.setLayout(fondoBotonMinimLayout);
+        fondoBotonMinimLayout.setHorizontalGroup(
+            fondoBotonMinimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(fondoBotonMinimLayout.createSequentialGroup()
+                .addComponent(botonMinim, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        fondoBotonMinimLayout.setVerticalGroup(
+            fondoBotonMinimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(botonMinim, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout barraTituloLayout = new javax.swing.GroupLayout(barraTitulo);
+        barraTitulo.setLayout(barraTituloLayout);
+        barraTituloLayout.setHorizontalGroup(
+            barraTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(barraTituloLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(iconoYNombreVentana)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(fondoBotonMinim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(fondoBotonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        barraTituloLayout.setVerticalGroup(
+            barraTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(iconoYNombreVentana, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(barraTituloLayout.createSequentialGroup()
+                .addGroup(barraTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fondoBotonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fondoBotonMinim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        botonAceptar1.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
+        botonAceptar1.setText("Resetear");
+        botonAceptar1.setNextFocusableComponent(botonCancelar);
+        botonAceptar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAceptar1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jPanel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(botonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(22, 22, 22)
+                        .addComponent(botonAceptar1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22)
                         .addComponent(botonAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(43, 43, 43)))
                 .addContainerGap())
+            .addComponent(barraTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addComponent(barraTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1011,7 +1193,8 @@ public class NuevoCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonCancelar)
-                    .addComponent(botonAceptar))
+                    .addComponent(botonAceptar)
+                    .addComponent(botonAceptar1))
                 .addContainerGap())
         );
 
@@ -1030,13 +1213,74 @@ public class NuevoCliente extends javax.swing.JFrame {
         this.pack();
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
-    private void radiobutonnieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiobutonnieActionPerformed
+    private void inputNIEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputNIEActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_radiobutonnieActionPerformed
+    }//GEN-LAST:event_inputNIEActionPerformed
 
     private void inputLimiteCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputLimiteCreditoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_inputLimiteCreditoActionPerformed
+
+    private void botonCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonCerrarMouseEntered
+        fondoBotonCerrar.setBackground(new Color(253, 185, 186));
+    }//GEN-LAST:event_botonCerrarMouseEntered
+
+    private void botonCerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonCerrarMouseExited
+        fondoBotonCerrar.setBackground(Color.white);
+    }//GEN-LAST:event_botonCerrarMouseExited
+
+    private void botonMinimMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonMinimMouseEntered
+        fondoBotonMinim.setBackground(new Color(189, 203, 216));
+    }//GEN-LAST:event_botonMinimMouseEntered
+
+    private void botonMinimMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonMinimMouseExited
+        fondoBotonMinim.setBackground(Color.white);
+    }//GEN-LAST:event_botonMinimMouseExited
+
+    Point location;
+    int px = 0, 
+        py = 0;
+    
+    private void barraTituloMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraTituloMouseDragged
+        location = this.getLocation(location);
+        int x = location.x - px + evt.getX();
+        int y = location.y - py + evt.getY();
+        this.setLocation(x, y);
+    }//GEN-LAST:event_barraTituloMouseDragged
+
+    private void barraTituloMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraTituloMousePressed
+        px = evt.getX();
+        py = evt.getY();
+    }//GEN-LAST:event_barraTituloMousePressed
+
+    private void iconoYNombreVentanaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconoYNombreVentanaMouseDragged
+        barraTituloMouseDragged(evt);
+    }//GEN-LAST:event_iconoYNombreVentanaMouseDragged
+
+    private void iconoYNombreVentanaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconoYNombreVentanaMousePressed
+        barraTituloMousePressed(evt);
+    }//GEN-LAST:event_iconoYNombreVentanaMousePressed
+
+    private void botonMinimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonMinimActionPerformed
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_ICONIFIED));
+        this.setState(Frame.ICONIFIED);
+    }//GEN-LAST:event_botonMinimActionPerformed
+
+    private void botonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarActionPerformed
+        ref.editarClienteExiste = false;
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }//GEN-LAST:event_botonCerrarActionPerformed
+
+    private void botonAceptar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptar1ActionPerformed
+        for (JTextField campo : inputs) {
+            campo.setText("");
+        }
+        inputNA.setSelected(true);
+    }//GEN-LAST:event_botonAceptar1ActionPerformed
+
+    private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
+        ((DefaultTableModel) ref.getTablaClientes().getModel()).addRow(new Object[]{ inputCodigo.getText(), inputNombre.getText(), inputContactoNombre.getText() });
+    }//GEN-LAST:event_botonAceptarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1054,20 +1298,29 @@ public class NuevoCliente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NuevoCliente().setVisible(true);
+                new EditarCliente(null).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel barraTitulo;
     private javax.swing.JButton botonAceptar;
+    private javax.swing.JButton botonAceptar1;
     private javax.swing.JButton botonCancelar;
+    private javax.swing.JButton botonCerrar;
+    private javax.swing.JButton botonMinim;
+    private javax.swing.JPanel fondoBotonCerrar;
+    private javax.swing.JPanel fondoBotonMinim;
+    private javax.swing.JLabel iconoYNombreVentana;
     private javax.swing.JFormattedTextField inputCodRepVentas;
     private javax.swing.JFormattedTextField inputCodigo;
     private javax.swing.JTextField inputContactoApellido;
     private javax.swing.JTextField inputContactoFax;
     private javax.swing.JTextField inputContactoNombre;
     private javax.swing.JTextField inputContactoTelefono;
+    private javax.swing.JPasswordField inputContrasena;
+    private javax.swing.JRadioButton inputDNI;
     private javax.swing.JTextField inputDocumentoContenido;
     private javax.swing.JTextField inputDomicilioCP;
     private javax.swing.JTextField inputDomicilioCiudad;
@@ -1075,7 +1328,10 @@ public class NuevoCliente extends javax.swing.JFrame {
     private javax.swing.JTextField inputDomicilioDireccion2;
     private javax.swing.JTextField inputDomicilioPais;
     private javax.swing.JTextField inputDomicilioRegion;
+    private javax.swing.JTextField inputEmail;
     private javax.swing.JFormattedTextField inputLimiteCredito;
+    private javax.swing.JRadioButton inputNA;
+    private javax.swing.JRadioButton inputNIE;
     private javax.swing.JTextField inputNombre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1130,14 +1386,9 @@ public class NuevoCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField13;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JPanel panel_datos_contacto;
     private javax.swing.JPanel panel_datos_domicilio;
-    private javax.swing.JRadioButton radiobutondni;
-    private javax.swing.JRadioButton radiobutonna;
-    private javax.swing.JRadioButton radiobutonnie;
     // End of variables declaration//GEN-END:variables
 }
