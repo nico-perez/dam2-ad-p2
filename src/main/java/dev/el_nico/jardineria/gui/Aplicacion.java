@@ -207,7 +207,7 @@ public class Aplicacion extends javax.swing.JFrame {
                 .addGap(16, 16, 16))
         );
 
-        jInternalFrame1.setBackground(new java.awt.Color(241, 247, 237));
+        jInternalFrame1.setBackground(new java.awt.Color(213, 217, 210));
         jInternalFrame1.setBorder(null);
         jInternalFrame1.setVisible(true);
 

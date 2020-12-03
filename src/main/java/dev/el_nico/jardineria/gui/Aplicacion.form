@@ -189,7 +189,7 @@
     <Container class="javax.swing.JInternalFrame" name="jInternalFrame1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ed" green="f7" red="f1" type="rgb"/>
+          <Color blue="d2" green="d9" red="d5" type="rgb"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="null"/>
