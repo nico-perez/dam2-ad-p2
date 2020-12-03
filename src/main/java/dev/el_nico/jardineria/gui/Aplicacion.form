@@ -359,6 +359,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/plus-square-solid.png"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
                 <Property name="focusPainted" type="boolean" value="false"/>
               </Properties>
               <Events>

@@ -79,6 +79,8 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="barraTitulo" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jPanel29" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jPanel3" max="32767" attributes="0"/>
                   <Component id="jPanel1" max="32767" attributes="0"/>
@@ -99,9 +101,7 @@
                   <Component id="jPanel8" max="32767" attributes="0"/>
                   <Component id="jPanel10" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jPanel29" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="botonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="botonAceptar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1580,7 +1580,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Calibri Light" size="12" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Atemsion"/>
+            <Property name="text" type="java.lang.String" value="aqui van los errores cuando los implemente"/>
           </Properties>
         </Component>
       </SubComponents>

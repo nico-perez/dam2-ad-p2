@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.JTable;
 import javax.swing.border.Border;
@@ -33,6 +34,7 @@ public class Aplicacion extends javax.swing.JFrame {
      */
     public Aplicacion() {
         
+        
         Border b = this.getRootPane().getBorder();
         this.setUndecorated(true);
         this.getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
@@ -49,7 +51,7 @@ public class Aplicacion extends javax.swing.JFrame {
         } 
         ((BasicInternalFrameUI)jInternalFrame1.getUI()).setNorthPane(null);
         
-
+        setLocationRelativeTo(null); 
     }
 
     /**
@@ -271,6 +273,7 @@ public class Aplicacion extends javax.swing.JFrame {
         jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/plus-square-solid.png"))); // NOI18N
+        jButton1.setToolTipText("");
         jButton1.setFocusPainted(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -427,7 +430,10 @@ public class Aplicacion extends javax.swing.JFrame {
     }//GEN-LAST:event_botonMinimActionPerformed
 
     private void botonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarActionPerformed
-        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        int resul = JOptionPane.showConfirmDialog(null, "¿Salir del programa?", "Salir", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (resul == JOptionPane.YES_OPTION) {
+            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        }
     }//GEN-LAST:event_botonCerrarActionPerformed
 
     private JFrame ventanaEditarCliente;
