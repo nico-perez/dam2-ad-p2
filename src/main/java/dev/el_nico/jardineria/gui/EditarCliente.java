@@ -33,6 +33,10 @@ public class EditarCliente extends javax.swing.JFrame {
     private Aplicacion ref;
     private ArrayList<JTextField> inputs = new ArrayList<>(17);
     
+    private boolean codigoBien, nombreBien, telefonoBien,
+                    faxBien, direccion1Bien, ciudadBien,
+                    documentoBien, emailBien, contrasenaBien;
+    
     /**
      * Creates new form NuevoCliente
      */
@@ -81,6 +85,17 @@ public class EditarCliente extends javax.swing.JFrame {
         );
         
         setLocationRelativeTo(ref);
+        
+        etiquetaCodigo.setForeground(colorError);
+        etiquetaNombre.setForeground(colorError);
+        etiquetaTelefono.setForeground(colorError);
+        etiquetaFax.setForeground(colorError);
+        etiquetaDireccion1.setForeground(colorError);
+        etiquetaCiudad.setForeground(colorError);
+        
+        iconoAtencion.setVisible(false);
+        iconoBien.setVisible(false);
+        
     }
     
     /**
@@ -93,27 +108,27 @@ public class EditarCliente extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        etiquetaCodigo = new javax.swing.JLabel();
         jPanel22 = new javax.swing.JPanel();
         inputCodigo = new javax.swing.JFormattedTextField();
         jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        etiquetaNombre = new javax.swing.JLabel();
         jPanel24 = new javax.swing.JPanel();
         inputNombre = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         panel_datos_contacto = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
+        etiquetaNombreContacto = new javax.swing.JLabel();
         inputContactoNombre = new javax.swing.JTextField();
         jPanel12 = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
+        etiquetaApellido = new javax.swing.JLabel();
         inputContactoApellido = new javax.swing.JTextField();
         jPanel13 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
+        etiquetaFax = new javax.swing.JLabel();
         inputContactoFax = new javax.swing.JTextField();
         jPanel16 = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
+        etiquetaTelefono = new javax.swing.JLabel();
         inputContactoTelefono = new javax.swing.JTextField();
         jToggleButton1 = new javax.swing.JToggleButton();
         jPanel5 = new javax.swing.JPanel();
@@ -121,54 +136,56 @@ public class EditarCliente extends javax.swing.JFrame {
         jToggleButton2 = new javax.swing.JToggleButton();
         panel_datos_domicilio = new javax.swing.JPanel();
         jPanel17 = new javax.swing.JPanel();
-        jLabel19 = new javax.swing.JLabel();
+        etiquetaDireccion2 = new javax.swing.JLabel();
         inputDomicilioDireccion2 = new javax.swing.JTextField();
         jPanel18 = new javax.swing.JPanel();
-        jLabel22 = new javax.swing.JLabel();
+        etiquetaDireccion1 = new javax.swing.JLabel();
         inputDomicilioDireccion1 = new javax.swing.JTextField();
         jPanel19 = new javax.swing.JPanel();
-        jLabel23 = new javax.swing.JLabel();
+        etiquetaCP = new javax.swing.JLabel();
         inputDomicilioCP = new javax.swing.JTextField();
         jPanel20 = new javax.swing.JPanel();
-        jLabel24 = new javax.swing.JLabel();
+        etiquetaCiudad = new javax.swing.JLabel();
         inputDomicilioCiudad = new javax.swing.JTextField();
         jPanel21 = new javax.swing.JPanel();
-        jLabel25 = new javax.swing.JLabel();
+        etiquetaPais = new javax.swing.JLabel();
         inputDomicilioPais = new javax.swing.JTextField();
         jPanel23 = new javax.swing.JPanel();
-        jLabel27 = new javax.swing.JLabel();
+        etiquetaRegion = new javax.swing.JLabel();
         inputDomicilioRegion = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        etiquetaRepVentas = new javax.swing.JLabel();
         jPanel25 = new javax.swing.JPanel();
         inputCodRepVentas = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        etiquetaLimCredito = new javax.swing.JLabel();
         jPanel26 = new javax.swing.JPanel();
         inputLimiteCredito = new javax.swing.JFormattedTextField();
         jPanel7 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
+        etiquetaDocumento = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
-        jLabel28 = new javax.swing.JLabel();
+        etiquetaTipoDocumento = new javax.swing.JLabel();
         inputNA = new javax.swing.JRadioButton();
         inputNIE = new javax.swing.JRadioButton();
         inputDNI = new javax.swing.JRadioButton();
-        jPanel15 = new javax.swing.JPanel();
-        jLabel29 = new javax.swing.JLabel();
+        panelContenidoDocumento = new javax.swing.JPanel();
+        etiquetaContenidoDocumento = new javax.swing.JLabel();
         inputDocumentoContenido = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
+        etiquetaEmail = new javax.swing.JLabel();
         jPanel27 = new javax.swing.JPanel();
         inputEmail = new javax.swing.JTextField();
         jPanel10 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
+        etiquetaContrasena = new javax.swing.JLabel();
         jPanel28 = new javax.swing.JPanel();
         inputContrasena = new javax.swing.JPasswordField();
-        jPanel29 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
+        panelInfo = new javax.swing.JPanel();
+        iconoAtencion = new javax.swing.JLabel();
+        iconoTeclado = new javax.swing.JLabel();
+        iconoBien = new javax.swing.JLabel();
+        scrollTexto = new javax.swing.JScrollPane();
+        infoTexto = new javax.swing.JTextArea();
         botonAceptar = new javax.swing.JButton();
         botonCancelar = new javax.swing.JButton();
         barraTitulo = new javax.swing.JPanel();
@@ -189,14 +206,22 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel1.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(118, 101, 100));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hashtag-solid.png"))); // NOI18N
-        jLabel1.setText("Código");
+        etiquetaCodigo.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaCodigo.setForeground(new java.awt.Color(118, 101, 100));
+        etiquetaCodigo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hashtag-solid.png"))); // NOI18N
+        etiquetaCodigo.setText("Código");
+
+        jPanel22.setBackground(new java.awt.Color(255, 255, 255));
 
         inputCodigo.setBorder(null);
+        inputCodigo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         inputCodigo.setFont(new java.awt.Font("Calibri Light", 0, 12)); // NOI18N
         inputCodigo.setOpaque(false);
+        inputCodigo.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                inputCodigoCaretUpdate(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
         jPanel22.setLayout(jPanel22Layout);
@@ -217,28 +242,35 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addComponent(etiquetaCodigo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(etiquetaCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel3.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(118, 101, 100));
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/signature-solid.png"))); // NOI18N
-        jLabel3.setText("Nombre");
+        etiquetaNombre.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaNombre.setForeground(new java.awt.Color(118, 101, 100));
+        etiquetaNombre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/signature-solid.png"))); // NOI18N
+        etiquetaNombre.setText("Nombre");
+
+        jPanel24.setBackground(new java.awt.Color(255, 255, 255));
 
         inputNombre.setFont(new java.awt.Font("Calibri Light", 0, 12)); // NOI18N
         inputNombre.setBorder(null);
         inputNombre.setNextFocusableComponent(inputContactoNombre);
         inputNombre.setOpaque(false);
+        inputNombre.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                inputNombreCaretUpdate(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
         jPanel24.setLayout(jPanel24Layout);
@@ -259,13 +291,13 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel3)
+                .addComponent(etiquetaNombre)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+            .addComponent(etiquetaNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
             .addComponent(jPanel24, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -279,11 +311,13 @@ public class EditarCliente extends javax.swing.JFrame {
 
         panel_datos_contacto.setBackground(new java.awt.Color(204, 255, 255));
 
-        jLabel9.setBackground(new java.awt.Color(184, 201, 217));
-        jLabel9.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(139, 104, 90));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel9.setText("Nombre");
+        jPanel9.setBackground(new java.awt.Color(255, 255, 255));
+
+        etiquetaNombreContacto.setBackground(new java.awt.Color(184, 201, 217));
+        etiquetaNombreContacto.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaNombreContacto.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaNombreContacto.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        etiquetaNombreContacto.setText("Nombre");
 
         inputContactoNombre.setFont(new java.awt.Font("Calibri Light", 0, 12)); // NOI18N
         inputContactoNombre.setBorder(null);
@@ -294,24 +328,24 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(etiquetaNombreContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(inputContactoNombre)
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+            .addComponent(etiquetaNombreContacto, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
             .addComponent(inputContactoNombre)
         );
 
-        jPanel12.setBackground(new java.awt.Color(224, 224, 224));
+        jPanel12.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel12.setBackground(new java.awt.Color(221, 229, 237));
-        jLabel12.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(139, 104, 90));
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel12.setText("Apellido");
+        etiquetaApellido.setBackground(new java.awt.Color(221, 229, 237));
+        etiquetaApellido.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaApellido.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaApellido.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        etiquetaApellido.setText("Apellido");
 
         inputContactoApellido.setFont(new java.awt.Font("Calibri Light", 0, 12)); // NOI18N
         inputContactoApellido.setBorder(null);
@@ -322,7 +356,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(etiquetaApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(inputContactoApellido)
                 .addContainerGap())
@@ -331,29 +365,34 @@ public class EditarCliente extends javax.swing.JFrame {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(inputContactoApellido)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(etiquetaApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel13.setBackground(new java.awt.Color(224, 224, 224));
+        jPanel13.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel13.setBackground(new java.awt.Color(221, 229, 237));
-        jLabel13.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(139, 104, 90));
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel13.setText("Fax");
+        etiquetaFax.setBackground(new java.awt.Color(221, 229, 237));
+        etiquetaFax.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaFax.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaFax.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        etiquetaFax.setText("Fax");
 
         inputContactoFax.setFont(new java.awt.Font("Calibri Light", 0, 12)); // NOI18N
         inputContactoFax.setBorder(null);
         inputContactoFax.setNextFocusableComponent(inputDomicilioDireccion1);
         inputContactoFax.setOpaque(false);
+        inputContactoFax.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                inputContactoFaxCaretUpdate(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(etiquetaFax, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(inputContactoFax)
                 .addContainerGap())
@@ -363,26 +402,33 @@ public class EditarCliente extends javax.swing.JFrame {
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(inputContactoFax, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                    .addComponent(etiquetaFax, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jLabel16.setBackground(new java.awt.Color(221, 229, 237));
-        jLabel16.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(139, 104, 90));
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel16.setText("Teléfono");
+        jPanel16.setBackground(new java.awt.Color(255, 255, 255));
+
+        etiquetaTelefono.setBackground(new java.awt.Color(221, 229, 237));
+        etiquetaTelefono.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaTelefono.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaTelefono.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        etiquetaTelefono.setText("Teléfono");
 
         inputContactoTelefono.setFont(new java.awt.Font("Calibri Light", 0, 12)); // NOI18N
         inputContactoTelefono.setBorder(null);
         inputContactoTelefono.setOpaque(false);
+        inputContactoTelefono.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                inputContactoTelefonoCaretUpdate(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(etiquetaTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(inputContactoTelefono)
                 .addContainerGap())
@@ -391,7 +437,7 @@ public class EditarCliente extends javax.swing.JFrame {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(inputContactoTelefono)
             .addGroup(jPanel16Layout.createSequentialGroup()
-                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(etiquetaTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -422,6 +468,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jToggleButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 6, 1, 6));
         jToggleButton1.setBorderPainted(false);
         jToggleButton1.setContentAreaFilled(false);
+        jToggleButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToggleButton1.setFocusPainted(false);
         jToggleButton1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/caret-down-solid.png"))); // NOI18N
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -464,6 +511,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jToggleButton2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 6, 1, 6));
         jToggleButton2.setBorderPainted(false);
         jToggleButton2.setContentAreaFilled(false);
+        jToggleButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToggleButton2.setFocusPainted(false);
         jToggleButton2.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/caret-down-solid.png"))); // NOI18N
         jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -474,12 +522,12 @@ public class EditarCliente extends javax.swing.JFrame {
 
         panel_datos_domicilio.setBackground(new java.awt.Color(153, 153, 255));
 
-        jPanel17.setBackground(new java.awt.Color(224, 224, 224));
+        jPanel17.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel19.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(139, 104, 90));
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel19.setText("Dirección 2");
+        etiquetaDireccion2.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaDireccion2.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaDireccion2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        etiquetaDireccion2.setText("Dirección 2");
 
         inputDomicilioDireccion2.setFont(new java.awt.Font("Calibri Light", 0, 12)); // NOI18N
         inputDomicilioDireccion2.setBorder(null);
@@ -490,32 +538,39 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel17Layout.setHorizontalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
-                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(etiquetaDireccion2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(inputDomicilioDireccion2)
                 .addContainerGap())
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+            .addComponent(etiquetaDireccion2, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
             .addComponent(inputDomicilioDireccion2)
         );
 
-        jLabel22.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(139, 104, 90));
-        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel22.setText("Dirección 1");
+        jPanel18.setBackground(new java.awt.Color(255, 255, 255));
+
+        etiquetaDireccion1.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaDireccion1.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaDireccion1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        etiquetaDireccion1.setText("Dirección 1");
 
         inputDomicilioDireccion1.setFont(new java.awt.Font("Calibri Light", 0, 12)); // NOI18N
         inputDomicilioDireccion1.setBorder(null);
         inputDomicilioDireccion1.setOpaque(false);
+        inputDomicilioDireccion1.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                inputDomicilioDireccion1CaretUpdate(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
         jPanel18.setLayout(jPanel18Layout);
         jPanel18Layout.setHorizontalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
-                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(etiquetaDireccion1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(inputDomicilioDireccion1)
                 .addContainerGap())
@@ -523,13 +578,15 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(inputDomicilioDireccion1)
-            .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+            .addComponent(etiquetaDireccion1, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
         );
 
-        jLabel23.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(139, 104, 90));
-        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel23.setText("C.P.");
+        jPanel19.setBackground(new java.awt.Color(255, 255, 255));
+
+        etiquetaCP.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaCP.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaCP.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        etiquetaCP.setText("C.P.");
 
         inputDomicilioCP.setFont(new java.awt.Font("Calibri Light", 0, 12)); // NOI18N
         inputDomicilioCP.setBorder(null);
@@ -540,51 +597,56 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel19Layout.setHorizontalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
-                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(etiquetaCP, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(inputDomicilioCP)
                 .addContainerGap())
         );
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+            .addComponent(etiquetaCP, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
             .addComponent(inputDomicilioCP)
         );
 
-        jPanel20.setBackground(new java.awt.Color(224, 224, 224));
+        jPanel20.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel24.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(139, 104, 90));
-        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel24.setText("Ciudad");
+        etiquetaCiudad.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaCiudad.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaCiudad.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        etiquetaCiudad.setText("Ciudad");
 
         inputDomicilioCiudad.setFont(new java.awt.Font("Calibri Light", 0, 12)); // NOI18N
         inputDomicilioCiudad.setBorder(null);
         inputDomicilioCiudad.setOpaque(false);
+        inputDomicilioCiudad.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                inputDomicilioCiudadCaretUpdate(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
         jPanel20Layout.setHorizontalGroup(
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel20Layout.createSequentialGroup()
-                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(etiquetaCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(inputDomicilioCiudad)
                 .addContainerGap())
         );
         jPanel20Layout.setVerticalGroup(
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+            .addComponent(etiquetaCiudad, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
             .addComponent(inputDomicilioCiudad)
         );
 
-        jPanel21.setBackground(new java.awt.Color(224, 224, 224));
+        jPanel21.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel25.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(139, 104, 90));
-        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel25.setText("País");
-        jLabel25.setToolTipText("");
+        etiquetaPais.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaPais.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaPais.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        etiquetaPais.setText("País");
+        etiquetaPais.setToolTipText("");
 
         inputDomicilioPais.setFont(new java.awt.Font("Calibri Light", 0, 12)); // NOI18N
         inputDomicilioPais.setBorder(null);
@@ -595,21 +657,23 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel21Layout.setHorizontalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel21Layout.createSequentialGroup()
-                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(etiquetaPais, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(inputDomicilioPais)
                 .addContainerGap())
         );
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+            .addComponent(etiquetaPais, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
             .addComponent(inputDomicilioPais)
         );
 
-        jLabel27.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel27.setForeground(new java.awt.Color(139, 104, 90));
-        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel27.setText("Región");
+        jPanel23.setBackground(new java.awt.Color(255, 255, 255));
+
+        etiquetaRegion.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaRegion.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaRegion.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        etiquetaRegion.setText("Región");
 
         inputDomicilioRegion.setFont(new java.awt.Font("Calibri Light", 0, 12)); // NOI18N
         inputDomicilioRegion.setBorder(null);
@@ -620,14 +684,14 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel23Layout.setHorizontalGroup(
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel23Layout.createSequentialGroup()
-                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(etiquetaRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(inputDomicilioRegion)
                 .addContainerGap())
         );
         jPanel23Layout.setVerticalGroup(
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+            .addComponent(etiquetaRegion, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
             .addComponent(inputDomicilioRegion)
         );
 
@@ -682,12 +746,15 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel2.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(118, 101, 100));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/user-tie-solid.png"))); // NOI18N
-        jLabel2.setText("Rep. ventas");
+        etiquetaRepVentas.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaRepVentas.setForeground(new java.awt.Color(118, 101, 100));
+        etiquetaRepVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/user-tie-solid.png"))); // NOI18N
+        etiquetaRepVentas.setText("Rep. ventas");
+
+        jPanel25.setBackground(new java.awt.Color(255, 255, 255));
 
         inputCodRepVentas.setBorder(null);
+        inputCodRepVentas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         inputCodRepVentas.setFont(new java.awt.Font("Calibri Light", 0, 12)); // NOI18N
         inputCodRepVentas.setOpaque(false);
 
@@ -710,25 +777,28 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jLabel2)
+                .addComponent(etiquetaRepVentas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2)
+            .addComponent(etiquetaRepVentas)
             .addComponent(jPanel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel6.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(118, 101, 100));
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/euro-sign-solid.png"))); // NOI18N
-        jLabel6.setText("Lím. crédito");
+        etiquetaLimCredito.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaLimCredito.setForeground(new java.awt.Color(118, 101, 100));
+        etiquetaLimCredito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/euro-sign-solid.png"))); // NOI18N
+        etiquetaLimCredito.setText("Lím. crédito");
+
+        jPanel26.setBackground(new java.awt.Color(255, 255, 255));
 
         inputLimiteCredito.setBorder(null);
+        inputLimiteCredito.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         inputLimiteCredito.setFont(new java.awt.Font("Calibri Light", 0, 12)); // NOI18N
         inputLimiteCredito.setOpaque(false);
         inputLimiteCredito.addActionListener(new java.awt.event.ActionListener() {
@@ -756,36 +826,49 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel6)
+                .addComponent(etiquetaLimCredito)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6)
+            .addComponent(etiquetaLimCredito)
             .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel7.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(118, 101, 100));
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/id-card-solid.png"))); // NOI18N
-        jLabel7.setText("Documento identificativo");
+        etiquetaDocumento.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaDocumento.setForeground(new java.awt.Color(118, 101, 100));
+        etiquetaDocumento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/id-card-solid.png"))); // NOI18N
+        etiquetaDocumento.setText("Documento identificativo");
 
-        jLabel28.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel28.setForeground(new java.awt.Color(139, 104, 90));
-        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel28.setText("Tipo");
-        jLabel28.setOpaque(true);
+        jPanel14.setBackground(new java.awt.Color(255, 255, 255));
+
+        etiquetaTipoDocumento.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaTipoDocumento.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaTipoDocumento.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        etiquetaTipoDocumento.setText("Tipo");
 
         inputNA.setSelected(true);
         inputNA.setText("N/A");
         inputNA.setNextFocusableComponent(inputDNI);
+        inputNA.setOpaque(false);
+        inputNA.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inputNAMouseClicked(evt);
+            }
+        });
+        inputNA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputNAActionPerformed(evt);
+            }
+        });
 
         inputNIE.setText("NIE");
         inputNIE.setNextFocusableComponent(inputDocumentoContenido);
+        inputNIE.setOpaque(false);
         inputNIE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inputNIEActionPerformed(evt);
@@ -794,13 +877,19 @@ public class EditarCliente extends javax.swing.JFrame {
 
         inputDNI.setText("DNI");
         inputDNI.setNextFocusableComponent(inputNIE);
+        inputDNI.setOpaque(false);
+        inputDNI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputDNIActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
-                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(etiquetaTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(inputNA)
                 .addGap(18, 18, 18)
@@ -812,37 +901,44 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addComponent(etiquetaTipoDocumento, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                 .addComponent(inputNA)
                 .addComponent(inputNIE)
                 .addComponent(inputDNI))
         );
 
-        jPanel15.setBackground(new java.awt.Color(224, 224, 224));
+        panelContenidoDocumento.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel29.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(139, 104, 90));
-        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel29.setText("Contenido");
+        etiquetaContenidoDocumento.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaContenidoDocumento.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaContenidoDocumento.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        etiquetaContenidoDocumento.setText("Contenido");
+        etiquetaContenidoDocumento.setEnabled(false);
 
         inputDocumentoContenido.setFont(new java.awt.Font("Calibri Light", 0, 12)); // NOI18N
         inputDocumentoContenido.setBorder(null);
+        inputDocumentoContenido.setEnabled(false);
         inputDocumentoContenido.setOpaque(false);
+        inputDocumentoContenido.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                inputDocumentoContenidoCaretUpdate(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-        jPanel15.setLayout(jPanel15Layout);
-        jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
-                .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout panelContenidoDocumentoLayout = new javax.swing.GroupLayout(panelContenidoDocumento);
+        panelContenidoDocumento.setLayout(panelContenidoDocumentoLayout);
+        panelContenidoDocumentoLayout.setHorizontalGroup(
+            panelContenidoDocumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelContenidoDocumentoLayout.createSequentialGroup()
+                .addComponent(etiquetaContenidoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(inputDocumentoContenido)
                 .addContainerGap())
         );
-        jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+        panelContenidoDocumentoLayout.setVerticalGroup(
+            panelContenidoDocumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelContenidoDocumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(etiquetaContenidoDocumento, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                 .addComponent(inputDocumentoContenido))
         );
 
@@ -851,14 +947,14 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelContenidoDocumento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelContenidoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
@@ -867,14 +963,14 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addComponent(jLabel7)
+                .addComponent(etiquetaDocumento)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(etiquetaDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -882,14 +978,21 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
         jPanel8.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel8.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(118, 101, 100));
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/at-solid.png"))); // NOI18N
-        jLabel8.setText("Email");
+        etiquetaEmail.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaEmail.setForeground(new java.awt.Color(118, 101, 100));
+        etiquetaEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/at-solid.png"))); // NOI18N
+        etiquetaEmail.setText("Email");
+
+        jPanel27.setBackground(new java.awt.Color(255, 255, 255));
 
         inputEmail.setFont(new java.awt.Font("Calibri Light", 0, 12)); // NOI18N
         inputEmail.setBorder(null);
         inputEmail.setOpaque(false);
+        inputEmail.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                inputEmailCaretUpdate(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
         jPanel27.setLayout(jPanel27Layout);
@@ -910,23 +1013,25 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addComponent(jLabel8)
+                .addComponent(etiquetaEmail)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel8)
+            .addComponent(etiquetaEmail)
             .addComponent(jPanel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
         jPanel10.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel10.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(118, 101, 100));
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/asterisk-solid.png"))); // NOI18N
-        jLabel10.setText("Contraseña");
+        etiquetaContrasena.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        etiquetaContrasena.setForeground(new java.awt.Color(118, 101, 100));
+        etiquetaContrasena.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/asterisk-solid.png"))); // NOI18N
+        etiquetaContrasena.setText("Contraseña");
+
+        jPanel28.setBackground(new java.awt.Color(255, 255, 255));
 
         inputContrasena.setBorder(null);
         inputContrasena.setNextFocusableComponent(botonAceptar);
@@ -951,47 +1056,72 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(jLabel10)
+                .addComponent(etiquetaContrasena)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(etiquetaContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel29.setBackground(new java.awt.Color(255, 214, 255));
+        panelInfo.setBackground(new java.awt.Color(255, 234, 255));
+        panelInfo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exclamation-triangle-solid-rojo.png"))); // NOI18N
+        iconoAtencion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exclamation-triangle-solid-rojo.png"))); // NOI18N
 
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/keyboard-solid.png"))); // NOI18N
+        iconoTeclado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/keyboard-solid.png"))); // NOI18N
 
-        jLabel15.setFont(new java.awt.Font("Calibri Light", 1, 12)); // NOI18N
-        jLabel15.setText("aqui van los errores cuando los implemente");
+        iconoBien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check-solid.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel29Layout = new javax.swing.GroupLayout(jPanel29);
-        jPanel29.setLayout(jPanel29Layout);
-        jPanel29Layout.setHorizontalGroup(
-            jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel29Layout.createSequentialGroup()
+        scrollTexto.setBackground(new java.awt.Color(255, 234, 255));
+        scrollTexto.setBorder(null);
+        scrollTexto.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollTexto.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        scrollTexto.setOpaque(false);
+        scrollTexto.setPreferredSize(new java.awt.Dimension(29, 96));
+        scrollTexto.setRequestFocusEnabled(false);
+
+        infoTexto.setEditable(false);
+        infoTexto.setBackground(new java.awt.Color(255, 234, 255));
+        infoTexto.setColumns(20);
+        infoTexto.setFont(new java.awt.Font("Calibri Light", 0, 15)); // NOI18N
+        infoTexto.setLineWrap(true);
+        infoTexto.setRows(2);
+        infoTexto.setText("Hay campos obligatorios sin rellenar.");
+        infoTexto.setToolTipText("");
+        infoTexto.setWrapStyleWord(true);
+        infoTexto.setMargin(new java.awt.Insets(3, 2, 2, 2));
+        scrollTexto.setViewportView(infoTexto);
+
+        javax.swing.GroupLayout panelInfoLayout = new javax.swing.GroupLayout(panelInfo);
+        panelInfo.setLayout(panelInfoLayout);
+        panelInfoLayout.setHorizontalGroup(
+            panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInfoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel11)
+                .addComponent(iconoAtencion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel14)
+                .addComponent(iconoTeclado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(iconoBien)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollTexto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel29Layout.setVerticalGroup(
-            jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel29Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+        panelInfoLayout.setVerticalGroup(
+            panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoLayout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(iconoTeclado, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                    .addComponent(iconoBien, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(iconoAtencion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelInfoLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(scrollTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8))
         );
 
         botonAceptar.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
@@ -1006,6 +1136,11 @@ public class EditarCliente extends javax.swing.JFrame {
         botonCancelar.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
         botonCancelar.setText("Cancelar");
         botonCancelar.setNextFocusableComponent(inputCodigo);
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCancelarActionPerformed(evt);
+            }
+        });
 
         barraTitulo.setBackground(new java.awt.Color(255, 255, 255));
         barraTitulo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
@@ -1138,7 +1273,7 @@ public class EditarCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -1173,8 +1308,8 @@ public class EditarCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(barraTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(panelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1216,7 +1351,10 @@ public class EditarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void inputNIEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputNIEActionPerformed
-        // TODO add your handling code here:
+        if (!inputDocumentoContenido.isEnabled()) {
+            etiquetaContenidoDocumento.setEnabled(true);
+            inputDocumentoContenido.setEnabled(true);
+        }
     }//GEN-LAST:event_inputNIEActionPerformed
 
     private void inputLimiteCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputLimiteCreditoActionPerformed
@@ -1269,20 +1407,168 @@ public class EditarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_botonMinimActionPerformed
 
     private void botonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarActionPerformed
-        ref.editarClienteExiste = false;
-        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        cerrar();
     }//GEN-LAST:event_botonCerrarActionPerformed
 
+    private void cerrar() {
+        if (ref != null) ref.editarClienteExiste = false;
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }
+    
     private void botonAceptar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptar1ActionPerformed
         for (JTextField campo : inputs) {
             campo.setText("");
         }
+        etiquetaCodigo.setForeground(colorError);
+        if (botonAceptar.isEnabled()) botonAceptar.setEnabled(false);
         inputNA.setSelected(true);
     }//GEN-LAST:event_botonAceptar1ActionPerformed
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
-        ((DefaultTableModel) ref.getTablaClientes().getModel()).addRow(new Object[]{ inputCodigo.getText(), inputNombre.getText(), inputContactoNombre.getText() });
+        if (ref != null) {
+            ((DefaultTableModel) ref.getTablaClientes().getModel())
+                    .addRow(new Object[]{ inputCodigo.getText(), 
+                                          inputNombre.getText(), 
+                                          inputContactoNombre.getText() });
+        }
+        cerrar();
     }//GEN-LAST:event_botonAceptarActionPerformed
+
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
+        cerrar();
+    }//GEN-LAST:event_botonCancelarActionPerformed
+
+    private static final Color colorNormal = new Color(118,101,100);
+    private static final Color colorError = new Color(248,29,32);
+    
+    private void inputCodigoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_inputCodigoCaretUpdate
+        Object o = inputCodigo.getValue();
+        if (o == null || (Long)o <= 0L) {
+            etiquetaCodigo.setForeground(colorError);
+            codigoBien = false;
+        } else {
+            etiquetaCodigo.setForeground(colorNormal);
+            codigoBien = true;
+        }
+    }//GEN-LAST:event_inputCodigoCaretUpdate
+
+    private void inputNombreCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_inputNombreCaretUpdate
+        String texto = inputNombre.getText();
+        if (texto == null || texto.matches("\\h*")) {
+            etiquetaNombre.setForeground(colorError);
+            nombreBien = false;
+        } else {
+            etiquetaNombre.setForeground(colorNormal);
+            nombreBien = true;
+        }
+    }//GEN-LAST:event_inputNombreCaretUpdate
+
+    private void inputContactoTelefonoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_inputContactoTelefonoCaretUpdate
+        String texto = inputContactoTelefono.getText();
+        if (texto == null || texto.matches("\\h*")) {
+            etiquetaTelefono.setForeground(colorError);
+            telefonoBien = false;
+        } else {
+            etiquetaTelefono.setForeground(colorNormal);
+            telefonoBien = true;
+        }
+    }//GEN-LAST:event_inputContactoTelefonoCaretUpdate
+
+    private void inputDomicilioDireccion1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_inputDomicilioDireccion1CaretUpdate
+        String texto = inputDomicilioDireccion1.getText();
+        if (texto == null || texto.matches("\\h*")) {
+            etiquetaDireccion1.setForeground(colorError);
+            direccion1Bien = false;
+        } else {
+            etiquetaDireccion1.setForeground(colorNormal);
+            direccion1Bien = true;
+        }
+    }//GEN-LAST:event_inputDomicilioDireccion1CaretUpdate
+
+    private void inputDomicilioCiudadCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_inputDomicilioCiudadCaretUpdate
+        String texto = inputDomicilioCiudad.getText();
+        if (texto == null || texto.matches("\\h*")) {
+            etiquetaCiudad.setForeground(colorError);
+            ciudadBien = false;
+        } else {
+            etiquetaCiudad.setForeground(colorNormal);
+            ciudadBien = true;
+        }
+    }//GEN-LAST:event_inputDomicilioCiudadCaretUpdate
+
+    private void inputNAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputNAActionPerformed
+        etiquetaContenidoDocumento.setForeground(colorNormal);
+        documentoBien = true;
+        if (inputDocumentoContenido.isEnabled()) {
+            etiquetaContenidoDocumento.setEnabled(false);
+            inputDocumentoContenido.setEnabled(false);
+        }
+    }//GEN-LAST:event_inputNAActionPerformed
+
+    private void inputDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputDNIActionPerformed
+        if (!inputDocumentoContenido.isEnabled()) {
+            etiquetaContenidoDocumento.setEnabled(true);
+            inputDocumentoContenido.setEnabled(true);
+        }
+    }//GEN-LAST:event_inputDNIActionPerformed
+
+    private void inputDocumentoContenidoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_inputDocumentoContenidoCaretUpdate
+        if (inputDNI.isSelected()) {
+            if (inputDocumentoContenido.getText().matches("\\d{8}\\p{Alpha}")) {
+                documentoBien = true;
+                etiquetaDocumento.setForeground(colorNormal);
+            } else {
+                documentoBien = false;
+                etiquetaDocumento.setForeground(colorError);
+            }
+        } else { // NIE
+            if (inputDocumentoContenido.getText().matches("\\p{Alpha}\\d{7}\\p{Alpha}")) {
+                    documentoBien = true;
+                etiquetaDocumento.setForeground(colorNormal);
+            } else {
+                documentoBien = false;
+                etiquetaDocumento.setForeground(colorError);
+            }
+        }
+    }//GEN-LAST:event_inputDocumentoContenidoCaretUpdate
+
+    private void inputContactoFaxCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_inputContactoFaxCaretUpdate
+        String texto = inputContactoFax.getText();
+        if (texto == null || texto.matches("\\h*")) {
+            etiquetaFax.setForeground(colorError);
+            faxBien = false;
+        } else {
+            etiquetaFax.setForeground(colorNormal);
+            faxBien = true;
+        }
+    }//GEN-LAST:event_inputContactoFaxCaretUpdate
+
+    private void inputEmailCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_inputEmailCaretUpdate
+        if (inputEmail.getText().matches("\\w+@\\w+[.]\\w+")) {
+            etiquetaEmail.setForeground(colorNormal);
+            emailBien = true;
+            
+            if (new String(inputContrasena.getPassword()).matches("\\h*")) {
+                etiquetaContrasena.setForeground(colorError);
+                contrasenaBien = false;
+            } else {
+                etiquetaContrasena.setForeground(colorNormal);
+                contrasenaBien = true;
+            }
+            
+        } else if (inputEmail.getText().matches("\\h*")) {
+            etiquetaEmail.setForeground(colorNormal);
+            emailBien = true;
+            etiquetaContrasena.setForeground(colorNormal);
+            contrasenaBien = true;
+        } else {
+            etiquetaEmail.setForeground(colorError);
+            emailBien = false;
+        }
+    }//GEN-LAST:event_inputEmailCaretUpdate
+
+    private void inputNAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inputNAMouseClicked
+    }//GEN-LAST:event_inputNAMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1312,9 +1598,32 @@ public class EditarCliente extends javax.swing.JFrame {
     private javax.swing.JButton botonCancelar;
     private javax.swing.JButton botonCerrar;
     private javax.swing.JButton botonMinim;
+    private javax.swing.JLabel etiquetaApellido;
+    private javax.swing.JLabel etiquetaCP;
+    private javax.swing.JLabel etiquetaCiudad;
+    private javax.swing.JLabel etiquetaCodigo;
+    private javax.swing.JLabel etiquetaContenidoDocumento;
+    private javax.swing.JLabel etiquetaContrasena;
+    private javax.swing.JLabel etiquetaDireccion1;
+    private javax.swing.JLabel etiquetaDireccion2;
+    private javax.swing.JLabel etiquetaDocumento;
+    private javax.swing.JLabel etiquetaEmail;
+    private javax.swing.JLabel etiquetaFax;
+    private javax.swing.JLabel etiquetaLimCredito;
+    private javax.swing.JLabel etiquetaNombre;
+    private javax.swing.JLabel etiquetaNombreContacto;
+    private javax.swing.JLabel etiquetaPais;
+    private javax.swing.JLabel etiquetaRegion;
+    private javax.swing.JLabel etiquetaRepVentas;
+    private javax.swing.JLabel etiquetaTelefono;
+    private javax.swing.JLabel etiquetaTipoDocumento;
     private javax.swing.JPanel fondoBotonCerrar;
     private javax.swing.JPanel fondoBotonMinim;
+    private javax.swing.JLabel iconoAtencion;
+    private javax.swing.JLabel iconoBien;
+    private javax.swing.JLabel iconoTeclado;
     private javax.swing.JLabel iconoYNombreVentana;
+    private javax.swing.JTextArea infoTexto;
     private javax.swing.JFormattedTextField inputCodRepVentas;
     private javax.swing.JFormattedTextField inputCodigo;
     private javax.swing.JTextField inputContactoApellido;
@@ -1335,37 +1644,14 @@ public class EditarCliente extends javax.swing.JFrame {
     private javax.swing.JRadioButton inputNA;
     private javax.swing.JRadioButton inputNIE;
     private javax.swing.JTextField inputNombre;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
@@ -1380,7 +1666,6 @@ public class EditarCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel26;
     private javax.swing.JPanel jPanel27;
     private javax.swing.JPanel jPanel28;
-    private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1390,7 +1675,10 @@ public class EditarCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JPanel panelContenidoDocumento;
+    private javax.swing.JPanel panelInfo;
     private javax.swing.JPanel panel_datos_contacto;
     private javax.swing.JPanel panel_datos_domicilio;
+    private javax.swing.JScrollPane scrollTexto;
     // End of variables declaration//GEN-END:variables
 }

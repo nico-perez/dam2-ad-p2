@@ -264,6 +264,7 @@ public class Aplicacion extends javax.swing.JFrame {
             }
         });
         tablaPedidos.setEnabled(false);
+        tablaPedidos.setFocusable(false);
         jScrollPane2.setViewportView(tablaPedidos);
 
         jTabbedPane1.addTab("Pedidos", new javax.swing.ImageIcon(getClass().getResource("/img/file-invoice-solid.png")), jScrollPane2); // NOI18N
@@ -283,6 +284,7 @@ public class Aplicacion extends javax.swing.JFrame {
         jToolBar1.add(jButton1);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/minus-square-solid.png"))); // NOI18N
+        jButton2.setEnabled(false);
         jButton2.setFocusPainted(false);
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -290,6 +292,7 @@ public class Aplicacion extends javax.swing.JFrame {
         jToolBar1.add(jButton2);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pen-square-solid.png"))); // NOI18N
+        jButton3.setEnabled(false);
         jButton3.setFocusPainted(false);
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
