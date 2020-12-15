@@ -12,13 +12,13 @@ import dev.el_nico.jardineria.excepciones.ExcepcionCodigoYaExistente;
 import dev.el_nico.jardineria.modelo.Cliente;
 import dev.el_nico.jardineria.modelo.Pedido;
 
-public class PedidosDao implements IDataAccessObject<Pedido> {
+public class PedidosDao implements IDao<Pedido> {
 
     private SortedMap<Integer, Pedido> pedidos = new TreeMap<>();
-    private IDataAccessObject<Cliente> clientes;
+    private IDao<Cliente> clientes;
 
     // No estoy seguro cómo proporcionar acceso a los clientes si no.
-    public PedidosDao(IDataAccessObject<Cliente> clientes) {
+    public PedidosDao(IDao<Cliente> clientes) {
         this.clientes = clientes;
         try {
             guardar(new Pedido.Builder(1, 4, "enviado", 1).con_comentarios("holaaa").build());
@@ -33,7 +33,7 @@ public class PedidosDao implements IDataAccessObject<Pedido> {
     }
 
     @Override
-    public Optional<Pedido> uno(int id) {
+    public Optional<Pedido> uno(Object id) {
         return Optional.ofNullable(pedidos.get(id));
     }
 
@@ -67,7 +67,7 @@ public class PedidosDao implements IDataAccessObject<Pedido> {
     }
 
     @Override
-    public void modificar(Pedido t, String params) {
+    public void modificar(Pedido t, Object[] params) {
         // TODO Auto-generated method stub
 
     }

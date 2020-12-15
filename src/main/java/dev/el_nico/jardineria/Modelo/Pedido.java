@@ -2,7 +2,7 @@ package dev.el_nico.jardineria.modelo;
 
 import java.util.Calendar;
 
-import dev.el_nico.jardineria.util.AbstractBuilder;
+import dev.el_nico.jardineria.util.IBuilder;
 import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
 
 
@@ -106,7 +106,7 @@ public class Pedido {
     }
 
     /** Clase para buildear instancias válidas de Pedido. */
-    public static class Builder extends AbstractBuilder<Pedido> {
+    public static class Builder implements IBuilder<Pedido> {
         private Pedido pedido;
 
         /** 

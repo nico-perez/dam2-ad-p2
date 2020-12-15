@@ -1,4 +1,4 @@
-package dev.el_nico.jardineria.dao;
+package dev.el_nico.jardineria.dao.gson;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,18 +13,19 @@ import java.util.TreeMap;
 
 import com.google.gson.Gson;
 
+import dev.el_nico.jardineria.dao.IDao;
 import dev.el_nico.jardineria.excepciones.ExcepcionCodigoYaExistente;
 import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
 import dev.el_nico.jardineria.modelo.Cliente;
 import dev.el_nico.jardineria.modelo.Pedido;
 
-public class PedidosGsonDao implements IDataAccessObject<Pedido> {
+public class PedidosGsonDao implements IDao<Pedido> {
     private static int version = 1;
 
     private SortedMap<Integer, Pedido> pedidos = new TreeMap<>();
-    private IDataAccessObject<Cliente> clientes;
+    private IDao<Cliente> clientes;
 
-    public PedidosGsonDao(String ruta_archivo_json, IDataAccessObject<Cliente> clientes) {
+    public PedidosGsonDao(String ruta_archivo_json, IDao<Cliente> clientes) {
         this.clientes = clientes;
 
         File archivo_json = new File(ruta_archivo_json);
@@ -62,7 +63,7 @@ public class PedidosGsonDao implements IDataAccessObject<Pedido> {
     }
 
     @Override
-    public Optional<Pedido> uno(int id) {
+    public Optional<Pedido> uno(Object id) {
         return Optional.ofNullable(pedidos.get(id));
     }
 
@@ -105,7 +106,7 @@ public class PedidosGsonDao implements IDataAccessObject<Pedido> {
     }
 
     @Override
-    public void modificar(Pedido t, String params) {
+    public void modificar(Pedido t, Object[] params) {
         // TODO Auto-generated method stub
 
     }

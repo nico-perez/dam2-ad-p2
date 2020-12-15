@@ -10,7 +10,7 @@ import dev.el_nico.jardineria.excepciones.ExcepcionClienteDuplicado;
 import dev.el_nico.jardineria.excepciones.ExcepcionCodigoYaExistente;
 import dev.el_nico.jardineria.modelo.Cliente;
 
-public class ClientesDao implements IDataAccessObject<Cliente> {
+public class ClientesDao implements IDao<Cliente> {
 
     private SortedMap<Integer, Cliente> clientes = new TreeMap<>();
 
@@ -26,7 +26,7 @@ public class ClientesDao implements IDataAccessObject<Cliente> {
     }
 
     @Override
-    public Optional<Cliente> uno(int id) {
+    public Optional<Cliente> uno(Object id) {
         return Optional.ofNullable(clientes.get(id));
     }
 
@@ -61,7 +61,7 @@ public class ClientesDao implements IDataAccessObject<Cliente> {
     }
 
     @Override
-    public void modificar(Cliente t, String params) {
+    public void modificar(Cliente t, Object[] params) {
         // TODO Auto-generated method stub
 
     }

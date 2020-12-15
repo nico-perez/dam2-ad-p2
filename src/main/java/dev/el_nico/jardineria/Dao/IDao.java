@@ -4,16 +4,16 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Interfaz Dao<T> con métodos para leer uno, leer varios,
- * guardar uno, modificar uno y eliminar uno.
+ * Interfaz Data Access Object <T> con métodos para leer uno,
+ * leer varios, guardar uno, modificar uno y eliminar uno.
  */
-public interface IDataAccessObject<T> { // DAO
+public interface IDao<T> { // DAO
     /**
      * Devuelve un Optional<> del tipo del Dao.
-     * @param id Código del objeto a recuperar.
+     * @param id Código del objeto a recuperar (normalmente, int o String)
      * @return Un Optional<> con, posiblemente, un objeto dentro.
      */
-    Optional<T> uno(int id);
+    Optional<T> uno(Object id);
 
     /**
      * Devuelve todos los objetos contenidos en el Dao, en forma
@@ -35,7 +35,7 @@ public interface IDataAccessObject<T> { // DAO
      * @param t
      * @param params
      */
-    void modificar(T t, String params);
+    void modificar(T t, Object[] params);
 
     /**
      * Elimina un objeto del Dao.

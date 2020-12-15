@@ -2,7 +2,7 @@ package dev.el_nico.jardineria.modelo;
 
 import java.util.Optional;
 
-import dev.el_nico.jardineria.util.AbstractBuilder;
+import dev.el_nico.jardineria.util.IBuilder;
 import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
 import dev.el_nico.jardineria.excepciones.ExcepcionFormatoIncorrecto;
 
@@ -210,7 +210,7 @@ public class Cliente {
     }
 
     /** Clase para buildear instancias válidas de Cliente. */
-    public static class Builder extends AbstractBuilder<Cliente> {
+    public static class Builder implements IBuilder<Cliente> {
         private Cliente cliente;
 
         /**
@@ -265,25 +265,25 @@ public class Cliente {
 
         /** Para aportar un nombre de contacto al builder. */
         public Builder con_nombre_de_contacto(String nombre) {
-            cliente.contacto.nombre = Optional.of(nombre);
+            cliente.contacto.nombre = Optional.ofNullable(nombre);
             return this;
         }
 
         /** Para aportar un apellido de contacto al builder. */
         public Builder con_apellido_de_contacto(String apellido) {
-            cliente.contacto.apellido = Optional.of(apellido);
+            cliente.contacto.apellido = Optional.ofNullable(apellido);
             return this;
         }
 
         /** Para aportar un límite de crédito al builder. */
         public Builder con_limite_credito(double limite_credito) {
-            cliente.limite_credito = Optional.of(limite_credito);
+            cliente.limite_credito = Optional.ofNullable(limite_credito);
             return this;
         }
 
         /** Para aportar un código de empleado rep. ventas al builder. */
         public Builder con_cod_empl_rep_ventas(int cod_empl_rep_ventas) {
-            cliente.cod_empl_rep_ventas = Optional.of(cod_empl_rep_ventas);
+            cliente.cod_empl_rep_ventas = Optional.ofNullable(cod_empl_rep_ventas);
             return this;
         }
 
@@ -292,39 +292,39 @@ public class Cliente {
          * del builder.
          */
         public Builder con_linea_direccion2(String direccion2) {
-            cliente.domicilio.direccion2 = Optional.of(direccion2);
+            cliente.domicilio.direccion2 = Optional.ofNullable(direccion2);
             return this;
         }
 
         /** Para aportar una región al domicilio del builder. */
         public Builder con_region(String region) {
-            cliente.domicilio.region = Optional.of(region);
+            cliente.domicilio.region = Optional.ofNullable(region);
             return this;
         }
 
         /** Para aportar un país al domicilio del builder. */
         public Builder con_pais(String pais) {
-            cliente.domicilio.pais = Optional.of(pais);
+            cliente.domicilio.pais = Optional.ofNullable(pais);
             return this;
         }
 
         /** Para aportar un código postal al domicilio del builder. */
         public Builder con_codigo_postal(String cp) {
-            cliente.domicilio.cp = Optional.of(cp);
+            cliente.domicilio.cp = Optional.ofNullable(cp);
             return this;
         }
 
         /** Para aportar DNI o NIE al builder */
         public Builder con_documento(TipoDocumento tipo, String documento) {
-            cliente.tipo_doc = Optional.of(tipo);
-            cliente.dni = Optional.of(documento);
+            cliente.tipo_doc = Optional.ofNullable(tipo);
+            cliente.dni = Optional.ofNullable(documento);
             return this;
         }
 
         /** Para aportar email y contraseña al builder */
         public Builder con_email(String email, String contrasena) {
-            cliente.email = Optional.of(email);
-            cliente.contrasena = Optional.of(contrasena);
+            cliente.email = Optional.ofNullable(email);
+            cliente.contrasena = Optional.ofNullable(contrasena);
             return this;
         }
 

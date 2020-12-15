@@ -1,6 +1,6 @@
 package dev.el_nico.jardineria.util;
 
-public abstract class AbstractBuilder<T> {
+public interface IBuilder<T> {
     /**
      * Esta función debe asegurarse de que todos los
      * datos de la clase siendo buildeada son correctos.
