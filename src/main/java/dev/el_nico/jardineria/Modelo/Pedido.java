@@ -1,6 +1,7 @@
 package dev.el_nico.jardineria.modelo;
 
 import java.util.Calendar;
+import java.util.Optional;
 
 import dev.el_nico.jardineria.util.IBuilder;
 import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
@@ -32,7 +33,7 @@ public class Pedido {
     private int codigo;
     private Fecha fecha;
     private String estado;
-    private String comentarios;
+    private Optional<String> comentarios;
     private int codigo_cliente;
 
     private Pedido(int codigo, Fecha fecha, String estado, int codigo_cliente) {
@@ -58,7 +59,7 @@ public class Pedido {
     }
 
     /** Devuelve los comentarios del pedido. */
-    public String get_comentarios() {
+    public Optional<String> get_comentarios() {
         return comentarios;
     }
 
@@ -71,7 +72,7 @@ public class Pedido {
     public static class Fecha {
         private Calendar pedido;
         private Calendar esperada;
-        private Calendar entrega;
+        private Optional<Calendar> entrega;
 
         /**
          * Construye una nueva Fecha asignando a pedido
@@ -102,9 +103,8 @@ public class Pedido {
             return esperada;
         }
 
-        // TODO Poner un puñado de Optionals por aquí
         /** La fecha de entrega real del pedido. */
-        public Calendar entrega() {
+        public Optional<Calendar> entrega() {
             return entrega;
         }
     }
@@ -142,13 +142,13 @@ public class Pedido {
 
         /** Añade fecha de entrega al builder. */
         public Builder con_fecha_de_entrega(Calendar entrega) {
-            this.pedido.fecha.entrega = entrega;
+            this.pedido.fecha.entrega = Optional.ofNullable(entrega);
             return this;
         }
 
         /** Añade comentarios al builder. */
         public Builder con_comentarios(String comentarios) {
-            pedido.comentarios = comentarios;
+            pedido.comentarios = Optional.ofNullable(comentarios);
             return this;
         }
 

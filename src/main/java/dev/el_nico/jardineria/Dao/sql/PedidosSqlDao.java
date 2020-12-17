@@ -1,15 +1,19 @@
 package dev.el_nico.jardineria.dao.sql;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
 import dev.el_nico.jardineria.dao.IDao;
+import dev.el_nico.jardineria.excepciones.ExcepcionClienteNoEncontrado;
+import dev.el_nico.jardineria.excepciones.ExcepcionCodigoYaExistente;
 import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
 import dev.el_nico.jardineria.modelo.Cliente;
 import dev.el_nico.jardineria.modelo.Pedido;
@@ -51,7 +55,6 @@ public class PedidosSqlDao implements IDao<Pedido> {
                 sacarPedidoDeResultSet(resultados).ifPresent(c -> lista.add(c));
             }
             return lista;
-
         } catch (SQLException e) {
             e.printStackTrace();    
             return new ArrayList<Pedido>(0);
@@ -60,8 +63,64 @@ public class PedidosSqlDao implements IDao<Pedido> {
 
     @Override
     public void guardar(Pedido t) throws Exception {
-        // TODO Auto-generated method stub
+        
+        try (PreparedStatement pscount = conn.prepareStatement("select count(*) from pedido where codigo_pedido=?;");
+             PreparedStatement pscodcl = conn.prepareStatement("select count(*) from cliente where codigo_cliente=?;");
+             PreparedStatement psinsrt = conn.prepareStatement("insert into pedido values(?,?,?,?,?,?,?);")) {
+            pscount.setInt(1, t.get_codigo());
+            ResultSet rs = pscount.executeQuery();
+            if (rs.next()) {
+                if (rs.getInt(1) != 0) {
+                    // ya hay un pedido con el codigo pedido tal
+                    throw new ExcepcionCodigoYaExistente("Ya hay un pedido con código " + t.get_codigo());
+                } else {
 
+                    pscodcl.setInt(1, t.get_codigo_cliente());
+                    ResultSet rscodcl =pscodcl.executeQuery();
+                    if (rscodcl.next()) {
+                        if (rscodcl.getInt(1) < 1) {
+                            // no hay cliente al que referir
+                            throw new ExcepcionClienteNoEncontrado("No hay cliente con código " + t.get_codigo_cliente()); 
+                        } else {
+
+                            psinsrt.setInt(1, t.get_codigo());
+                            psinsrt.setDate(2, new Date(t.get_fecha().pedido().getTimeInMillis()));
+                            psinsrt.setDate(3, new Date(t.get_fecha().esperada().getTimeInMillis()));
+                            t.get_fecha().entrega().ifPresentOrElse(e -> {
+                                try {
+                                    psinsrt.setDate(4, new Date(e.getTimeInMillis()));
+                                } catch (SQLException e2) {
+                                    e2.printStackTrace();
+                                }
+                            }, () -> {
+                                try {
+                                    psinsrt.setNull(4, Types.DATE);
+                                } catch (SQLException e2) {
+                                    e2.printStackTrace();
+                                }
+                            });
+                            psinsrt.setString(5, t.get_estado());
+                            t.get_comentarios().ifPresentOrElse(c -> {
+                                try {
+                                    psinsrt.setString(6, c);
+                                } catch (SQLException e1) {
+                                    e1.printStackTrace();
+                                }
+                            }, () -> {
+                                try {
+                                    psinsrt.setNull(6, Types.VARCHAR);
+                                } catch (SQLException e1) {
+                                    e1.printStackTrace();
+                                }
+                            });
+                            psinsrt.setInt(7, t.get_codigo_cliente());
+
+                            psinsrt.executeUpdate();
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -72,8 +131,18 @@ public class PedidosSqlDao implements IDao<Pedido> {
 
     @Override
     public void eliminar(Pedido t) {
-        // TODO Auto-generated method stub
-
+        Optional<Pedido> p = uno(t.get_codigo());
+        if (p.isPresent() &&  p.get().equals(t)) {
+            // eliminar
+            try (PreparedStatement ps = conn.prepareStatement("delete from pedido where codigo_pedido=?;")) {
+                ps.setInt(1, t.get_codigo());
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // nada 
+        }
     }
     
     private static Optional<Pedido> sacarPedidoDeResultSet(ResultSet sqlQuery) throws SQLException {
