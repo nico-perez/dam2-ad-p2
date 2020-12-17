@@ -84,8 +84,12 @@ public class Pedido {
          */
         private Fecha(int demora_esperada) {
             this.pedido = Calendar.getInstance();
-            (this.esperada = (Calendar)pedido.clone()).add(Calendar.DAY_OF_MONTH, 
-                    demora_esperada < DEMORA_MINIMA ? DEMORA_MINIMA : demora_esperada);
+            (this.esperada = (Calendar)pedido.clone()).add(Calendar.DAY_OF_MONTH, demora_esperada);
+        }
+
+        private Fecha(Calendar pedido, Calendar esperada) {
+            this.pedido = pedido;
+            this.esperada = esperada;
         }
 
         /** La fecha en que se hizo el pedido. Nunca es null. */
@@ -132,6 +136,10 @@ public class Pedido {
             this.pedido = new Pedido(codigo, new Fecha(dias_demora), estado, codigo_cliente);
         }
 
+        public Builder(int codigo, Calendar pedido, Calendar esperada, String estado, int codigo_cliente) {
+            this.pedido = new Pedido(codigo, new Fecha(pedido, esperada), estado, codigo_cliente);
+        }
+
         /** Añade fecha de entrega al builder. */
         public Builder con_fecha_de_entrega(Calendar entrega) {
             this.pedido.fecha.entrega = entrega;
@@ -168,7 +176,6 @@ public class Pedido {
 
             // Se asegura de que la fecha de espera es por lo menos
             // tres días posterior a la fecha del pedido.
-            // TODO Hay que quitar esto. Esto se asegura en el constructor de Fecha.
             Calendar tres_dias_despues_del_pedido = (Calendar)pedido.fecha.pedido.clone();
             tres_dias_despues_del_pedido.add(Calendar.DAY_OF_MONTH, DEMORA_MINIMA);
             if (pedido.fecha.esperada.before(tres_dias_despues_del_pedido)) {

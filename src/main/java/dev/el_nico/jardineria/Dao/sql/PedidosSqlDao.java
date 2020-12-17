@@ -1,13 +1,16 @@
 package dev.el_nico.jardineria.dao.sql;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
 import dev.el_nico.jardineria.dao.IDao;
+import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
 import dev.el_nico.jardineria.modelo.Cliente;
 import dev.el_nico.jardineria.modelo.Pedido;
 
@@ -27,14 +30,32 @@ public class PedidosSqlDao implements IDao<Pedido> {
 
     @Override
     public Optional<Pedido> uno(Object id) {
-        // TODO Auto-generated method stub
-        return null;
+        try (PreparedStatement stat = conn.prepareStatement("select * from pedido where codigo_pedido=?;")) {
+            stat.setInt(1, (int)id);
+            ResultSet res = stat.executeQuery();
+            if (res.next()) {
+                return sacarPedidoDeResultSet(res);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 
     @Override
     public List<Pedido> todos() {
-        // TODO Auto-generated method stub
-        return null;
+        try (PreparedStatement stat = conn.prepareStatement("select * from pedido;")) {
+            ResultSet resultados = stat.executeQuery();
+            List<Pedido> lista = new ArrayList<>();
+            while (resultados.next()) {
+                sacarPedidoDeResultSet(resultados).ifPresent(c -> lista.add(c));
+            }
+            return lista;
+
+        } catch (SQLException e) {
+            e.printStackTrace();    
+            return new ArrayList<Pedido>(0);
+        }
     }
 
     @Override
@@ -67,9 +88,13 @@ public class PedidosSqlDao implements IDao<Pedido> {
 
             Pedido pedido;
             try {
-                pedido = new Pedido.Builder(codigo, dias_demora, estado, codigo_cliente) // TODO regulero
+                pedido = new Pedido.Builder(codigo_pedido, fecha_pedido, fecha_esperada, estado, codigo_cliente)
+                        .con_fecha_de_entrega(fecha_entrega).con_comentarios(comentarios).build();
+            } catch (ExcepcionDatoNoValido e) {
+                pedido = null;
             }
 
+            return Optional.ofNullable(pedido);
         } else {
             return Optional.empty();
         }
