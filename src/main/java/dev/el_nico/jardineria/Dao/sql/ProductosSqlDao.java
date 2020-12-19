@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,41 +59,45 @@ public class ProductosSqlDao implements IDao<Producto> {
     @Override
     public void modificar(Producto t, Object[] params) {
         if (t != null && params != null && params.length > 0) {
-            try (PreparedStatement stat = conn.prepareStatement("update producto ? where codigo_producto=?")) {
-                stat.setString(2, t.getCodigo_producto());
+            try (PreparedStatement stat = conn.prepareStatement(
+                    //                                   1         2       3              4            5              6                    7               8                   9                      10
+                    "update producto set codigo_producto=?, nombre=?, gama=?, dimensiones=?, proveedor=?, descripcion=?, cantidad_en_stock=?, precio_venta=?, precio_proveedor=? where codigo_producto=?;")) {
+                stat.setString(10, t.getCodigo_producto());
 
-                String sets = "";
-                int i = 0;
-                for (Object o : params) {
-                    /*
-                     * 0 - codigo_producto, 1 - nombre, 2 - gama, 3 - dimensiones, 4 - proveedor,
-                     * 5 - descripcion, 6 - cantidad_en_stock, 7 - precio_venta, 8 - precio_proveedor
-                     */
+                for (int i = 1; i <= 9; ++i) {
+                    Object o = i <= params.length ? params[i - 1] : null;
                     if (o != null) {
-                        String set = "";
-                        if (i > 0)
-                            set += ", ";
-                        set += "set ";
-                        switch (i) {
-                            case 1: set += "codigo_producto"; break;
-                            case 2: set += "nombre"; break;
-                            case 3: set += "gama"; break;
-                            case 4: set += "proveedor"; break;
-                            case 5: set += "descripcion"; break;
-                            case 6: set += "cantidad_en_stock"; break;
-                            case 7: set += "precio_venta"; break;
-                            case 8: set += "precio_proveedor"; break;
+                        // nonull
+                        if (o instanceof String && ((String)o).equals("sqlnull")) {
+                            // queremos nullear el campo
+                            stat.setObject(i, Types.NULL);
+                        } else {
+                            stat.setObject(i, o);
                         }
-                        set += "=" + o;
-                        sets += set;
+                    } else {
+                        // sinull (valor por defecto)
+                        Object def;
+                        switch (i) {
+                            case 1: def = t.getCodigo_producto(); break;
+                            case 2: def = t.getNombre(); break;
+                            case 3: def = t.getGama(); break;
+                            case 4: def = t.getDimensiones(); break;
+                            case 5: def = t.getProveedor(); break;
+                            case 6: def = t.getDescripcion(); break;
+                            case 7: def = t.getCantidad_en_stock(); break;
+                            case 8: def = t.getPrecio_venta(); break;
+                            case 9: def = t.getPrecio_proveedor(); break;
+                            default: def = null;
+                        }
+
+                        stat.setObject(i, def);
                     }
                 }
-                stat.setString(1, sets);
 
                 stat.executeUpdate();
 
             } catch (SQLException e) {
-
+                e.printStackTrace();
             }
         }
     }

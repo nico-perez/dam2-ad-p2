@@ -13,8 +13,8 @@ public class ConexionJardineria implements AutoCloseable {
     private ProductosSqlDao productosDao;
 
     private void initDaos() {
-        pedidosDao = new PedidosSqlDao(
-                clientesDao = new ClientesSqlDao(conn));
+        clientesDao = new ClientesSqlDao(conn);
+        pedidosDao = new PedidosSqlDao(conn);
         productosDao = new ProductosSqlDao(conn);
     }
 
@@ -44,6 +44,7 @@ public class ConexionJardineria implements AutoCloseable {
     @Override
     public void close() throws SQLException {
         if (conn != null) {
+            if (!conn.getAutoCommit()) conn.commit();
             conn.close();
         }
     }
