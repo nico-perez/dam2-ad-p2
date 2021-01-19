@@ -70,5 +70,4 @@ public class ClientesDao implements IDao<Cliente> {
     public void eliminar(Cliente t) {
         clientes.remove(t.get_codigo());
     }
-    
 }

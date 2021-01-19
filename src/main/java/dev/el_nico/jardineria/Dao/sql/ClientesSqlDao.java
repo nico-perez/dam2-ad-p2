@@ -4,19 +4,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import dev.el_nico.jardineria.dao.IDao;
+import dev.el_nico.jardineria.excepciones.ExcepcionCodigoYaExistente;
 import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
 import dev.el_nico.jardineria.excepciones.ExcepcionFormatoIncorrecto;
 import dev.el_nico.jardineria.modelo.Cliente;
 
 public class ClientesSqlDao implements IDao<Cliente> {
 
-    // package access para que pueda acceder PedidosSQLDao
-    Connection conn;
+    private Connection conn;
 
     public ClientesSqlDao(Connection conn) {
         this.conn = conn;
@@ -53,9 +54,153 @@ public class ClientesSqlDao implements IDao<Cliente> {
     }
 
     @Override
-    public void guardar(Cliente t) throws Exception {
-        // TODO Auto-generated method stub
+    public void guardar(Cliente t) throws ExcepcionCodigoYaExistente, SQLException {
+        try (PreparedStatement count_cod_cliente = conn.prepareStatement("select count(*) from cliente where codigo_cliente=?;");
+             PreparedStatement insert_into_cliente = conn.prepareStatement("insert into cliente values(?,?,?,?,?,?,?,?,?,?,?,?,?,?);")) {
+            
+            count_cod_cliente.setInt(1, t.get_codigo());
+            ResultSet rs = count_cod_cliente.executeQuery();
+            if (rs.next()) {
+                if (rs.getInt(1) != 0) {
+                    // ya hay un cliente con el codigo pedido tal
+                    throw new ExcepcionCodigoYaExistente("Ya hay un cliente con código " + t.get_codigo());
+                } else {
 
+                    // esto es culpa de java me niego a arreglarlo
+
+                    insert_into_cliente.setInt(1, t.get_codigo());
+                    insert_into_cliente.setString(2, t.get_nombre());
+                    t.get_contacto().nombre().ifPresentOrElse(n -> {
+                        try {
+                            insert_into_cliente.setString(3, n);
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }, () -> {
+                        try {
+                            insert_into_cliente.setNull(3, Types.VARCHAR);
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    });
+                    t.get_contacto().apellido().ifPresentOrElse(a-> {
+                        try {
+                            insert_into_cliente.setString(4, a);
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }, () -> {
+                        try {
+                            insert_into_cliente.setNull(4, Types.VARCHAR);
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    });
+                    insert_into_cliente.setString(5, t.get_contacto().telefono());
+                    insert_into_cliente.setString(6, t.get_contacto().fax());
+                    insert_into_cliente.setString(7, t.get_domicilio().direccion1());
+                    t.get_domicilio().direccion2().ifPresentOrElse(d-> {
+                        try {
+                            insert_into_cliente.setString(8, d);
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }, () -> {
+                        try {
+                            insert_into_cliente.setNull(8, Types.VARCHAR);
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    });
+                    insert_into_cliente.setString(9, t.get_domicilio().ciudad());
+                    t.get_domicilio().region().ifPresentOrElse(r-> {
+                        try {
+                            insert_into_cliente.setString(10, r);
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }, () -> {
+                        try {
+                            insert_into_cliente.setNull(10, Types.VARCHAR);
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    });
+                    t.get_domicilio().pais().ifPresentOrElse(p-> {
+                        try {
+                            insert_into_cliente.setString(11, p);
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }, () -> {
+                        try {
+                            insert_into_cliente.setNull(11, Types.VARCHAR);
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    });
+                    t.get_domicilio().cp().ifPresentOrElse(c-> {
+                        try {
+                            insert_into_cliente.setString(12, c);
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }, () -> {
+                        try {
+                            insert_into_cliente.setNull(12, Types.VARCHAR);
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    });
+                    t.get_cod_empl_rep_ventas().ifPresentOrElse(c-> {
+                        try {
+                            insert_into_cliente.setInt(13, c);
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }, () -> {
+                        try {
+                            insert_into_cliente.setNull(13, Types.INTEGER);
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    });
+                    t.get_limite_credito().ifPresentOrElse(L-> {
+                        try {
+                            insert_into_cliente.setDouble(14, L);
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }, () -> {
+                        try {
+                            insert_into_cliente.setNull(14, Types.DOUBLE);
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    });
+                    
+                    // try catch try catch try catch try catch try catch try catch try catch try catch try catch try catch try catch try
+
+                    insert_into_cliente.executeUpdate();
+                }
+            }
+        }
     }
 
     @Override

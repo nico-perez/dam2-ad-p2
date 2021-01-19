@@ -69,7 +69,7 @@ public class PedidosSqlDao implements IDao<Pedido> {
                 } else {
 
                     count_cod_cliente.setInt(1, t.get_codigo_cliente());
-                    ResultSet rscodcl =count_cod_cliente.executeQuery();
+                    ResultSet rscodcl = count_cod_cliente.executeQuery();
                     if (rscodcl.next()) {
                         if (rscodcl.getInt(1) < 1) {
                             // no hay cliente al que referir
@@ -139,10 +139,14 @@ public class PedidosSqlDao implements IDao<Pedido> {
     
     private static Optional<Pedido> sacarPedidoDeResultSet(ResultSet sqlQuery) throws SQLException {
         if (sqlQuery != null) {
+            
             int codigo_pedido = sqlQuery.getInt("codigo_pedido");
-            Calendar fecha_pedido = new Calendar.Builder().setInstant(sqlQuery.getDate("fecha_pedido")).build();
-            Calendar fecha_esperada = new Calendar.Builder().setInstant(sqlQuery.getDate("fecha_esperada")).build();
-            Calendar fecha_entrega = new Calendar.Builder().setInstant(sqlQuery.getDate("fecha_entrega")).build();
+            Date date_fecha_pedido = sqlQuery.getDate("fecha_pedido");
+            Date date_fecha_esperada = sqlQuery.getDate("fecha_esperada");
+            Date date_fecha_entrega = sqlQuery.getDate("fecha_entrega");
+            Calendar fecha_pedido = date_fecha_pedido == null ? null : new Calendar.Builder().setInstant(date_fecha_pedido).build();
+            Calendar fecha_esperada = date_fecha_esperada == null ? null : new Calendar.Builder().setInstant(date_fecha_esperada).build();
+            Calendar fecha_entrega = date_fecha_entrega == null ? null : new Calendar.Builder().setInstant(date_fecha_entrega).build();
             String estado = sqlQuery.getString("estado");
             String comentarios = sqlQuery.getString("comentarios");
             int codigo_cliente = sqlQuery.getInt("codigo_cliente");

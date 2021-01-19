@@ -2,9 +2,9 @@ package dev.el_nico.jardineria.modelo;
 
 import java.util.Optional;
 
-import dev.el_nico.jardineria.util.IBuilder;
 import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
 import dev.el_nico.jardineria.excepciones.ExcepcionFormatoIncorrecto;
+import dev.el_nico.jardineria.util.IBuilder;
 
 /**
  * Objeto que representa a uno de los clientes
@@ -48,6 +48,25 @@ public class Cliente {
         this.nombre = nombre;
         this.contacto = contacto;
         this.domicilio = domicilio;
+
+        if (contacto != null) {
+            contacto.nombre = Optional.empty();
+            contacto.apellido = Optional.empty();
+        }
+
+        if (domicilio != null) {
+            domicilio.direccion2 = Optional.empty();
+            domicilio.region = Optional.empty();
+            domicilio.pais = Optional.empty();
+            domicilio.cp = Optional.empty();
+        }
+
+        cod_empl_rep_ventas = Optional.empty();
+        limite_credito = Optional.empty();
+        tipo_doc = Optional.empty();
+        dni = Optional.empty();
+        email = Optional.empty();
+        contrasena = Optional.empty();
     }
 
     /** Devuelve el código de cliente. */
@@ -145,6 +164,12 @@ public class Cliente {
         public String fax() {
             return fax;
         }
+
+        @Override
+        public String toString() {
+            return "Contacto [apellido=" + apellido + ", fax=" + fax + ", nombre=" + nombre + ", telefono=" + telefono
+                    + "]";
+        }
     }
 
     /**
@@ -206,6 +231,12 @@ public class Cliente {
         /** Devuelve el código postal del domicilio del cliente */
         public Optional<String> cp() {
             return cp;
+        }
+
+        @Override
+        public String toString() {
+            return "Domicilio [ciudad=" + ciudad + ", cp=" + cp + ", direccion1=" + direccion1 + ", direccion2="
+                    + direccion2 + ", pais=" + pais + ", region=" + region + "]";
         }
     }
 
@@ -276,13 +307,13 @@ public class Cliente {
         }
 
         /** Para aportar un límite de crédito al builder. */
-        public Builder con_limite_credito(double limite_credito) {
+        public Builder con_limite_credito(Double limite_credito) {
             cliente.limite_credito = Optional.ofNullable(limite_credito);
             return this;
         }
 
         /** Para aportar un código de empleado rep. ventas al builder. */
-        public Builder con_cod_empl_rep_ventas(int cod_empl_rep_ventas) {
+        public Builder con_cod_empl_rep_ventas(Integer cod_empl_rep_ventas) {
             cliente.cod_empl_rep_ventas = Optional.ofNullable(cod_empl_rep_ventas);
             return this;
         }
@@ -359,9 +390,9 @@ public class Cliente {
                     throw new ExcepcionDatoNoValido("Deberia haber contraseña!!!");
                 }
                 // Comprobar que el email es en forma tal @ tal . tal
-                if (!cliente.email.get().matches("\\w+@\\w+[.][a-zA-Z]+")) {
+                if (!cliente.email.get().matches("\\w+@\\w+[.]\\w+")) {
                     email_bien = false;
-                    throw new ExcepcionFormatoIncorrecto("El email debería cumplir \"[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.][a-zA-Z]+\", " +
+                    throw new ExcepcionFormatoIncorrecto("El email debería matchear \"\\w+@\\w+[.]\\w+\", " +
                                                          "pero es " + cliente.email.get());
                 }
             }
@@ -394,5 +425,58 @@ public class Cliente {
             return datos_necesarios_asignados && 
                    email_bien && documento_bien ? cliente : null;
         }
+    }
+
+    /** Utilidad para las tablas de la interfaz de usuario */
+    public Object[] objArray() {
+        return new String[] {
+            String.valueOf(codigo),
+            nombre,
+            contacto.nombre.orElse(""),
+            contacto.apellido.orElse(""),
+            contacto.telefono,
+            contacto.fax,
+            domicilio.direccion1,
+            domicilio.direccion2.orElse(""),
+            domicilio.ciudad,
+            domicilio.region.orElse(""),
+            domicilio.pais.orElse(""),
+            domicilio.cp.orElse(""),
+            cod_empl_rep_ventas == null ? "" : (cod_empl_rep_ventas.isPresent() ?  String.valueOf(cod_empl_rep_ventas.get()) : ""),
+            limite_credito == null ? "" : (limite_credito.isPresent() ? String.valueOf(limite_credito.get()) : ""),
+            tipo_doc == null ? "" : (tipo_doc.isPresent() ? tipo_doc.get().toString() : ""),
+            dni == null ? "" : dni.orElse(""),
+            email == null ? "" : email.orElse(""),
+            contrasena == null ? "" : contrasena.orElse("")
+        };
+    }
+
+    /** Un resumen del cliente para la práctica 1 de AD */
+    public String infoResumen() {
+        return "ID: " + codigo + " | Nombre: " + nombre + " | Contacto: " + contacto.nombre.orElse("-----") + " " + contacto.apellido.orElse("-----");
+    }
+
+    @Override
+    public String toString() {
+        String s = 
+              "\n============[ Cliente " + codigo + " ]============"
+            + "\nNombre: " + nombre
+            + "\nContacto {"
+            + "\n  Nom: " + contacto.nombre.orElse("------")
+            + "\n  Ape: " + contacto.apellido.orElse("------")
+            + "\n  Tlf: " + contacto.telefono
+            + "\n  Fax: " + contacto.fax
+            + "\n}"
+            + "\nDomicilio {"
+            + "\n  Ln1: " + domicilio.direccion1
+            + "\n  Ln2: " + domicilio.direccion2.orElse("------")
+            + "\n  Ciu: " + domicilio.ciudad
+            + "\n  Reg: " + domicilio.region.orElse("------")
+            + "\n  Pai: " + domicilio.pais.orElse("------")
+            + "\n   CP: " + domicilio.cp.orElse("------")
+            + "\n}"
+            + "\nRpVtas: " + (cod_empl_rep_ventas.isPresent() ? cod_empl_rep_ventas.get() : "------")
+            + "\nLimCrd: " + (limite_credito.isPresent() ? limite_credito.get() : "------");
+        return s;
     }
 }

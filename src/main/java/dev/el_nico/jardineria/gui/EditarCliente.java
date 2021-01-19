@@ -7,30 +7,44 @@ package dev.el_nico.jardineria.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.Point;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
-import javax.swing.JRootPane;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+
+import org.apache.commons.lang3.StringUtils;
+
+import dev.el_nico.jardineria.excepciones.ExcepcionCodigoYaExistente;
+import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
+import dev.el_nico.jardineria.excepciones.ExcepcionFormatoIncorrecto;
+import dev.el_nico.jardineria.modelo.Cliente;
+import dev.el_nico.jardineria.modelo.TipoDocumento;
 
 /**
  *
  * @author NICO2DAM
  */
-public class EditarCliente extends javax.swing.JFrame {
+public class EditarCliente extends javax.swing.JDialog {
 
-    private Aplicacion ref;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 8778139352579750015L;
+    private Cliente C = null;
+    private Integer rowCliente = null;
+    
+    private Aplicacion app;
     private ArrayList<JTextField> inputs = new ArrayList<>(17);
     
     private boolean codigoBien, nombreBien, telefonoBien,
@@ -40,9 +54,10 @@ public class EditarCliente extends javax.swing.JFrame {
     /**
      * Creates new form NuevoCliente
      */
-    public EditarCliente(Aplicacion ref) {
-        this.ref = ref;
-        if (ref != null) ref.editarClienteExiste = true;
+    public EditarCliente(Aplicacion app, Integer rowCliente) {
+        super(app, true);
+
+        
         
         this.setUndecorated(true);
         this.getRootPane().setBorder(new LineBorder(new Color(204,204,204)));
@@ -54,7 +69,6 @@ public class EditarCliente extends javax.swing.JFrame {
         } 
         //panel_datos_contacto.setVisible(false);
         //panel_datos_domicilio.setVisible(false);
-        panel_datos_contacto_h = panel_datos_contacto.getHeight();
         this.setMinimumSize(new Dimension(450, 0));
         this.pack();
         ButtonGroup bg = new ButtonGroup();
@@ -84,18 +98,70 @@ public class EditarCliente extends javax.swing.JFrame {
             )
         );
         
-        setLocationRelativeTo(ref);
+        setLocationRelativeTo(app);
         
         etiquetaCodigo.setForeground(colorError);
         etiquetaNombre.setForeground(colorError);
         etiquetaTelefono.setForeground(colorError);
         etiquetaFax.setForeground(colorError);
         etiquetaDireccion1.setForeground(colorError);
-        etiquetaCiudad.setForeground(colorError);
+        etiquetaCiudad.setForeground(colorError);       
         
-        iconoAtencion.setVisible(false);
-        iconoBien.setVisible(false);
+        botonMinim.setVisible(false);
+
         
+        documentoBien = emailBien = contrasenaBien = true;
+        
+        this.app = app;
+        if (app != null) { 
+            app.editarClienteExiste = true;
+            this.rowCliente = rowCliente;
+            if (rowCliente != null) {
+                this.C = app.daos.clientes().uno(rowCliente).orElse(null);
+                if (C != null) {
+                    inputCodigo.setText(Integer.toString(C.get_codigo()));
+                    inputNombre.setText(C.get_nombre());
+
+                    inputContactoNombre.setText(C.get_contacto().nombre().orElse(null));
+                    inputContactoApellido.setText(C.get_contacto().apellido().orElse(null));
+                    inputContactoTelefono.setText(C.get_contacto().telefono());
+                    inputContactoFax.setText(C.get_contacto().fax());
+
+                    inputDomicilioDireccion1.setText(C.get_domicilio().direccion1());
+                    inputDomicilioDireccion2.setText(C.get_domicilio().direccion2().orElse(null));
+                    inputDomicilioCP.setText(C.get_domicilio().cp().orElse(null));
+                    inputDomicilioCiudad.setText(C.get_domicilio().ciudad());
+                    inputDomicilioPais.setText(C.get_domicilio().pais().orElse(null));
+                    inputDomicilioRegion.setText(C.get_domicilio().region().orElse(null));
+
+                    inputCodRepVentas.setText((C.get_cod_empl_rep_ventas() != null && C.get_cod_empl_rep_ventas().isPresent()) ? Integer.toString(C.get_cod_empl_rep_ventas().get()) : null);
+                    inputLimiteCredito.setText((C.get_limite_credito() != null && C.get_limite_credito().isPresent()) ? Double.toString(C.get_limite_credito().get()) : null);
+
+                    if (C.get_tipo_documento() != null && C.get_tipo_documento().isPresent()) {
+                        if (C.get_tipo_documento().get() == TipoDocumento.DNI) {
+                            inputDNI.setSelected(true);
+                            inputNIE.setSelected(false);
+                            inputNA.setSelected(false);
+                        } else {
+                            inputDNI.setSelected(false);
+                            inputNIE.setSelected(true);
+                            inputNA.setSelected(false);
+                        }
+                        inputDocumentoContenido.setText(C.get_dni().orElse(null));
+                    } else {
+                        inputDNI.setSelected(false);
+                        inputNIE.setSelected(false);
+                        inputNA.setSelected(true);
+                    }
+
+                    inputEmail.setText(C.get_email() != null ? C.get_email().orElse(null) : null);
+                    inputContrasena.setText(C.get_contrasena() != null ? C.get_contrasena().orElse(null) : null);
+
+                    codigoBien = nombreBien = telefonoBien = faxBien = direccion1Bien = ciudadBien = true;
+                    updatearMsjError();
+                }
+            }
+        }
     }
     
     /**
@@ -103,7 +169,7 @@ public class EditarCliente extends javax.swing.JFrame {
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("all")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -181,9 +247,6 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel28 = new javax.swing.JPanel();
         inputContrasena = new javax.swing.JPasswordField();
         panelInfo = new javax.swing.JPanel();
-        iconoAtencion = new javax.swing.JLabel();
-        iconoTeclado = new javax.swing.JLabel();
-        iconoBien = new javax.swing.JLabel();
         scrollTexto = new javax.swing.JScrollPane();
         infoTexto = new javax.swing.JTextArea();
         botonAceptar = new javax.swing.JButton();
@@ -194,11 +257,11 @@ public class EditarCliente extends javax.swing.JFrame {
         botonCerrar = new javax.swing.JButton();
         fondoBotonMinim = new javax.swing.JPanel();
         botonMinim = new javax.swing.JButton();
-        botonAceptar1 = new javax.swing.JButton();
+        botonReset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Jardinería - Añadir nuevo cliente");
-        setBackground(new java.awt.Color(241, 247, 237));
+        setBackground(new java.awt.Color(153, 204, 0));
         setForeground(new java.awt.Color(254, 242, 227));
         setUndecorated(true);
         setResizable(false);
@@ -207,7 +270,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         etiquetaCodigo.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaCodigo.setForeground(new java.awt.Color(118, 101, 100));
+        etiquetaCodigo.setForeground(new java.awt.Color(102, 102, 102));
         etiquetaCodigo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hashtag-solid.png"))); // NOI18N
         etiquetaCodigo.setText("Código");
 
@@ -256,7 +319,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         etiquetaNombre.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaNombre.setForeground(new java.awt.Color(118, 101, 100));
+        etiquetaNombre.setForeground(new java.awt.Color(102, 102, 102));
         etiquetaNombre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/signature-solid.png"))); // NOI18N
         etiquetaNombre.setText("Nombre");
 
@@ -305,7 +368,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel4.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(118, 101, 100));
+        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/address-book-solid.png"))); // NOI18N
         jLabel4.setText("Contacto [...]");
 
@@ -315,7 +378,7 @@ public class EditarCliente extends javax.swing.JFrame {
 
         etiquetaNombreContacto.setBackground(new java.awt.Color(184, 201, 217));
         etiquetaNombreContacto.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaNombreContacto.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaNombreContacto.setForeground(new java.awt.Color(153, 153, 153));
         etiquetaNombreContacto.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         etiquetaNombreContacto.setText("Nombre");
 
@@ -343,7 +406,7 @@ public class EditarCliente extends javax.swing.JFrame {
 
         etiquetaApellido.setBackground(new java.awt.Color(221, 229, 237));
         etiquetaApellido.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaApellido.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaApellido.setForeground(new java.awt.Color(153, 153, 153));
         etiquetaApellido.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         etiquetaApellido.setText("Apellido");
 
@@ -373,7 +436,7 @@ public class EditarCliente extends javax.swing.JFrame {
 
         etiquetaFax.setBackground(new java.awt.Color(221, 229, 237));
         etiquetaFax.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaFax.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaFax.setForeground(new java.awt.Color(153, 153, 153));
         etiquetaFax.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         etiquetaFax.setText("Fax");
 
@@ -410,7 +473,7 @@ public class EditarCliente extends javax.swing.JFrame {
 
         etiquetaTelefono.setBackground(new java.awt.Color(221, 229, 237));
         etiquetaTelefono.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaTelefono.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaTelefono.setForeground(new java.awt.Color(153, 153, 153));
         etiquetaTelefono.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         etiquetaTelefono.setText("Teléfono");
 
@@ -502,7 +565,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel5.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(118, 101, 100));
+        jLabel5.setForeground(new java.awt.Color(102, 102, 102));
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/house-user-solid.png"))); // NOI18N
         jLabel5.setText("Domicilio [...]");
 
@@ -525,7 +588,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel17.setBackground(new java.awt.Color(255, 255, 255));
 
         etiquetaDireccion2.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaDireccion2.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaDireccion2.setForeground(new java.awt.Color(153, 153, 153));
         etiquetaDireccion2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         etiquetaDireccion2.setText("Dirección 2");
 
@@ -552,7 +615,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel18.setBackground(new java.awt.Color(255, 255, 255));
 
         etiquetaDireccion1.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaDireccion1.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaDireccion1.setForeground(new java.awt.Color(153, 153, 153));
         etiquetaDireccion1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         etiquetaDireccion1.setText("Dirección 1");
 
@@ -584,7 +647,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel19.setBackground(new java.awt.Color(255, 255, 255));
 
         etiquetaCP.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaCP.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaCP.setForeground(new java.awt.Color(153, 153, 153));
         etiquetaCP.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         etiquetaCP.setText("C.P.");
 
@@ -611,7 +674,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel20.setBackground(new java.awt.Color(255, 255, 255));
 
         etiquetaCiudad.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaCiudad.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaCiudad.setForeground(new java.awt.Color(153, 153, 153));
         etiquetaCiudad.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         etiquetaCiudad.setText("Ciudad");
 
@@ -643,7 +706,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel21.setBackground(new java.awt.Color(255, 255, 255));
 
         etiquetaPais.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaPais.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaPais.setForeground(new java.awt.Color(153, 153, 153));
         etiquetaPais.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         etiquetaPais.setText("País");
         etiquetaPais.setToolTipText("");
@@ -671,7 +734,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel23.setBackground(new java.awt.Color(255, 255, 255));
 
         etiquetaRegion.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaRegion.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaRegion.setForeground(new java.awt.Color(153, 153, 153));
         etiquetaRegion.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         etiquetaRegion.setText("Región");
 
@@ -747,7 +810,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         etiquetaRepVentas.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaRepVentas.setForeground(new java.awt.Color(118, 101, 100));
+        etiquetaRepVentas.setForeground(new java.awt.Color(102, 102, 102));
         etiquetaRepVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/user-tie-solid.png"))); // NOI18N
         etiquetaRepVentas.setText("Rep. ventas");
 
@@ -791,7 +854,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         etiquetaLimCredito.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaLimCredito.setForeground(new java.awt.Color(118, 101, 100));
+        etiquetaLimCredito.setForeground(new java.awt.Color(102, 102, 102));
         etiquetaLimCredito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/euro-sign-solid.png"))); // NOI18N
         etiquetaLimCredito.setText("Lím. crédito");
 
@@ -840,14 +903,14 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel7.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         etiquetaDocumento.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaDocumento.setForeground(new java.awt.Color(118, 101, 100));
+        etiquetaDocumento.setForeground(new java.awt.Color(102, 102, 102));
         etiquetaDocumento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/id-card-solid.png"))); // NOI18N
         etiquetaDocumento.setText("Documento identificativo");
 
         jPanel14.setBackground(new java.awt.Color(255, 255, 255));
 
         etiquetaTipoDocumento.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaTipoDocumento.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaTipoDocumento.setForeground(new java.awt.Color(153, 153, 153));
         etiquetaTipoDocumento.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         etiquetaTipoDocumento.setText("Tipo");
 
@@ -910,7 +973,7 @@ public class EditarCliente extends javax.swing.JFrame {
         panelContenidoDocumento.setBackground(new java.awt.Color(255, 255, 255));
 
         etiquetaContenidoDocumento.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaContenidoDocumento.setForeground(new java.awt.Color(139, 104, 90));
+        etiquetaContenidoDocumento.setForeground(new java.awt.Color(153, 153, 153));
         etiquetaContenidoDocumento.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         etiquetaContenidoDocumento.setText("Contenido");
         etiquetaContenidoDocumento.setEnabled(false);
@@ -979,7 +1042,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel8.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         etiquetaEmail.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaEmail.setForeground(new java.awt.Color(118, 101, 100));
+        etiquetaEmail.setForeground(new java.awt.Color(102, 102, 102));
         etiquetaEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/at-solid.png"))); // NOI18N
         etiquetaEmail.setText("Email");
 
@@ -1027,7 +1090,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel10.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         etiquetaContrasena.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        etiquetaContrasena.setForeground(new java.awt.Color(118, 101, 100));
+        etiquetaContrasena.setForeground(new java.awt.Color(102, 102, 102));
         etiquetaContrasena.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/asterisk-solid.png"))); // NOI18N
         etiquetaContrasena.setText("Contraseña");
 
@@ -1036,6 +1099,11 @@ public class EditarCliente extends javax.swing.JFrame {
         inputContrasena.setBorder(null);
         inputContrasena.setNextFocusableComponent(botonAceptar);
         inputContrasena.setOpaque(false);
+        inputContrasena.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                inputContrasenaCaretUpdate(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
         jPanel28.setLayout(jPanel28Layout);
@@ -1066,14 +1134,8 @@ public class EditarCliente extends javax.swing.JFrame {
             .addComponent(jPanel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        panelInfo.setBackground(new java.awt.Color(255, 234, 255));
+        panelInfo.setBackground(new java.awt.Color(255, 102, 102));
         panelInfo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        iconoAtencion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exclamation-triangle-solid-rojo.png"))); // NOI18N
-
-        iconoTeclado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/keyboard-solid.png"))); // NOI18N
-
-        iconoBien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check-solid.png"))); // NOI18N
 
         scrollTexto.setBackground(new java.awt.Color(255, 234, 255));
         scrollTexto.setBorder(null);
@@ -1084,9 +1146,10 @@ public class EditarCliente extends javax.swing.JFrame {
         scrollTexto.setRequestFocusEnabled(false);
 
         infoTexto.setEditable(false);
-        infoTexto.setBackground(new java.awt.Color(255, 234, 255));
+        infoTexto.setBackground(new java.awt.Color(255, 102, 102));
         infoTexto.setColumns(20);
-        infoTexto.setFont(new java.awt.Font("Calibri Light", 0, 15)); // NOI18N
+        infoTexto.setFont(new java.awt.Font("Calibri Light", 1, 15)); // NOI18N
+        infoTexto.setForeground(new java.awt.Color(255, 255, 102));
         infoTexto.setLineWrap(true);
         infoTexto.setRows(2);
         infoTexto.setText("Hay campos obligatorios sin rellenar.");
@@ -1099,29 +1162,17 @@ public class EditarCliente extends javax.swing.JFrame {
         panelInfo.setLayout(panelInfoLayout);
         panelInfoLayout.setHorizontalGroup(
             panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelInfoLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(iconoAtencion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(iconoTeclado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(iconoBien)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scrollTexto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelInfoLayout.setVerticalGroup(
             panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoLayout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(iconoTeclado, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                    .addComponent(iconoBien, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(iconoAtencion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panelInfoLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(scrollTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(8, 8, 8))
+            .addGroup(panelInfoLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(scrollTexto, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                .addGap(5, 5, 5))
         );
 
         botonAceptar.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
@@ -1207,6 +1258,7 @@ public class EditarCliente extends javax.swing.JFrame {
         botonMinim.setBorder(null);
         botonMinim.setBorderPainted(false);
         botonMinim.setContentAreaFilled(false);
+        botonMinim.setEnabled(false);
         botonMinim.setFocusPainted(false);
         botonMinim.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -1257,12 +1309,12 @@ public class EditarCliente extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        botonAceptar1.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
-        botonAceptar1.setText("Resetear");
-        botonAceptar1.setNextFocusableComponent(botonCancelar);
-        botonAceptar1.addActionListener(new java.awt.event.ActionListener() {
+        botonReset.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
+        botonReset.setText("Resetear");
+        botonReset.setNextFocusableComponent(botonCancelar);
+        botonReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonAceptar1ActionPerformed(evt);
+                botonResetActionPerformed(evt);
             }
         });
 
@@ -1296,7 +1348,7 @@ public class EditarCliente extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(botonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(22, 22, 22)
-                        .addComponent(botonAceptar1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(22, 22, 22)
                         .addComponent(botonAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(43, 43, 43)))
@@ -1331,14 +1383,13 @@ public class EditarCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonCancelar)
                     .addComponent(botonAceptar)
-                    .addComponent(botonAceptar1))
+                    .addComponent(botonReset))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private int panel_datos_contacto_h;
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         panel_datos_contacto.setVisible(!panel_datos_contacto.isVisible());
         //this.setSize(this.getWidth(), this.getHeight() + (panel_datos_contacto_h * (panel_datos_contacto.isVisible() ? 1 : -1)));
@@ -1355,6 +1406,7 @@ public class EditarCliente extends javax.swing.JFrame {
             etiquetaContenidoDocumento.setEnabled(true);
             inputDocumentoContenido.setEnabled(true);
         }
+        inputDocumentoContenidoCaretUpdate(null);
     }//GEN-LAST:event_inputNIEActionPerformed
 
     private void inputLimiteCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputLimiteCreditoActionPerformed
@@ -1403,7 +1455,7 @@ public class EditarCliente extends javax.swing.JFrame {
 
     private void botonMinimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonMinimActionPerformed
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_ICONIFIED));
-        this.setState(Frame.ICONIFIED);
+        //this.setState(Frame.ICONIFIED);
     }//GEN-LAST:event_botonMinimActionPerformed
 
     private void botonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarActionPerformed
@@ -1411,35 +1463,92 @@ public class EditarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_botonCerrarActionPerformed
 
     private void cerrar() {
-        if (ref != null) ref.editarClienteExiste = false;
+        if (app != null) app.editarClienteExiste = false;
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
     
-    private void botonAceptar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptar1ActionPerformed
+    private void botonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonResetActionPerformed
         for (JTextField campo : inputs) {
             campo.setText("");
         }
         etiquetaCodigo.setForeground(colorError);
-        if (botonAceptar.isEnabled()) botonAceptar.setEnabled(false);
+        //if (botonAceptar.isEnabled()) botonAceptar.setEnabled(false);
         inputNA.setSelected(true);
-    }//GEN-LAST:event_botonAceptar1ActionPerformed
+    }//GEN-LAST:event_botonResetActionPerformed
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
-        if (ref != null) {
-            ((DefaultTableModel) ref.getTablaClientes().getModel())
-                    .addRow(new Object[]{ inputCodigo.getText(), 
-                                          inputNombre.getText(), 
-                                          inputContactoNombre.getText() });
+        if (app != null) {
+            try {
+                // intentar buildear
+                Cliente nuevo = new Cliente.Builder(Integer.parseInt(inputCodigo.getText()), 
+                                                    inputNombre.getText(),
+                                                    inputContactoTelefono.getText(),
+                                                    inputContactoFax.getText(),
+                                                    inputDomicilioDireccion1.getText(),
+                                                    inputDomicilioCiudad.getText())
+                                                    .con_nombre_de_contacto(StringUtils.isBlank(inputContactoNombre.getText()) ? null : inputContactoNombre.getText())
+                                                    .con_apellido_de_contacto(StringUtils.isBlank(inputContactoApellido.getText()) ? null : inputContactoApellido.getText())
+                                                    .con_linea_direccion2(StringUtils.isBlank(inputDomicilioDireccion2.getText()) ? null : inputDomicilioDireccion2.getText())
+                                                    .con_region(StringUtils.isBlank(inputDomicilioRegion.getText()) ? null : inputDomicilioRegion.getText())
+                                                    .con_pais(StringUtils.isBlank(inputDomicilioPais.getText()) ? null : inputDomicilioPais.getText())
+                                                    .con_codigo_postal(StringUtils.isBlank(inputDomicilioCP.getText()) ? null : inputDomicilioCP.getText())
+                                                    .con_cod_empl_rep_ventas(StringUtils.isBlank(inputCodRepVentas.getText()) ? null :
+                                                            Integer.parseInt(inputCodRepVentas.getText()))
+                                                    .con_limite_credito(StringUtils.isBlank(inputLimiteCredito.getText()) ? null :
+                                                            Double.parseDouble(inputLimiteCredito.getText().replace(',', '.')))
+                                                    .con_documento(inputDNI.isSelected() ? TipoDocumento.DNI : (inputNIE.isSelected() ? TipoDocumento.NIE : null),
+                                                            !inputNA.isSelected() ? inputDocumentoContenido.getText() : null)
+                                                    .con_email(StringUtils.isBlank(inputEmail.getText()) ? null : inputEmail.getText(), 
+                                                               inputContrasena.getPassword().length == 0 ? null : new String(inputContrasena.getPassword()))
+                                                    .build();
+
+                if (C == null) {
+                    // añadiendo cliente nuevo
+                    app.daos.clientes().guardar(nuevo);
+
+                    ((DefaultTableModel) app.getTablaClientes().getModel()).addRow(nuevo.objArray());
+                } else {
+                    // editando cliente existente
+                    ((DefaultTableModel) app.getTablaClientes().getModel()).removeRow(rowCliente - 1);
+                    ((DefaultTableModel) app.getTablaClientes().getModel()).insertRow(rowCliente - 1, nuevo.objArray());
+                }
+                cerrar();
+
+            } catch (Exception e) {
+                
+                infoTexto.setBackground(panelErrorBgMal);
+                panelInfo.setBackground(panelErrorBgMal);
+                
+                if (e instanceof ExcepcionFormatoIncorrecto) {
+                    // Excepcion de Cliente.Builder
+                    infoTexto.setText("Excepción: formato incorrecto");
+                } else if (e instanceof ExcepcionDatoNoValido) {
+                    // Excepcion de Cliente.Builder
+                    infoTexto.setText("Excepción: dato no válido");
+                } else if (e instanceof ExcepcionCodigoYaExistente) {
+                    // Excepcion de ClientesSqlDao
+                    infoTexto.setText("Excepción: código ya existente");
+                } else if (e instanceof SQLException) {
+                    // Excepcion de ClientesSqlDao
+                    infoTexto.setText("Excepción: excepción SQL");
+                } else if (e instanceof NumberFormatException) {
+                    infoTexto.setText("Exepción: formato de número");
+                } else {
+                    infoTexto.setText("Excepción de otro tipo");
+                }
+                e.printStackTrace();
+            }
+            
         }
-        cerrar();
+        
     }//GEN-LAST:event_botonAceptarActionPerformed
 
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         cerrar();
     }//GEN-LAST:event_botonCancelarActionPerformed
 
-    private static final Color colorNormal = new Color(118,101,100);
-    private static final Color colorError = new Color(248,29,32);
+    private static final Color colorNormal = new Color(102,102,102);
+    private static final Color colorError = new Color(228,103,18);
     
     private void inputCodigoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_inputCodigoCaretUpdate
         Object o = inputCodigo.getValue();
@@ -1450,22 +1559,24 @@ public class EditarCliente extends javax.swing.JFrame {
             etiquetaCodigo.setForeground(colorNormal);
             codigoBien = true;
         }
+        updatearMsjError();
     }//GEN-LAST:event_inputCodigoCaretUpdate
 
     private void inputNombreCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_inputNombreCaretUpdate
         String texto = inputNombre.getText();
-        if (texto == null || texto.matches("\\h*")) {
+        if (texto == null || StringUtils.isBlank(texto)) {
             etiquetaNombre.setForeground(colorError);
             nombreBien = false;
         } else {
             etiquetaNombre.setForeground(colorNormal);
             nombreBien = true;
         }
+        updatearMsjError();
     }//GEN-LAST:event_inputNombreCaretUpdate
 
     private void inputContactoTelefonoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_inputContactoTelefonoCaretUpdate
         String texto = inputContactoTelefono.getText();
-        if (texto == null || texto.matches("\\h*")) {
+        if (texto == null || StringUtils.isBlank(texto)) {
             etiquetaTelefono.setForeground(colorError);
             telefonoBien = false;
         } else {
@@ -1476,24 +1587,26 @@ public class EditarCliente extends javax.swing.JFrame {
 
     private void inputDomicilioDireccion1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_inputDomicilioDireccion1CaretUpdate
         String texto = inputDomicilioDireccion1.getText();
-        if (texto == null || texto.matches("\\h*")) {
+        if (texto == null || StringUtils.isBlank(texto)) {
             etiquetaDireccion1.setForeground(colorError);
             direccion1Bien = false;
         } else {
             etiquetaDireccion1.setForeground(colorNormal);
             direccion1Bien = true;
         }
+        updatearMsjError();
     }//GEN-LAST:event_inputDomicilioDireccion1CaretUpdate
 
     private void inputDomicilioCiudadCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_inputDomicilioCiudadCaretUpdate
         String texto = inputDomicilioCiudad.getText();
-        if (texto == null || texto.matches("\\h*")) {
+        if (texto == null || StringUtils.isBlank(texto)) {
             etiquetaCiudad.setForeground(colorError);
             ciudadBien = false;
         } else {
             etiquetaCiudad.setForeground(colorNormal);
             ciudadBien = true;
         }
+        updatearMsjError();
     }//GEN-LAST:event_inputDomicilioCiudadCaretUpdate
 
     private void inputNAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputNAActionPerformed
@@ -1503,6 +1616,7 @@ public class EditarCliente extends javax.swing.JFrame {
             etiquetaContenidoDocumento.setEnabled(false);
             inputDocumentoContenido.setEnabled(false);
         }
+        updatearMsjError();
     }//GEN-LAST:event_inputNAActionPerformed
 
     private void inputDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputDNIActionPerformed
@@ -1510,6 +1624,7 @@ public class EditarCliente extends javax.swing.JFrame {
             etiquetaContenidoDocumento.setEnabled(true);
             inputDocumentoContenido.setEnabled(true);
         }
+        inputDocumentoContenidoCaretUpdate(null);
     }//GEN-LAST:event_inputDNIActionPerformed
 
     private void inputDocumentoContenidoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_inputDocumentoContenidoCaretUpdate
@@ -1521,7 +1636,7 @@ public class EditarCliente extends javax.swing.JFrame {
                 documentoBien = false;
                 etiquetaDocumento.setForeground(colorError);
             }
-        } else { // NIE
+        } else if (inputNIE.isSelected()) { // NIE
             if (inputDocumentoContenido.getText().matches("\\p{Alpha}\\d{7}\\p{Alpha}")) {
                     documentoBien = true;
                 etiquetaDocumento.setForeground(colorNormal);
@@ -1529,18 +1644,22 @@ public class EditarCliente extends javax.swing.JFrame {
                 documentoBien = false;
                 etiquetaDocumento.setForeground(colorError);
             }
+        } else {
+            documentoBien = true;
         }
+        updatearMsjError();
     }//GEN-LAST:event_inputDocumentoContenidoCaretUpdate
 
     private void inputContactoFaxCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_inputContactoFaxCaretUpdate
         String texto = inputContactoFax.getText();
-        if (texto == null || texto.matches("\\h*")) {
+        if (texto == null || StringUtils.isBlank(texto)) {
             etiquetaFax.setForeground(colorError);
             faxBien = false;
         } else {
             etiquetaFax.setForeground(colorNormal);
             faxBien = true;
         }
+        updatearMsjError();
     }//GEN-LAST:event_inputContactoFaxCaretUpdate
 
     private void inputEmailCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_inputEmailCaretUpdate
@@ -1556,7 +1675,7 @@ public class EditarCliente extends javax.swing.JFrame {
                 contrasenaBien = true;
             }
             
-        } else if (inputEmail.getText().matches("\\h*")) {
+        } else if (StringUtils.isBlank(inputEmail.getText())) {
             etiquetaEmail.setForeground(colorNormal);
             emailBien = true;
             etiquetaContrasena.setForeground(colorNormal);
@@ -1565,10 +1684,36 @@ public class EditarCliente extends javax.swing.JFrame {
             etiquetaEmail.setForeground(colorError);
             emailBien = false;
         }
+        updatearMsjError();
     }//GEN-LAST:event_inputEmailCaretUpdate
 
     private void inputNAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inputNAMouseClicked
     }//GEN-LAST:event_inputNAMouseClicked
+
+    private void inputContrasenaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_inputContrasenaCaretUpdate
+        if (inputEmail.getText().matches("\\w+@\\w+[.]\\w+")) {
+            etiquetaEmail.setForeground(colorNormal);
+            emailBien = true;
+            
+            if (StringUtils.isBlank(new String(inputContrasena.getPassword()))) {
+                etiquetaContrasena.setForeground(colorError);
+                contrasenaBien = false;
+            } else {
+                etiquetaContrasena.setForeground(colorNormal);
+                contrasenaBien = true;
+            }
+            
+        } else if (StringUtils.isBlank(inputEmail.getText())) {
+            etiquetaEmail.setForeground(colorNormal);
+            emailBien = true;
+            etiquetaContrasena.setForeground(colorNormal);
+            contrasenaBien = true;
+        } else {
+            etiquetaEmail.setForeground(colorError);
+            emailBien = false;
+
+        }   updatearMsjError();
+     }//GEN-LAST:event_inputContrasenaCaretUpdate
 
     /**
      * @param args the command line arguments
@@ -1586,18 +1731,42 @@ public class EditarCliente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EditarCliente(null).setVisible(true);
+                new EditarCliente(null, null).setVisible(true);
             }
         });
+    }
+    
+    private final Color panelErrorBgMal = new Color(255,102,102);
+    //private final Color textoPanelError = new Color(255,255,102);
+    private final Color panelErrorBgBien = new Color(102,202,102);
+    
+    private void updatearMsjError() {
+        boolean obligatoriosBien = codigoBien && nombreBien && telefonoBien &&
+                    faxBien && direccion1Bien && ciudadBien;
+        boolean otrosBien = documentoBien && emailBien && contrasenaBien;
+        
+        if (obligatoriosBien && otrosBien) {
+            infoTexto.setText("Bien");
+            infoTexto.setBackground(panelErrorBgBien);
+            panelInfo.setBackground(panelErrorBgBien);
+        } else {
+            infoTexto.setBackground(panelErrorBgMal);
+            panelInfo.setBackground(panelErrorBgMal);
+            if (!obligatoriosBien) {
+                infoTexto.setText("Hay campos obligatorios sin rellenar");
+            } else {
+                infoTexto.setText("no");
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel barraTitulo;
     private javax.swing.JButton botonAceptar;
-    private javax.swing.JButton botonAceptar1;
     private javax.swing.JButton botonCancelar;
     private javax.swing.JButton botonCerrar;
     private javax.swing.JButton botonMinim;
+    private javax.swing.JButton botonReset;
     private javax.swing.JLabel etiquetaApellido;
     private javax.swing.JLabel etiquetaCP;
     private javax.swing.JLabel etiquetaCiudad;
@@ -1619,9 +1788,6 @@ public class EditarCliente extends javax.swing.JFrame {
     private javax.swing.JLabel etiquetaTipoDocumento;
     private javax.swing.JPanel fondoBotonCerrar;
     private javax.swing.JPanel fondoBotonMinim;
-    private javax.swing.JLabel iconoAtencion;
-    private javax.swing.JLabel iconoBien;
-    private javax.swing.JLabel iconoTeclado;
     private javax.swing.JLabel iconoYNombreVentana;
     private javax.swing.JTextArea infoTexto;
     private javax.swing.JFormattedTextField inputCodRepVentas;

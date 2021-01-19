@@ -47,16 +47,18 @@ public class PedidosGsonDao implements IDao<Pedido> {
         if (todo_bien) {
             String contenido_json = new String(contenido_bytes);
             Pedido[] arrayPedidos = new Gson().fromJson(contenido_json, Pedido[].class);
-            for (int i = 0; i < arrayPedidos.length; ++i) {
-                try {
-                    Pedido chequeado = new Pedido.Builder(arrayPedidos[i]).build();
-                    if (clientes.uno(chequeado.get_codigo_cliente()).isPresent()) {
-                        pedidos.put(chequeado.get_codigo(), chequeado);
-                    } else {
-                        throw new ExcepcionDatoNoValido("cliente no existe");
+            if (arrayPedidos != null) {
+                for (int i = 0; i < arrayPedidos.length; ++i) {
+                    try {
+                        Pedido chequeado = new Pedido.Builder(arrayPedidos[i]).build();
+                        if (clientes.uno(chequeado.get_codigo_cliente()).isPresent()) {
+                            pedidos.put(chequeado.get_codigo(), chequeado);
+                        } else {
+                            throw new ExcepcionDatoNoValido("cliente no existe");
+                        }
+                    } catch (ExcepcionDatoNoValido e) {
+                        System.err.println("Un cliente deserializado no tenía datos correctos");
                     }
-                } catch (ExcepcionDatoNoValido e) {
-                    System.err.println("Un cliente deserializado no tenía datos correctos");
                 }
             }
         }

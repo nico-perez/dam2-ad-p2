@@ -81,12 +81,12 @@ public class ProductosSqlDao implements IDao<Producto> {
                             case 1: def = t.getCodigo_producto(); break;
                             case 2: def = t.getNombre(); break;
                             case 3: def = t.getGama(); break;
-                            case 4: def = t.getDimensiones(); break;
-                            case 5: def = t.getProveedor(); break;
-                            case 6: def = t.getDescripcion(); break;
+                            case 4: def = t.getDimensiones().orElse(null); break;
+                            case 5: def = t.getProveedor().orElse(null); break;
+                            case 6: def = t.getDescripcion().orElse(null); break;
                             case 7: def = t.getCantidad_en_stock(); break;
                             case 8: def = t.getPrecio_venta(); break;
-                            case 9: def = t.getPrecio_proveedor(); break;
+                            case 9: def = t.getPrecio_proveedor().orElse(null); break;
                             default: def = null;
                         }
 

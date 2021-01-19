@@ -1,5 +1,6 @@
 package dev.el_nico.jardineria.util.adapter;
 
+import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Optional;
@@ -8,42 +9,46 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
-import dev.el_nico.jardineria.util.Tipo;
-
-/**
- * Esto es para que el java no se queje de «illegal reflective access operation»
- * al serializar/deserializar objetos Optional<?>
- */
 public class OptionalAdapterFactory implements TypeAdapterFactory {
 
-    @SuppressWarnings("unchecked") // ssíííí que puedo convertir OptionalAdapter a TypeAdapter
     @Override
+    @SuppressWarnings("unchecked")
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-        
-        Type tipo_posible_optional = type.getType();
 
-        // Comprueba que el tipo es un Optional parametrizado
-        if (type.getRawType() == Optional.class && tipo_posible_optional instanceof ParameterizedType) {
+        // Comprueba que T es tipo Optional parametrizado
+        if (type.getRawType() == Optional.class && type.getType() instanceof ParameterizedType) {
 
-            Type T = ((ParameterizedType) tipo_posible_optional).getActualTypeArguments()[0];
+            Type paramType = ((ParameterizedType) type.getType()).getActualTypeArguments()[0];
+            TypeToken<?> token = TypeToken.get(paramType);
 
-            if (Tipo.numerico(T) || Tipo.booleano(T) || Tipo.cadena(T)) {
-                return (TypeAdapter<T>) OptionalAdapter.crear(TypeToken.get(T));
-            } else {
-                return null;
-                /*
-                try {
-                    // A ver si gson tiene un adapter de los suyos por ahí
-                    return (TypeAdapter<T>) gson.getAdapter(T.getClass());
-                } catch (ClassCastException e) {
-                    // No hay adapter válido.
-                    return null;
+            TypeAdapter<Object> optTypeTypeAdapter = (TypeAdapter<Object>) gson.getDelegateAdapter(this, token);
+
+            // a lo mejor esto se puede hacer una clase propia para extender y añadir
+            // como parametro el tipo generico del optional y asi no tener que usar 
+            // raw type pero bueno eso es trabajo para el nico de mañana
+            return new TypeAdapter<T>() {
+
+                @Override
+                public void write(JsonWriter out, T value) throws IOException {
+                    
+                    Object paraEscribir = null;
+
+                    if (value != null) {
+                        paraEscribir = ((Optional<?>) value).orElse(null);
+                    }
+
+                    optTypeTypeAdapter.write(out, paraEscribir);
                 }
-                */
-            }
+
+                @Override
+                public T read(JsonReader in) throws IOException {
+                    return (T) Optional.of(optTypeTypeAdapter.read(in));
+                }
+            };
         } else {
-            // Si no lo es, no nos interesa
             return null;
         }
     }

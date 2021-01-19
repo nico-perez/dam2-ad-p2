@@ -12,6 +12,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import dev.el_nico.jardineria.dao.IDao;
 import dev.el_nico.jardineria.excepciones.ExcepcionClienteDuplicado;
@@ -19,16 +20,17 @@ import dev.el_nico.jardineria.excepciones.ExcepcionCodigoYaExistente;
 import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
 import dev.el_nico.jardineria.excepciones.ExcepcionFormatoIncorrecto;
 import dev.el_nico.jardineria.modelo.Cliente;
+import dev.el_nico.jardineria.util.adapter.OptionalAdapterFactory;
 
 public class ClientesGsonDao implements IDao<Cliente> {
 
-    private static int version = 1;
+    private File archivo_json;
 
     private SortedMap<Integer, Cliente> clientes = new TreeMap<>();
 
     public ClientesGsonDao(String ruta_archivo_json) {
 
-        File archivo_json = new File(ruta_archivo_json);
+        archivo_json = new File(ruta_archivo_json);
         byte[] contenido_bytes = new byte[(int) archivo_json.length()];
         boolean todo_bien = true;
 
@@ -47,19 +49,24 @@ public class ClientesGsonDao implements IDao<Cliente> {
         if (todo_bien) {
             String contenido_json = new String(contenido_bytes);
             // Deserializa el array leído del json
-            Cliente[] arrayClientes = new Gson().fromJson(contenido_json, Cliente[].class);
-            for (int i = 0; i < arrayClientes.length; ++i) {
-                try {
-                    // Asegúrase de que el cliente deserializado es válido, 
-                    // ya que se podría haber escrito algún valor sin sentido
-                    // con un editor de texto, por ejemplo.
-                    Cliente chequeado = new Cliente.Builder(arrayClientes[i]).build();
-                    clientes.put(chequeado.get_codigo(), chequeado);
-                } catch (ExcepcionDatoNoValido e) {
-                    // Si el cliente leído no es válido, lo descarta directamente.
-                    System.err.println("Un cliente deserializado no tenía datos correctos");
-                } catch (ExcepcionFormatoIncorrecto e) {
-                    System.err.println("formato incorrecto! en email, dni o nie");
+
+            // usando el adapter jejejeje
+            Gson gson = new GsonBuilder().registerTypeAdapterFactory(new OptionalAdapterFactory()).create();
+            Cliente[] arrayClientes = gson.fromJson(contenido_json, Cliente[].class);
+            if (arrayClientes != null) {
+                for (int i = 0; i < arrayClientes.length; ++i) {
+                    try {
+                        // Asegúrase de que el cliente deserializado es válido, 
+                        // ya que se podría haber escrito algún valor sin sentido
+                        // con un editor de texto, por ejemplo.
+                        Cliente chequeado = new Cliente.Builder(arrayClientes[i]).build();
+                        clientes.put(chequeado.get_codigo(), chequeado);
+                    } catch (ExcepcionDatoNoValido e) {
+                        // Si el cliente leído no es válido, lo descarta directamente.
+                        System.err.println("Un cliente deserializado no tenía datos correctos");
+                    } catch (ExcepcionFormatoIncorrecto e) {
+                        System.err.println("formato incorrecto! en email, dni o nie");
+                    }
                 }
             }
         }
@@ -96,13 +103,14 @@ public class ClientesGsonDao implements IDao<Cliente> {
             }
         } else {
 
-            // Si el cliente es válido, directamente guarda un nuevo archivo
-            // json. Esto es temporal, para ver que funciona bien.
+            // Si el cliente es válido, sobrescribe el archivo json
 
             clientes.put(cliente.get_codigo(), cliente);
-            Gson gson = new Gson();
+            
+            Gson gson = new GsonBuilder().registerTypeAdapterFactory(new OptionalAdapterFactory()).create();
+
             String json_clientes = gson.toJson(todos());
-            try (FileOutputStream fos = new FileOutputStream("clientes" + (version++) + ".json")) {
+            try (FileOutputStream fos = new FileOutputStream(archivo_json)) {
                 fos.write(json_clientes.getBytes());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

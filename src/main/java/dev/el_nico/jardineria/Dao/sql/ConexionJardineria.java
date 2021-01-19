@@ -4,41 +4,29 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConexionJardineria implements AutoCloseable {
+import dev.el_nico.jardineria.dao.DaoHolder;
+
+public class ConexionJardineria extends DaoHolder<PedidosSqlDao, ClientesSqlDao, ProductosSqlDao> implements AutoCloseable {
 
     private Connection conn;
 
-    private PedidosSqlDao pedidosDao;
-    private ClientesSqlDao clientesDao;
-    private ProductosSqlDao productosDao;
-
-    private void initDaos() {
-        clientesDao = new ClientesSqlDao(conn);
-        pedidosDao = new PedidosSqlDao(conn);
-        productosDao = new ProductosSqlDao(conn);
+    public ConexionJardineria() {
+        super(null, null, null);
     }
 
     public boolean login(String user, String pass) {
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/jardineria?serverTimezone=UTC", user, pass);
-            initDaos();
+            
+            pedidosDao = new PedidosSqlDao(conn);
+            clientesDao = new ClientesSqlDao(conn);
+            productosDao = new ProductosSqlDao(conn);
+
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Error al loginear.");
             return false;
         }
-    }
-
-    public PedidosSqlDao pedidos() {
-        return pedidosDao;
-    }
-
-    public ClientesSqlDao clientes() {
-        return clientesDao;
-    }
-
-    public ProductosSqlDao productos() {
-        return productosDao;
     }
 
     @Override
