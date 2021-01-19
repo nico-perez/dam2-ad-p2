@@ -2,6 +2,11 @@ package dev.el_nico.jardineria.modelo;
 
 import java.util.Optional;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
 import dev.el_nico.jardineria.excepciones.ExcepcionFormatoIncorrecto;
 import dev.el_nico.jardineria.util.IBuilder;
@@ -29,19 +34,26 @@ import dev.el_nico.jardineria.util.IBuilder;
  * <li>limite_credito NUMERIC(15,2) DEFAULT NULL</li>
  * </ul>
  */
+
+@Entity
+@Table(name = "cliente")
 public class Cliente {
-    private int codigo;
+
+    @Id
+    @Column(name = "codigo_cliente")
+    private Integer codigo;
+
     private String nombre;
     private Contacto contacto;
     private Domicilio domicilio;
 
-    private Optional<Integer> cod_empl_rep_ventas;
-    private Optional<Double> limite_credito;
+    private Integer cod_empl_rep_ventas;
+    private Double limite_credito;
     
-    private Optional<TipoDocumento> tipo_doc;
-    private Optional<String> dni;
-    private Optional<String> email;
-    private Optional<String> contrasena;
+    private TipoDocumento tipo_doc;
+    private String dni;
+    private String email;
+    private String contrasena;
 
     private Cliente(int codigo, String nombre, Contacto contacto,  Domicilio domicilio) {
         this.codigo = codigo;
@@ -50,27 +62,27 @@ public class Cliente {
         this.domicilio = domicilio;
 
         if (contacto != null) {
-            contacto.nombre = Optional.empty();
-            contacto.apellido = Optional.empty();
+            contacto.nombre = null;
+            contacto.apellido = null;
         }
 
         if (domicilio != null) {
-            domicilio.direccion2 = Optional.empty();
-            domicilio.region = Optional.empty();
-            domicilio.pais = Optional.empty();
-            domicilio.cp = Optional.empty();
+            domicilio.direccion2 = null;
+            domicilio.region = null;
+            domicilio.pais = null;
+            domicilio.cp = null;
         }
 
-        cod_empl_rep_ventas = Optional.empty();
-        limite_credito = Optional.empty();
-        tipo_doc = Optional.empty();
-        dni = Optional.empty();
-        email = Optional.empty();
-        contrasena = Optional.empty();
+        cod_empl_rep_ventas = null;
+        limite_credito = null;
+        tipo_doc = null;
+        dni = null;
+        email = null;
+        contrasena = null;
     }
 
     /** Devuelve el código de cliente. */
-    public int get_codigo() {
+    public Integer get_codigo() {
         return codigo;
     }
 
@@ -78,15 +90,16 @@ public class Cliente {
      * Devuelve el código del empleado representante de 
      * ventas.
      */
+
     public Optional<Integer> get_cod_empl_rep_ventas() {
-        return cod_empl_rep_ventas;
+        return Optional.ofNullable(cod_empl_rep_ventas);
     }
 
     /**
      * Devuelve el límite de crédito.
      */
     public Optional<Double> get_limite_credito() {
-        return limite_credito;
+        return Optional.ofNullable(limite_credito);
     }
 
     /** Devuelve el nombre. Nunca es null. */
@@ -109,22 +122,22 @@ public class Cliente {
      * DNI o NIE.
      */
     public Optional<TipoDocumento> get_tipo_documento() {
-        return tipo_doc;
+        return Optional.ofNullable(tipo_doc);
     }
 
     /** Devuelve el DNI o NIE */
     public Optional<String> get_dni() {
-        return dni;
+        return Optional.ofNullable(dni);
     }
 
     /** Devuelve el email */
     public Optional<String> get_email() {
-        return email;
+        return Optional.ofNullable(email);
     }
 
     /** Devuelve la contraseña */
     public Optional<String> get_contrasena() {
-        return contrasena;
+        return Optional.ofNullable(contrasena);
     }
 
     /**
@@ -133,26 +146,26 @@ public class Cliente {
      * pero siempre teléfono y fax.
      */
     public static class Contacto {
-        private Optional<String> nombre;
-        private Optional<String> apellido;
+        private String nombre;
+        private String apellido;
         private String telefono;
         private String fax;
 
         private Contacto(String telefono, String fax) {
             this.telefono = telefono;
             this.fax = fax;
-            nombre = Optional.empty();
-            apellido = Optional.empty();
+            nombre = null;
+            apellido = null;
         }
 
         /** Nombre del contacto del cliente. */
         public Optional<String> nombre() {
-            return nombre;
+            return Optional.ofNullable(nombre);
         }
 
         /** Apellido del contacto del cliente. */
         public Optional<String> apellido() {
-            return apellido;
+            return Optional.ofNullable(apellido);
         }
 
         /** Teléfono del cliente. Nunca es null. */
@@ -183,18 +196,18 @@ public class Cliente {
         private String direccion1;
         private String ciudad;
 
-        private Optional<String> direccion2;
-        private Optional<String> region;
-        private Optional<String> pais;
-        private Optional<String> cp;
+        private String direccion2;
+        private String region;
+        private String pais;
+        private String cp;
 
         private Domicilio(String direccion1, String ciudad) {
             this.direccion1 = direccion1;
             this.ciudad = ciudad;
-            direccion2 = Optional.empty();
-            region = Optional.empty();
-            pais = Optional.empty();
-            cp = Optional.empty();
+            direccion2 = null;
+            region = null;
+            pais = null;
+            cp = null;
         }
 
         /** 
@@ -215,22 +228,22 @@ public class Cliente {
          * del cliente.
          */
         public Optional<String> direccion2() {
-            return direccion2;
+            return Optional.ofNullable(direccion2);
         }
 
         /** Devuelve la región del domicilio del cliente. */
         public Optional<String> region() {
-            return region;
+            return Optional.ofNullable(region);
         }
 
         /** Devuelve el país del domicilio del cliente. */
         public Optional<String> pais() {
-            return pais;
+            return Optional.ofNullable(pais);
         }
 
         /** Devuelve el código postal del domicilio del cliente */
         public Optional<String> cp() {
-            return cp;
+            return Optional.ofNullable(cp);
         }
 
         @Override
@@ -254,28 +267,28 @@ public class Cliente {
             cliente = otro;
             
             // En este caso, solo hace falta rellenar los Optional
-            // con el valor Optional.empty() (porque si no serían 
+            // con el valor null (porque si no serían 
             // null)
             if (cliente.contacto != null) {
                 if (cliente.contacto.nombre == null) {
-                    cliente.contacto.nombre = Optional.empty();
+                    cliente.contacto.nombre = null;
                 }
                 if (cliente.contacto.apellido == null) {
-                    cliente.contacto.apellido = Optional.empty();
+                    cliente.contacto.apellido = null;
                 }
             }
             if (cliente.domicilio != null) {
                 if (cliente.domicilio.direccion2 == null) {
-                    cliente.domicilio.direccion2 = Optional.empty();
+                    cliente.domicilio.direccion2 = null;
                 }
                 if (cliente.domicilio.region == null) {
-                    cliente.domicilio.region = Optional.empty();
+                    cliente.domicilio.region = null;
                 }
                 if (cliente.domicilio.pais == null) {
-                    cliente.domicilio.pais = Optional.empty();
+                    cliente.domicilio.pais = null;
                 }
                 if (cliente.domicilio.cp == null) {
-                    cliente.domicilio.cp = Optional.empty();
+                    cliente.domicilio.cp = null;
                 }
             }
         }
@@ -286,7 +299,7 @@ public class Cliente {
          * aportados pueden ser null, y será la función «build» quien
          * lance la excepción.
          */
-        public Builder(int codigo, String nombre, String telefono, 
+        public Builder(Integer codigo, String nombre, String telefono, 
                        String fax, String direccion1, String ciudad) {
             cliente = new Cliente(codigo, 
                                   nombre, 
@@ -296,25 +309,25 @@ public class Cliente {
 
         /** Para aportar un nombre de contacto al builder. */
         public Builder con_nombre_de_contacto(String nombre) {
-            cliente.contacto.nombre = Optional.ofNullable(nombre);
+            cliente.contacto.nombre = nombre;
             return this;
         }
 
         /** Para aportar un apellido de contacto al builder. */
         public Builder con_apellido_de_contacto(String apellido) {
-            cliente.contacto.apellido = Optional.ofNullable(apellido);
+            cliente.contacto.apellido = apellido;
             return this;
         }
 
         /** Para aportar un límite de crédito al builder. */
         public Builder con_limite_credito(Double limite_credito) {
-            cliente.limite_credito = Optional.ofNullable(limite_credito);
+            cliente.limite_credito = limite_credito;
             return this;
         }
 
         /** Para aportar un código de empleado rep. ventas al builder. */
         public Builder con_cod_empl_rep_ventas(Integer cod_empl_rep_ventas) {
-            cliente.cod_empl_rep_ventas = Optional.ofNullable(cod_empl_rep_ventas);
+            cliente.cod_empl_rep_ventas = cod_empl_rep_ventas;
             return this;
         }
 
@@ -323,39 +336,39 @@ public class Cliente {
          * del builder.
          */
         public Builder con_linea_direccion2(String direccion2) {
-            cliente.domicilio.direccion2 = Optional.ofNullable(direccion2);
+            cliente.domicilio.direccion2 = direccion2;
             return this;
         }
 
         /** Para aportar una región al domicilio del builder. */
         public Builder con_region(String region) {
-            cliente.domicilio.region = Optional.ofNullable(region);
+            cliente.domicilio.region = region;
             return this;
         }
 
         /** Para aportar un país al domicilio del builder. */
         public Builder con_pais(String pais) {
-            cliente.domicilio.pais = Optional.ofNullable(pais);
+            cliente.domicilio.pais = pais;
             return this;
         }
 
         /** Para aportar un código postal al domicilio del builder. */
         public Builder con_codigo_postal(String cp) {
-            cliente.domicilio.cp = Optional.ofNullable(cp);
+            cliente.domicilio.cp = cp;
             return this;
         }
 
         /** Para aportar DNI o NIE al builder */
         public Builder con_documento(TipoDocumento tipo, String documento) {
-            cliente.tipo_doc = Optional.ofNullable(tipo);
-            cliente.dni = Optional.ofNullable(documento);
+            cliente.tipo_doc = tipo;
+            cliente.dni = documento;
             return this;
         }
 
         /** Para aportar email y contraseña al builder */
         public Builder con_email(String email, String contrasena) {
-            cliente.email = Optional.ofNullable(email);
-            cliente.contrasena = Optional.ofNullable(contrasena);
+            cliente.email = email;
+            cliente.contrasena = contrasena;
             return this;
         }
 
@@ -384,38 +397,38 @@ public class Cliente {
             }
 
             boolean email_bien = true;
-            if (cliente.email != null && cliente.email.isPresent()) {
-                if (cliente.contrasena == null || !cliente.contrasena.isPresent()) {
+            if (cliente.email != null) {
+                if (cliente.contrasena == null) {
                     email_bien = false;
                     throw new ExcepcionDatoNoValido("Deberia haber contraseña!!!");
                 }
                 // Comprobar que el email es en forma tal @ tal . tal
-                if (!cliente.email.get().matches("\\w+@\\w+[.]\\w+")) {
+                if (!cliente.email.matches("\\w+@\\w+[.]\\w+")) {
                     email_bien = false;
                     throw new ExcepcionFormatoIncorrecto("El email debería matchear \"\\w+@\\w+[.]\\w+\", " +
-                                                         "pero es " + cliente.email.get());
+                                                         "pero es " + cliente.email);
                 }
             }
 
             boolean documento_bien = true;
-            if (cliente.tipo_doc != null && cliente.tipo_doc.isPresent()) {
-                if (cliente.dni == null || !cliente.dni.isPresent()) {
+            if (cliente.tipo_doc != null) {
+                if (cliente.dni == null) {
                     documento_bien = false;
                     throw new ExcepcionDatoNoValido("Debería haber documento!!!");
                 } else {
-                    switch (cliente.tipo_doc.get()) {
+                    switch (cliente.tipo_doc) {
                     case DNI: // Comprobar que el documento es 8 dígitos + letra
-                        if (!cliente.dni.get().matches("\\d{8}[a-zA-Z]")) {
+                        if (!cliente.dni.matches("\\d{8}[a-zA-Z]")) {
                             documento_bien = false;
                             throw new ExcepcionFormatoIncorrecto("El formato DNI debería cumplir \"[0-9]{8}[a-zA-Z]\", " +
-                                                                 "pero es " + cliente.dni.get());
+                                                                 "pero es " + cliente.dni);
                         }
                         break;
                     case NIE: // Comprobar que el documento es letra + 7 dígitos + letra
-                        if (!cliente.dni.get().matches("[a-zA-Z]\\d{7}[a-zA-Z]")) {
+                        if (!cliente.dni.matches("[a-zA-Z]\\d{7}[a-zA-Z]")) {
                             documento_bien = false;
                             throw new ExcepcionFormatoIncorrecto("El formato NIE debería cumplir \"[a-zA-Z][0-9]{7}[a-zA-Z]\", " +
-                                                                 "pero es " + cliente.dni.get());
+                                                                 "pero es " + cliente.dni);
                         }
                         break;
                     }
@@ -432,28 +445,28 @@ public class Cliente {
         return new String[] {
             String.valueOf(codigo),
             nombre,
-            contacto.nombre.orElse(""),
-            contacto.apellido.orElse(""),
+            get_contacto().nombre().orElse(""),
+            get_contacto().apellido().orElse(""),
             contacto.telefono,
             contacto.fax,
             domicilio.direccion1,
-            domicilio.direccion2.orElse(""),
+            get_domicilio().direccion2().orElse(""),
             domicilio.ciudad,
-            domicilio.region.orElse(""),
-            domicilio.pais.orElse(""),
-            domicilio.cp.orElse(""),
-            cod_empl_rep_ventas == null ? "" : (cod_empl_rep_ventas.isPresent() ?  String.valueOf(cod_empl_rep_ventas.get()) : ""),
-            limite_credito == null ? "" : (limite_credito.isPresent() ? String.valueOf(limite_credito.get()) : ""),
-            tipo_doc == null ? "" : (tipo_doc.isPresent() ? tipo_doc.get().toString() : ""),
-            dni == null ? "" : dni.orElse(""),
-            email == null ? "" : email.orElse(""),
-            contrasena == null ? "" : contrasena.orElse("")
+            get_domicilio().region().orElse(""),
+            get_domicilio().pais().orElse(""),
+            get_domicilio().cp().orElse(""),
+            get_cod_empl_rep_ventas().isPresent() ?  String.valueOf(get_cod_empl_rep_ventas().get()) : "",
+            get_limite_credito().isPresent() ? String.valueOf(get_limite_credito().get()) : "",
+            get_tipo_documento().isPresent() ? get_tipo_documento().get().toString() : "",
+            get_dni().orElse(""),
+            get_email().orElse(""),
+            get_contrasena().orElse("")
         };
     }
 
     /** Un resumen del cliente para la práctica 1 de AD */
     public String infoResumen() {
-        return "ID: " + codigo + " | Nombre: " + nombre + " | Contacto: " + contacto.nombre.orElse("-----") + " " + contacto.apellido.orElse("-----");
+        return "ID: " + codigo + " | Nombre: " + nombre + " | Contacto: " + get_contacto().nombre().orElse("-----") + " " + get_contacto().apellido().orElse("-----");
     }
 
     @Override
@@ -462,21 +475,21 @@ public class Cliente {
               "\n============[ Cliente " + codigo + " ]============"
             + "\nNombre: " + nombre
             + "\nContacto {"
-            + "\n  Nom: " + contacto.nombre.orElse("------")
-            + "\n  Ape: " + contacto.apellido.orElse("------")
+            + "\n  Nom: " + get_contacto().nombre().orElse("------")
+            + "\n  Ape: " + get_contacto().apellido().orElse("------")
             + "\n  Tlf: " + contacto.telefono
             + "\n  Fax: " + contacto.fax
             + "\n}"
             + "\nDomicilio {"
             + "\n  Ln1: " + domicilio.direccion1
-            + "\n  Ln2: " + domicilio.direccion2.orElse("------")
+            + "\n  Ln2: " + get_domicilio().direccion2().orElse("------")
             + "\n  Ciu: " + domicilio.ciudad
-            + "\n  Reg: " + domicilio.region.orElse("------")
-            + "\n  Pai: " + domicilio.pais.orElse("------")
-            + "\n   CP: " + domicilio.cp.orElse("------")
+            + "\n  Reg: " + get_domicilio().region().orElse("------")
+            + "\n  Pai: " + get_domicilio().pais().orElse("------")
+            + "\n   CP: " + get_domicilio().cp().orElse("------")
             + "\n}"
-            + "\nRpVtas: " + (cod_empl_rep_ventas.isPresent() ? cod_empl_rep_ventas.get() : "------")
-            + "\nLimCrd: " + (limite_credito.isPresent() ? limite_credito.get() : "------");
+            + "\nRpVtas: " + (get_cod_empl_rep_ventas().isPresent() ? get_cod_empl_rep_ventas().get() : "------")
+            + "\nLimCrd: " + (get_limite_credito().isPresent() ? get_limite_credito().get() : "------");
         return s;
     }
 }

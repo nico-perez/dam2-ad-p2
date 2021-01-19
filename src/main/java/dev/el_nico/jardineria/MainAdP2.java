@@ -4,13 +4,16 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Session;
+
 import dev.el_nico.jardineria.dao.sql.ConexionJardineria;
 import dev.el_nico.jardineria.excepciones.ExcepcionCodigoYaExistente;
 import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
 import dev.el_nico.jardineria.excepciones.ExcepcionFormatoIncorrecto;
 import dev.el_nico.jardineria.modelo.Cliente;
 import dev.el_nico.jardineria.modelo.Producto;
-import org.apache.commons.lang3.StringUtils;
+import dev.el_nico.jardineria.util.SesionHibernate;
 
 /**
  * Clase Main de la práctica 1ª de Acceso a Datos, donde
@@ -20,6 +23,10 @@ import org.apache.commons.lang3.StringUtils;
 public class MainAdP2 {
 
     public static void main(String[] args) {
+        Session session = SesionHibernate.getInstance();
+    }
+
+    public static void main1(String[] args) {
         try (ConexionJardineria c = new ConexionJardineria()) {
 
             // login
