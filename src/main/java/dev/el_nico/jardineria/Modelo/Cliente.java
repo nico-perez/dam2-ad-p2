@@ -3,9 +3,12 @@ package dev.el_nico.jardineria.modelo;
 import java.util.Optional;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
 import dev.el_nico.jardineria.excepciones.ExcepcionFormatoIncorrecto;
@@ -34,30 +37,31 @@ import dev.el_nico.jardineria.util.IBuilder;
  * <li>limite_credito NUMERIC(15,2) DEFAULT NULL</li>
  * </ul>
  */
-
 @Entity
 @Table(name = "cliente")
 public class Cliente {
+    /*
+     * Al llamar a los atributos de la misma manera que las columnas
+     * de la BBDD, no hace falta usar la etiqueta @Column.
+     */
 
-    @Id
-    @Column(name = "codigo_cliente")
-    private Integer codigo;
+    private @Id Integer codigo_cliente;
+    private String nombre_cliente;
+    
+    private @Embedded Contacto contacto;
+    private @Embedded Domicilio domicilio;
 
-    private String nombre;
-    private Contacto contacto;
-    private Domicilio domicilio;
-
-    private Integer cod_empl_rep_ventas;
+    private Integer codigo_empleado_rep_ventas;
     private Double limite_credito;
     
-    private TipoDocumento tipo_doc;
-    private String dni;
-    private String email;
-    private String contrasena;
+    private @Transient TipoDocumento tipo_doc;
+    private @Transient String dni;
+    private @Transient String email;
+    private @Transient String contrasena;
 
     private Cliente(int codigo, String nombre, Contacto contacto,  Domicilio domicilio) {
-        this.codigo = codigo;
-        this.nombre = nombre;
+        this.codigo_cliente = codigo;
+        this.nombre_cliente = nombre;
         this.contacto = contacto;
         this.domicilio = domicilio;
 
@@ -73,7 +77,7 @@ public class Cliente {
             domicilio.cp = null;
         }
 
-        cod_empl_rep_ventas = null;
+        codigo_empleado_rep_ventas = null;
         limite_credito = null;
         tipo_doc = null;
         dni = null;
@@ -83,16 +87,15 @@ public class Cliente {
 
     /** Devuelve el código de cliente. */
     public Integer get_codigo() {
-        return codigo;
+        return codigo_cliente;
     }
 
     /** 
      * Devuelve el código del empleado representante de 
      * ventas.
      */
-
     public Optional<Integer> get_cod_empl_rep_ventas() {
-        return Optional.ofNullable(cod_empl_rep_ventas);
+        return Optional.ofNullable(codigo_empleado_rep_ventas);
     }
 
     /**
@@ -104,7 +107,7 @@ public class Cliente {
 
     /** Devuelve el nombre. Nunca es null. */
     public String get_nombre() {
-        return nombre;
+        return nombre_cliente;
     }
 
     /** Devuelve los datos de contacto. Nunca es null. */
@@ -145,12 +148,22 @@ public class Cliente {
      * Opcionalmente contendrá nombre y apellido de contacto,
      * pero siempre teléfono y fax.
      */
+    @Embeddable
     public static class Contacto {
+
+        @Column(name = "nombre_contacto")
         private String nombre;
+
+        @Column(name = "apellido_contacto")
         private String apellido;
+
+        @Column(name = "telefono", nullable = false)
         private String telefono;
+
+        @Column(name = "fax", nullable = false)
         private String fax;
 
+        private Contacto() {} // Constructor por defecto para que lo pueda usar Hibernate
         private Contacto(String telefono, String fax) {
             this.telefono = telefono;
             this.fax = fax;
@@ -192,15 +205,27 @@ public class Cliente {
      * de dirección, un código postal (cp), una región y
      * un país.
      */
+    @Embeddable
     public static class Domicilio {
+        @Column(name = "linea_direccion1", nullable = false)
         private String direccion1;
+
+        @Column(name = "ciudad", nullable = false)
         private String ciudad;
 
+        @Column(name = "linea_direccion2")
         private String direccion2;
+
+        @Column(name = "region")
         private String region;
+
+        @Column(name = "pais")
         private String pais;
+
+        @Column(name = "codigo_postal")
         private String cp;
 
+        private Domicilio() {} // Constructor por defecto para que lo pueda usar Hibernate
         private Domicilio(String direccion1, String ciudad) {
             this.direccion1 = direccion1;
             this.ciudad = ciudad;
@@ -327,7 +352,7 @@ public class Cliente {
 
         /** Para aportar un código de empleado rep. ventas al builder. */
         public Builder con_cod_empl_rep_ventas(Integer cod_empl_rep_ventas) {
-            cliente.cod_empl_rep_ventas = cod_empl_rep_ventas;
+            cliente.codigo_empleado_rep_ventas = cod_empl_rep_ventas;
             return this;
         }
 
@@ -383,8 +408,8 @@ public class Cliente {
          */
         public Cliente build() throws ExcepcionDatoNoValido, ExcepcionFormatoIncorrecto {
             boolean datos_necesarios_asignados = true;
-            datos_necesarios_asignados &= (cliente.codigo != 0) &&
-                      (cliente.nombre != null) &&
+            datos_necesarios_asignados &= (cliente.codigo_cliente != 0) &&
+                      (cliente.nombre_cliente != null) &&
                       (cliente.contacto.telefono != null) &&
                       (cliente.contacto.fax != null) &&
                       (cliente.domicilio.direccion1 != null) &&
@@ -443,8 +468,8 @@ public class Cliente {
     /** Utilidad para las tablas de la interfaz de usuario */
     public Object[] objArray() {
         return new String[] {
-            String.valueOf(codigo),
-            nombre,
+            String.valueOf(codigo_cliente),
+            nombre_cliente,
             get_contacto().nombre().orElse(""),
             get_contacto().apellido().orElse(""),
             contacto.telefono,
@@ -466,14 +491,14 @@ public class Cliente {
 
     /** Un resumen del cliente para la práctica 1 de AD */
     public String infoResumen() {
-        return "ID: " + codigo + " | Nombre: " + nombre + " | Contacto: " + get_contacto().nombre().orElse("-----") + " " + get_contacto().apellido().orElse("-----");
+        return "ID: " + codigo_cliente + " | Nombre: " + nombre_cliente + " | Contacto: " + get_contacto().nombre().orElse("-----") + " " + get_contacto().apellido().orElse("-----");
     }
 
     @Override
     public String toString() {
         String s = 
-              "\n============[ Cliente " + codigo + " ]============"
-            + "\nNombre: " + nombre
+              "\n============[ Cliente " + codigo_cliente + " ]============"
+            + "\nNombre: " + nombre_cliente
             + "\nContacto {"
             + "\n  Nom: " + get_contacto().nombre().orElse("------")
             + "\n  Ape: " + get_contacto().apellido().orElse("------")

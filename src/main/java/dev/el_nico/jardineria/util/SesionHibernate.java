@@ -22,11 +22,12 @@ public class SesionHibernate {
         }
         catch (Exception e) {
             StandardServiceRegistryBuilder.destroy(registry);
+            e.printStackTrace();
             return null;
         }
     }
 
-    public static final Session getInstance() {
+    public static final Session get() {
         return INSTANCE;
     }
 

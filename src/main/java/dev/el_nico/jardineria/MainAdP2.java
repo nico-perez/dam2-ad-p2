@@ -23,7 +23,16 @@ import dev.el_nico.jardineria.util.SesionHibernate;
 public class MainAdP2 {
 
     public static void main(String[] args) {
-        Session session = SesionHibernate.getInstance();
+        Session sesion = SesionHibernate.get();
+        try {
+            Cliente c = new Cliente.Builder(72, "limite credito sin @column", "telefono!!!", "faxxx!!!!", "direcion", "aragon").con_limite_credito(69.69).build();
+            sesion.beginTransaction();
+            sesion.save(c);
+            sesion.getTransaction().commit();
+            sesion.close();
+        } catch (ExcepcionDatoNoValido | ExcepcionFormatoIncorrecto e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main1(String[] args) {

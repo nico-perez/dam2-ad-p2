@@ -14,16 +14,15 @@
     <session-factory>
 
         <!-- Database connection settings -->
-        <property name="connection.driver_class">org.h2.Driver</property>
         <property name="connection.url">jdbc:mysql://localhost:3306/jardineria?serverTimezone=UTC</property>
         <property name="connection.username">admin</property>
-        <property name="connection.password"></property>
+        <property name="connection.password">4DM1n4DM1n</property>
 
         <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">1</property>
 
         <!-- SQL dialect -->
-        <property name="dialect">org.hibernate.dialect.H2Dialect</property>
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 
         <!-- Disable the second-level cache  -->
         <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
