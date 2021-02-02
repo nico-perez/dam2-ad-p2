@@ -192,7 +192,7 @@ public class MainAdP2 {
         }
         if (total > 0.0) {
             System.out.println(" ==> Total: " + total);
-        } else {
+        } else {// a
             System.out.println("El cliente de código " + codigo + " no tiene ningún pedido registrado.");
         }
     }
