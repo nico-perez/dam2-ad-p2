@@ -96,10 +96,12 @@ public class MainAdP2 {
         @SuppressWarnings("unchecked")
         List<Detalle> detalles = session.createQuery("from Detalle").list();
 
+        Map<Integer, Integer> ventas = new TreeMap<>();
         Map<Integer, Double> map = new TreeMap<>();
         for (Cliente c : clientes) {
             if (c.get_cod_empl_rep_ventas().isPresent()) {
                 map.put(c.get_cod_empl_rep_ventas().get(), 0.0);
+                ventas.put(c.get_cod_empl_rep_ventas().get(), 0);
             }
             for (Pedido p : pedidos) {
                 Calendar fechaPedido = p.get_fecha().pedido();
@@ -108,7 +110,10 @@ public class MainAdP2 {
                         && fechaPedido.get(Calendar.YEAR) == anio) {
                     for (Detalle d : detalles) {
                         if (d.getCodigo_pedido() == p.get_codigo() && c.get_cod_empl_rep_ventas().isPresent()) {
-                            map.put(c.get_cod_empl_rep_ventas().get(), map.get(c.get_cod_empl_rep_ventas().orElse(null)) + d.getCantidad() * d.getPrecio_unidad());
+                            map.put(c.get_cod_empl_rep_ventas().get(), map.get(c.get_cod_empl_rep_ventas().get()) + d.getCantidad() * d.getPrecio_unidad());
+                            if (d.getNumero_linea() == 1) {
+                                ventas.put(c.get_cod_empl_rep_ventas().get(), 1 + ventas.get(c.get_cod_empl_rep_ventas().get()));
+                            }
                         }
                     }
                 }
@@ -116,12 +121,13 @@ public class MainAdP2 {
         }
 
         Entry<Integer, Double> empleado = map.entrySet().stream().sorted((e1,e2)->{return e2.getValue().compareTo(e1.getValue());}).findFirst().orElse(null);
+        Integer totalv = ventas.get(empleado.getKey());
 
         if (empleado != null && empleado.getValue() > 0.0) {
             String nombre = (String) session
                     .createSQLQuery("select nombre from empleado where codigo_empleado=" + empleado.getKey())
                     .uniqueResult();
-            System.out.println("\nEl empleado del mes de " + cal.getDisplayName(Calendar.MONTH, Calendar.LONG_FORMAT, Locale.forLanguageTag("es-ES")) + " de " + anio + " es " + nombre + " (cód. " + empleado.getKey() + ") con " + empleado.getValue() + "€ en ventas.");
+            System.out.println("\nEl empleado del mes de " + cal.getDisplayName(Calendar.MONTH, Calendar.LONG_FORMAT, Locale.forLanguageTag("es-ES")) + " de " + anio + " es " + nombre + " (cód. " + empleado.getKey() + ") con " + totalv + " ventas que suman un beneficio de " + empleado.getValue() + "€");
         } else {
             System.out.println("No hay datos de ventas para el mes y año proporcionados.");
         }
@@ -141,31 +147,53 @@ public class MainAdP2 {
             }
         } while (!s.clientes().uno(codigo).isPresent());
         List<Detalle> detalles = session.createQuery("from Detalle where codigo_pedido in (from Pedido p where codigo_cliente=:c) order by codigo_pedido, numero_linea").setParameter("c", codigo).list();
+        List<Producto> productos = s.productos().todos();
 
         double subtotal = 0.0;
         double total = 0.0;
         int pedidoActual = -1;
 
+        String fechastring = "";
+
         System.out.println();
         for (Detalle d : detalles) {
+
+            Optional<Pedido> fecha = s.pedidos().uno(d.getCodigo_pedido());
+            if (fecha.isPresent()) {
+                Calendar cal = fecha.get().get_fecha().pedido();
+                fechastring = cal.getDisplayName(Calendar.MONTH, Calendar.LONG_FORMAT, Locale.forLanguageTag("es-ES")) + " de " + cal.get(Calendar.YEAR);
+            } else {
+                fechastring = "";
+            }
+
             if (pedidoActual != d.getCodigo_pedido()) {
                 pedidoActual = d.getCodigo_pedido();
                 if (subtotal > 0.0) {
-                    System.out.println(" --> Subtotal: " + subtotal + "\n");
+                    System.out.println(" --> Subtotal: " + subtotal + " en " + fechastring  + "\n");
                     total += subtotal;
                     subtotal = 0.0;
                 }
             }
-            System.out.println(d);
+
+            System.out.print(d);
+            Producto este = productos.stream().filter(p -> p.getCodigo_producto().equals(d.getCodigo_producto())).findAny().orElse(null);
+            
+            if (este != null) {
+                System.out.println(" | Nombre: " + este.getNombre() + " | Gama: " + este.getGama());
+            } else {
+                System.out.println(" | Algún error raro hay por haí porque no se ha podido encontrar el producto");
+            }
             subtotal += d.getCantidad() * d.getPrecio_unidad();
         }
         if (subtotal > 0.0) {
-            System.out.println(" --> Subtotal: " + subtotal + "\n==========================");
+            System.out.println(" --> Subtotal: " + subtotal + " en " + fechastring + "\n==========================");
             total += subtotal;
             subtotal = 0.0;
         }
         if (total > 0.0) {
             System.out.println(" ==> Total: " + total);
+        } else {
+            System.out.println("El cliente de código " + codigo + " no tiene ningún pedido registrado.");
         }
     }
 
