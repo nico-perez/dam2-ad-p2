@@ -3,6 +3,13 @@ package dev.el_nico.jardineria.modelo;
 import java.util.Calendar;
 import java.util.Optional;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
 import dev.el_nico.jardineria.util.IBuilder;
 
@@ -23,6 +30,7 @@ import dev.el_nico.jardineria.util.IBuilder;
  * <li>codigo_cliente INTEGER NOT NULL</li>
  * </ul>
  */
+@Entity
 public class Pedido {
     /** 
      * Demora mínima, en días, que puede tomar un
@@ -30,14 +38,15 @@ public class Pedido {
      */
     private static final int DEMORA_MINIMA = 3;
 
-    private int codigo;
-    private Fecha fecha;
+    private @Id Integer codigo_pedido;
+    private @Embedded Fecha fecha;
     private String estado;
-    private Optional<String> comentarios;
-    private int codigo_cliente;
+    private String comentarios;
+    private Integer codigo_cliente;
 
+    private Pedido() {} // hibernate
     private Pedido(int codigo, Fecha fecha, String estado, int codigo_cliente) {
-        this.codigo = codigo;
+        this.codigo_pedido = codigo;
         this.fecha = fecha;
         this.estado = estado;
         this.codigo_cliente = codigo_cliente;
@@ -45,7 +54,7 @@ public class Pedido {
 
     /** Devuelve el código de pedido. */
     public int get_codigo() {
-        return codigo;
+        return codigo_pedido;
     }
 
     /** Devuelve la fecha del pedido. Nunca es null. */
@@ -60,7 +69,7 @@ public class Pedido {
 
     /** Devuelve los comentarios del pedido. */
     public Optional<String> get_comentarios() {
-        return comentarios;
+        return Optional.ofNullable(comentarios);
     }
 
     /** Devuelve el código de cliente del pedido. */
@@ -69,10 +78,13 @@ public class Pedido {
     }
 
     /** Agrupa las fechas de un pedido. */
+    @Embeddable
     public static class Fecha {
-        private Calendar pedido;
-        private Calendar esperada;
-        private Optional<Calendar> entrega;
+        private @Temporal(TemporalType.DATE) Calendar fecha_pedido;
+        private @Temporal(TemporalType.DATE) Calendar fecha_esperada;
+        private @Temporal(TemporalType.DATE) Calendar fecha_entrega;
+
+        private Fecha() {} // hibernate
 
         /**
          * Construye una nueva Fecha asignando a pedido
@@ -84,28 +96,28 @@ public class Pedido {
          * tarde el pedido en llegar.
          */
         private Fecha(int demora_esperada) {
-            this.pedido = Calendar.getInstance();
-            (this.esperada = (Calendar)pedido.clone()).add(Calendar.DAY_OF_MONTH, demora_esperada);
+            this.fecha_pedido = Calendar.getInstance();
+            (this.fecha_esperada = (Calendar)fecha_pedido.clone()).add(Calendar.DAY_OF_MONTH, demora_esperada);
         }
 
         private Fecha(Calendar pedido, Calendar esperada) {
-            this.pedido = pedido;
-            this.esperada = esperada;
+            this.fecha_pedido = pedido;
+            this.fecha_esperada = esperada;
         }
 
         /** La fecha en que se hizo el pedido. Nunca es null. */
         public Calendar pedido() {
-            return pedido;
+            return fecha_pedido;
         }
 
         /** La fecha esperada de entrega del pedido. Nunca es null. */
         public Calendar esperada() {
-            return esperada;
+            return fecha_esperada;
         }
 
         /** La fecha de entrega real del pedido. */
         public Optional<Calendar> entrega() {
-            return entrega;
+            return Optional.ofNullable(fecha_entrega);
         }
     }
 
@@ -142,13 +154,13 @@ public class Pedido {
 
         /** Añade fecha de entrega al builder. */
         public Builder con_fecha_de_entrega(Calendar entrega) {
-            this.pedido.fecha.entrega = Optional.ofNullable(entrega);
+            this.pedido.fecha.fecha_entrega = entrega;
             return this;
         }
 
         /** Añade comentarios al builder. */
         public Builder con_comentarios(String comentarios) {
-            pedido.comentarios = Optional.ofNullable(comentarios);
+            pedido.comentarios = comentarios;
             return this;
         }
 
@@ -163,9 +175,9 @@ public class Pedido {
          */
         public Pedido build() throws ExcepcionDatoNoValido {
             boolean valido = true;
-            valido &= (pedido.codigo != 0) && 
-                      (pedido.fecha.pedido != null) && 
-                      (pedido.fecha.esperada != null) &&
+            valido &= (pedido.codigo_pedido != 0) && 
+                      (pedido.fecha.fecha_pedido != null) && 
+                      (pedido.fecha.fecha_esperada != null) &&
                       (pedido.estado != null) &&
                       (pedido.codigo_cliente != 0);
             if (!valido) {
@@ -176,9 +188,9 @@ public class Pedido {
 
             // Se asegura de que la fecha de espera es por lo menos
             // tres días posterior a la fecha del pedido.
-            Calendar tres_dias_despues_del_pedido = (Calendar)pedido.fecha.pedido.clone();
+            Calendar tres_dias_despues_del_pedido = (Calendar)pedido.fecha.fecha_pedido.clone();
             tres_dias_despues_del_pedido.add(Calendar.DAY_OF_MONTH, DEMORA_MINIMA);
-            if (pedido.fecha.esperada.before(tres_dias_despues_del_pedido)) {
+            if (pedido.fecha.fecha_esperada.before(tres_dias_despues_del_pedido)) {
                 valido = false;
                 throw new ExcepcionDatoNoValido("La fecha esperada debe ser, por lo menos, " +
                                                 "tres días posterior a la fecha del pedido");

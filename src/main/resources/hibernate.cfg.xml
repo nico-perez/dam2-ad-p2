@@ -15,8 +15,9 @@
 
         <!-- Database connection settings -->
         <property name="connection.url">jdbc:mysql://localhost:3306/jardineria?serverTimezone=UTC</property>
-        <property name="connection.username">admin</property>
-        <property name="connection.password">4DM1n4DM1n</property>
+        <property name="connection.username">nico</property>
+        <!--4DM1n4DM1n-->
+        <property name="connection.password">nico</property>
 
         <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">1</property>
@@ -30,12 +31,16 @@
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
 
+        <property name="hibernate.connection.autocommit">true</property>
+
         <!-- Drop and re-create the database schema on startup -->
         <!-- property name="hbm2ddl.auto">create</property -->
 
         <!-- Names the annotated entity class -->
         <mapping class="dev.el_nico.jardineria.modelo.Cliente"/>
-
+        <mapping class="dev.el_nico.jardineria.modelo.Pedido"/>
+        <mapping class="dev.el_nico.jardineria.modelo.Producto"/>
+        <mapping class="dev.el_nico.jardineria.modelo.Detalle"/>
     </session-factory>
 
 </hibernate-configuration>

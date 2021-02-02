@@ -2,12 +2,10 @@ package dev.el_nico.jardineria.modelo;
 
 import java.util.Optional;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import dev.el_nico.jardineria.excepciones.ExcepcionDatoNoValido;
@@ -38,7 +36,6 @@ import dev.el_nico.jardineria.util.IBuilder;
  * </ul>
  */
 @Entity
-@Table(name = "cliente")
 public class Cliente {
     /*
      * Al llamar a los atributos de la misma manera que las columnas
@@ -59,6 +56,7 @@ public class Cliente {
     private @Transient String email;
     private @Transient String contrasena;
 
+    private Cliente() {} // hibernate
     private Cliente(int codigo, String nombre, Contacto contacto,  Domicilio domicilio) {
         this.codigo_cliente = codigo;
         this.nombre_cliente = nombre;
@@ -66,15 +64,15 @@ public class Cliente {
         this.domicilio = domicilio;
 
         if (contacto != null) {
-            contacto.nombre = null;
-            contacto.apellido = null;
+            contacto.nombre_contacto = null;
+            contacto.apellido_contacto = null;
         }
 
         if (domicilio != null) {
-            domicilio.direccion2 = null;
+            domicilio.linea_direccion2 = null;
             domicilio.region = null;
             domicilio.pais = null;
-            domicilio.cp = null;
+            domicilio.codigo_postal = null;
         }
 
         codigo_empleado_rep_ventas = null;
@@ -151,34 +149,27 @@ public class Cliente {
     @Embeddable
     public static class Contacto {
 
-        @Column(name = "nombre_contacto")
-        private String nombre;
-
-        @Column(name = "apellido_contacto")
-        private String apellido;
-
-        @Column(name = "telefono", nullable = false)
+        private String nombre_contacto;
+        private String apellido_contacto;
         private String telefono;
-
-        @Column(name = "fax", nullable = false)
         private String fax;
 
-        private Contacto() {} // Constructor por defecto para que lo pueda usar Hibernate
+        private Contacto() {} // hibernate
         private Contacto(String telefono, String fax) {
             this.telefono = telefono;
             this.fax = fax;
-            nombre = null;
-            apellido = null;
+            nombre_contacto = null;
+            apellido_contacto = null;
         }
 
         /** Nombre del contacto del cliente. */
         public Optional<String> nombre() {
-            return Optional.ofNullable(nombre);
+            return Optional.ofNullable(nombre_contacto);
         }
 
         /** Apellido del contacto del cliente. */
         public Optional<String> apellido() {
-            return Optional.ofNullable(apellido);
+            return Optional.ofNullable(apellido_contacto);
         }
 
         /** Teléfono del cliente. Nunca es null. */
@@ -193,7 +184,7 @@ public class Cliente {
 
         @Override
         public String toString() {
-            return "Contacto [apellido=" + apellido + ", fax=" + fax + ", nombre=" + nombre + ", telefono=" + telefono
+            return "Contacto [apellido=" + apellido_contacto + ", fax=" + fax + ", nombre=" + nombre_contacto + ", telefono=" + telefono
                     + "]";
         }
     }
@@ -207,32 +198,22 @@ public class Cliente {
      */
     @Embeddable
     public static class Domicilio {
-        @Column(name = "linea_direccion1", nullable = false)
-        private String direccion1;
 
-        @Column(name = "ciudad", nullable = false)
+        private String linea_direccion1;
         private String ciudad;
-
-        @Column(name = "linea_direccion2")
-        private String direccion2;
-
-        @Column(name = "region")
+        private String linea_direccion2;
         private String region;
-
-        @Column(name = "pais")
         private String pais;
+        private String codigo_postal;
 
-        @Column(name = "codigo_postal")
-        private String cp;
-
-        private Domicilio() {} // Constructor por defecto para que lo pueda usar Hibernate
+        private Domicilio() {} // hibernate
         private Domicilio(String direccion1, String ciudad) {
-            this.direccion1 = direccion1;
+            this.linea_direccion1 = direccion1;
             this.ciudad = ciudad;
-            direccion2 = null;
+            linea_direccion2 = null;
             region = null;
             pais = null;
-            cp = null;
+            codigo_postal = null;
         }
 
         /** 
@@ -240,7 +221,7 @@ public class Cliente {
          * del cliente. Nunca es null.
          */
         public String direccion1() {
-            return direccion1;
+            return linea_direccion1;
         }
 
         /** Devuelve la ciudad del cliente. Nunca es null. */
@@ -253,7 +234,7 @@ public class Cliente {
          * del cliente.
          */
         public Optional<String> direccion2() {
-            return Optional.ofNullable(direccion2);
+            return Optional.ofNullable(linea_direccion2);
         }
 
         /** Devuelve la región del domicilio del cliente. */
@@ -268,13 +249,13 @@ public class Cliente {
 
         /** Devuelve el código postal del domicilio del cliente */
         public Optional<String> cp() {
-            return Optional.ofNullable(cp);
+            return Optional.ofNullable(codigo_postal);
         }
 
         @Override
         public String toString() {
-            return "Domicilio [ciudad=" + ciudad + ", cp=" + cp + ", direccion1=" + direccion1 + ", direccion2="
-                    + direccion2 + ", pais=" + pais + ", region=" + region + "]";
+            return "Domicilio [ciudad=" + ciudad + ", cp=" + codigo_postal + ", direccion1=" + linea_direccion1 + ", direccion2="
+                    + linea_direccion2 + ", pais=" + pais + ", region=" + region + "]";
         }
     }
 
@@ -295,16 +276,16 @@ public class Cliente {
             // con el valor null (porque si no serían 
             // null)
             if (cliente.contacto != null) {
-                if (cliente.contacto.nombre == null) {
-                    cliente.contacto.nombre = null;
+                if (cliente.contacto.nombre_contacto == null) {
+                    cliente.contacto.nombre_contacto = null;
                 }
-                if (cliente.contacto.apellido == null) {
-                    cliente.contacto.apellido = null;
+                if (cliente.contacto.apellido_contacto == null) {
+                    cliente.contacto.apellido_contacto = null;
                 }
             }
             if (cliente.domicilio != null) {
-                if (cliente.domicilio.direccion2 == null) {
-                    cliente.domicilio.direccion2 = null;
+                if (cliente.domicilio.linea_direccion2 == null) {
+                    cliente.domicilio.linea_direccion2 = null;
                 }
                 if (cliente.domicilio.region == null) {
                     cliente.domicilio.region = null;
@@ -312,8 +293,8 @@ public class Cliente {
                 if (cliente.domicilio.pais == null) {
                     cliente.domicilio.pais = null;
                 }
-                if (cliente.domicilio.cp == null) {
-                    cliente.domicilio.cp = null;
+                if (cliente.domicilio.codigo_postal == null) {
+                    cliente.domicilio.codigo_postal = null;
                 }
             }
         }
@@ -334,13 +315,13 @@ public class Cliente {
 
         /** Para aportar un nombre de contacto al builder. */
         public Builder con_nombre_de_contacto(String nombre) {
-            cliente.contacto.nombre = nombre;
+            cliente.contacto.nombre_contacto = nombre;
             return this;
         }
 
         /** Para aportar un apellido de contacto al builder. */
         public Builder con_apellido_de_contacto(String apellido) {
-            cliente.contacto.apellido = apellido;
+            cliente.contacto.apellido_contacto = apellido;
             return this;
         }
 
@@ -361,7 +342,7 @@ public class Cliente {
          * del builder.
          */
         public Builder con_linea_direccion2(String direccion2) {
-            cliente.domicilio.direccion2 = direccion2;
+            cliente.domicilio.linea_direccion2 = direccion2;
             return this;
         }
 
@@ -379,7 +360,7 @@ public class Cliente {
 
         /** Para aportar un código postal al domicilio del builder. */
         public Builder con_codigo_postal(String cp) {
-            cliente.domicilio.cp = cp;
+            cliente.domicilio.codigo_postal = cp;
             return this;
         }
 
@@ -412,7 +393,7 @@ public class Cliente {
                       (cliente.nombre_cliente != null) &&
                       (cliente.contacto.telefono != null) &&
                       (cliente.contacto.fax != null) &&
-                      (cliente.domicilio.direccion1 != null) &&
+                      (cliente.domicilio.linea_direccion1 != null) &&
                       (cliente.domicilio.ciudad != null);
 
             if (!datos_necesarios_asignados) {
@@ -474,7 +455,7 @@ public class Cliente {
             get_contacto().apellido().orElse(""),
             contacto.telefono,
             contacto.fax,
-            domicilio.direccion1,
+            domicilio.linea_direccion1,
             get_domicilio().direccion2().orElse(""),
             domicilio.ciudad,
             get_domicilio().region().orElse(""),
@@ -506,7 +487,7 @@ public class Cliente {
             + "\n  Fax: " + contacto.fax
             + "\n}"
             + "\nDomicilio {"
-            + "\n  Ln1: " + domicilio.direccion1
+            + "\n  Ln1: " + domicilio.linea_direccion1
             + "\n  Ln2: " + get_domicilio().direccion2().orElse("------")
             + "\n  Ciu: " + domicilio.ciudad
             + "\n  Reg: " + get_domicilio().region().orElse("------")

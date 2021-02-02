@@ -35,7 +35,7 @@ public interface IDao<T> { // DAO
      * @param t
      * @param params
      */
-    void modificar(T t, Object[] params);
+    void modificar(T t);
 
     /**
      * Elimina un objeto del Dao.

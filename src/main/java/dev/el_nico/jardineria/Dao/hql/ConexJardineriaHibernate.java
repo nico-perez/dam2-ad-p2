@@ -1,14 +1,36 @@
 package dev.el_nico.jardineria.dao.hql;
 
-import dev.el_nico.jardineria.dao.DaoHolder;
+import org.hibernate.Session;
 
-public class ConexJardineriaHibernate extends DaoHolder<PedidosHqlDao,
-                                                        ClientesHqlDao,
-                                                        ProductosHqlDao> {
+public class ConexJardineriaHibernate {
 
-    public ConexJardineriaHibernate(PedidosHqlDao pedidosDao, ClientesHqlDao clientesDao, ProductosHqlDao productosDao) {
-        super(pedidosDao, clientesDao, productosDao);
-        // TODO Auto-generated constructor stub
+    private ClientesHqlDao clientesDao;
+    private PedidosHqlDao pedidosDao;
+    private ProductosHqlDao productosDao;
+
+	private Session s;
+
+    public ConexJardineriaHibernate(Session s) {
+        clientesDao = new ClientesHqlDao(s);
+        pedidosDao = new PedidosHqlDao(s);
+		productosDao = new ProductosHqlDao(s);
+		
+		this.s = s;
     }
 
+	public ClientesHqlDao clientes() {
+		return clientesDao;
+	}
+
+	public PedidosHqlDao pedidos() {
+		return pedidosDao;
+	}
+
+	public ProductosHqlDao productos() {
+		return productosDao;
+	}
+
+	public void close() {
+		s.close();
+	}
 }
